@@ -3,8 +3,6 @@
 //  Homework1
 //
 //  Created by Gain Hagenau and Ryan Aikman on 3/28/16.
-//  This is on GitHub
-//this is a change!
 
 #include <iostream>
 #include <vector>
@@ -17,7 +15,7 @@
 using namespace std;
 
 int main(int argc, const char * argv[]) {
-    //Test
+
     //Creating Grid based environment
     GridEnvironment grid(10);
     
