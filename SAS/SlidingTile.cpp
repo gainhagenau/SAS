@@ -11,14 +11,6 @@
 
 #include "SlidingTile.hpp"
 
-SlidingTile::SlidingTile(TileState &nodeID) {
-    //build puzzle
-    int c = 0;
-    for (int i = 0; i < 16; i++) {
-        nodeID[i] = c++;    //load array
-    }
-    empty = 0;  //empty tile
-}
 void SlidingTile::GetActions(TileState &nodeID, vector<TileAction> &actions) {
     /* 0   1   2   3
        4   5   6   7
@@ -26,6 +18,9 @@ void SlidingTile::GetActions(TileState &nodeID, vector<TileAction> &actions) {
        12  13  14  15
      */
     actions.clear();
+    if (nodeID[empty] != 0) {
+        updateEmpty(nodeID);
+    }
     if (empty <= 3) {
         actions.push_back(UP);
     }
@@ -68,5 +63,13 @@ void SlidingTile::UndoAction(TileState &s, TileAction a) {
         ApplyAction(s, RIGHT);
     } else if (RIGHT) {
         ApplyAction(s, LEFT);
+    }
+}
+
+void SlidingTile::updateEmpty(TileState &s) {
+    for (int i = 0; i < 16; i++) {
+        if (s[i] == 0) {
+            empty = i;
+        }
     }
 }

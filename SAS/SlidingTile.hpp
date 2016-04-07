@@ -24,14 +24,14 @@ typedef int TileState[16];
 
 class SlidingTile {
 public:
-    SlidingTile(TileState &nodeID);
+    SlidingTile(){};
     ~SlidingTile(){};
     void GetActions(TileState &nodeID, vector<TileAction> &actions);
     void ApplyAction(TileState &s, TileAction a);
     void UndoAction(TileState &s, TileAction a);
 private:
     int empty;
-
+    void updateEmpty(TileState &s);
 };
 
 #endif /* SlidingTile_hpp */

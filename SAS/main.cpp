@@ -28,11 +28,11 @@ int main(int argc, const char * argv[]) {
      8   9   10  11
      12  13  14  15
      */
-    TileState s = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
+    TileState s = {0,15,2,3,4,5,6,7,8,9,10,11,12,13,14,1};
     
-    STmanhattan man();
+    STmanhattan man;
     
-    //cout << man.GetHeuristic(s);
+    cout << man.GetHeuristic(s) << endl;
     
     
     /* HOMEWORK 1
