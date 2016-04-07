@@ -36,6 +36,9 @@ void SlidingTile::GetActions(TileState &nodeID, vector<TileAction> &actions) {
 }
 
 void SlidingTile::ApplyAction(TileState &s, TileAction a) {
+    if (s[empty] != 0) {
+        updateEmpty(s);
+    }
     if (a == UP) {
         int temp = s[empty];
         s[empty] = s[empty - 4];
@@ -55,6 +58,9 @@ void SlidingTile::ApplyAction(TileState &s, TileAction a) {
     }
 }
 void SlidingTile::UndoAction(TileState &s, TileAction a) {
+    if (s[empty] != 0) {
+        updateEmpty(s);
+    }
     if (a == UP) {
         ApplyAction(s, DOWN);
     } else if (a == DOWN) {
