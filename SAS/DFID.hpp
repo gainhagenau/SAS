@@ -1,9 +1,13 @@
-//
+/**
+ Single Agent Search
+ University of Denver
+ 4/2016
+ Authored by Gain Hagenau and Ryan Aikman
+ **/
 //  DFIS.hpp
 //  Homework1
 //
-//  Created by Gain Hagenau and Ryan Aikman on 3/30/16.
-//
+
 
 #ifndef DFID_hpp
 #define DFID_hpp

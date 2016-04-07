@@ -1,9 +1,13 @@
-//
+/**
+ Single Agent Search
+ University of Denver
+ 4/2016
+ Authored by Gain Hagenau and Ryan Aikman
+ **/
 //  NEnvironment.hpp
 //  Homework1
 //
-//  Created by Gain Hagenau and Ryan Aikman on 3/29/16.
-//
+
 
 #ifndef NEnvironment_hpp
 #define NEnvironment_hpp

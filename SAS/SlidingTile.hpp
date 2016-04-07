@@ -1,9 +1,13 @@
-//
+/**
+ Single Agent Search
+ University of Denver
+ 4/2016
+ Authored by Gain Hagenau and Ryan Aikman
+ **/
 //  SlidingTile.hpp
 //  HW2
 //
-//  Created by Ryan Aikman and Gain Hagenau on 4/2/16.
-//
+
 
 #ifndef SlidingTile_hpp
 #define SlidingTile_hpp
