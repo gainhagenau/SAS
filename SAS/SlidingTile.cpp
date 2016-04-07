@@ -12,6 +12,7 @@
 #include "SlidingTile.hpp"
 
 SlidingTile::SlidingTile(TileState &nodeID) {
+    //build puzzle
     int c = 0;
     for (int i = 0; i < 16; i++) {
         nodeID[i] = c++;    //load array
