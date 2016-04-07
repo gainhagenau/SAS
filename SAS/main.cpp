@@ -8,7 +8,6 @@
 //  main.cpp
 
 
-
 #include <iostream>
 #include <vector>
 #include "GridEnvironment.hpp"

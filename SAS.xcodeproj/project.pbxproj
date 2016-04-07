@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A05775011CB610CB00EB8408 /* STmanhattan.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A05774FF1CB610CB00EB8408 /* STmanhattan.cpp */; };
 		A0D844FD1CB1D38600CDA1B1 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0D844FC1CB1D38600CDA1B1 /* main.cpp */; };
 		A0DC87CE1CB1D89500727651 /* GridEnvironment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0DC87C81CB1D89500727651 /* GridEnvironment.cpp */; };
 		A0DC87CF1CB1D89500727651 /* NEnvironment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0DC87CA1CB1D89500727651 /* NEnvironment.cpp */; };
@@ -26,6 +27,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A05774FF1CB610CB00EB8408 /* STmanhattan.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = STmanhattan.cpp; sourceTree = "<group>"; };
+		A05775001CB610CB00EB8408 /* STmanhattan.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = STmanhattan.hpp; sourceTree = "<group>"; };
 		A0D844F91CB1D38600CDA1B1 /* SAS */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SAS; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0D844FC1CB1D38600CDA1B1 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		A0DC87C61CB1D89500727651 /* BFS.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BFS.hpp; sourceTree = "<group>"; };
@@ -77,6 +80,8 @@
 				A0DC87CC1CB1D89500727651 /* SlidingTile.cpp */,
 				A0DC87CD1CB1D89500727651 /* SlidingTile.hpp */,
 				A0D844FC1CB1D38600CDA1B1 /* main.cpp */,
+				A05774FF1CB610CB00EB8408 /* STmanhattan.cpp */,
+				A05775001CB610CB00EB8408 /* STmanhattan.hpp */,
 			);
 			path = SAS;
 			sourceTree = "<group>";
@@ -141,6 +146,7 @@
 				A0DC87CF1CB1D89500727651 /* NEnvironment.cpp in Sources */,
 				A0D844FD1CB1D38600CDA1B1 /* main.cpp in Sources */,
 				A0DC87CE1CB1D89500727651 /* GridEnvironment.cpp in Sources */,
+				A05775011CB610CB00EB8408 /* STmanhattan.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
