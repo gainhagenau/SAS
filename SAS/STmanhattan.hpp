@@ -17,6 +17,7 @@
 #include "SlidingTile.hpp"
 
 #include <stdio.h>
+#include <cmath>
 
 void STmanhattan(){};
 

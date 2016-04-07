@@ -22,8 +22,6 @@ enum TileAction {UP, DOWN, LEFT, RIGHT};
 
 typedef int TileState[16];
 
-
-
 class SlidingTile {
 public:
     SlidingTile(TileState &nodeID);
