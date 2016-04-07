@@ -10,19 +10,24 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
-enum moves {UP, DOWN, LEFT, RIGHT};
+enum TileAction {UP, DOWN, LEFT, RIGHT};
+
+typedef int TileState[16];
 
 class SlidingTile {
 public:
-    int puzzle[4][4];
-    SlidingTile();
-    ~SlidingTile(){}
-    bool isValid(moves m);
-    bool applyMove(moves m);
-    bool isSolved();
+    SlidingTile(TileState &nodeID);
+    ~SlidingTile(){};
+    void GetActions(TileState &nodeID, vector<TileAction> &actions);
+    void ApplyAction(TileState &s, TileAction a);
+    void UndoAction(TileState &s, TileAction a);
+private:
+    int empty;
+
 };
 
 #endif /* SlidingTile_hpp */
