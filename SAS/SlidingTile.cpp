@@ -77,3 +77,7 @@ void SlidingTile::updateEmpty(TileState &s) {
         }
     }
 }
+
+void cost_limited_dfs(int limit, TileState &s) {
+    
+}
