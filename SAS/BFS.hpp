@@ -7,8 +7,7 @@
 //  BFS.hpp
 //  Homework1
 //
-//  Created by Gain Hagenau and Ryan Aikma on 3/29/16.
-//
+
 
 #ifndef BFS_hpp
 #define BFS_hpp

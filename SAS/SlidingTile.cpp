@@ -7,8 +7,7 @@
 //  SlidingTile.cpp
 //  HW2
 //
-//  Created by Ryan Aikman and Gain Hagenau on 4/2/16.
-//
+
 
 #include "SlidingTile.hpp"
 

@@ -7,8 +7,7 @@
 //  SlidingTile.hpp
 //  HW2
 //
-//  Created by Ryan Aikman and Gain Hagenau on 4/2/16.
-//
+
 
 #ifndef SlidingTile_hpp
 #define SlidingTile_hpp

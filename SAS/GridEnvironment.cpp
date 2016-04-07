@@ -7,8 +7,7 @@
 //  GridEnvironment.cpp
 //  Homework1
 //
-//  Created by Gain Hagenau and Ryan Aikman on 3/28/16.
-//
+
 
 #include "GridEnvironment.hpp"
 

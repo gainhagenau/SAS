@@ -7,8 +7,7 @@
 //  DFIS.hpp
 //  Homework1
 //
-//  Created by Gain Hagenau and Ryan Aikman on 3/30/16.
-//
+
 
 #ifndef DFID_hpp
 #define DFID_hpp
