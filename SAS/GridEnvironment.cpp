@@ -1,4 +1,9 @@
-//
+/**
+ Single Agent Search
+ University of Denver
+ 4/2016
+ Authored by Gain Hagenau and Ryan Aikman
+ **/
 //  GridEnvironment.cpp
 //  Homework1
 //

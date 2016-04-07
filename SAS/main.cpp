@@ -1,8 +1,13 @@
-//
+/**
+ Single Agent Search
+ University of Denver
+ 4/2016
+ Authored by Gain Hagenau and Ryan Aikman
+ **/
+
 //  main.cpp
-//  Homework1
-//
-//  Created by Gain Hagenau and Ryan Aikman on 3/28/16.
+
+
 
 #include <iostream>
 #include <vector>
@@ -16,6 +21,12 @@ using namespace std;
 
 int main(int argc, const char * argv[]) {
 
+    
+    
+    
+    
+    /* HOMEWORK 1
+     
     //Creating Grid based environment
     GridEnvironment grid(10);
     
@@ -29,8 +40,6 @@ int main(int argc, const char * argv[]) {
     //Creating IDFS objects
     DFID<GridState, GridAction, GridEnvironment> dfidg;
     DFID<NState, int, NEnvironment> dfidn;
-    
-    
     
     //BFS on Grid based environment
     GridState start; start.x = 0; start.y = 0;
@@ -78,6 +87,7 @@ int main(int argc, const char * argv[]) {
     cout << "\n";
     cout << "\n";
     
+    HOMEWORK 1 END */
     
     
     return 0;
