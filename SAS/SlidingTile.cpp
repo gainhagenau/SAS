@@ -40,27 +40,24 @@ void SlidingTile::ApplyAction(TileState &s, TileAction a) {
         updateEmpty(s);
     }
     if (a == UP) {
-        int temp = s[empty];
         s[empty] = s[empty - 4];
-        s[empty - 4] = temp;
+        s[empty - 4] = 0;
+        empty = empty - 4;
     } else if (a == DOWN) {
-        int temp = s[empty];
         s[empty] = s[empty + 4];
-        s[empty + 4] = temp;
+        s[empty + 4] = 0;
+        empty = empty + 4;
     } else if (a == LEFT) {
-        int temp = s[empty];
         s[empty] = s[empty - 1];
-        s[empty - 1] = temp;
+        s[empty - 1] = 0;
+        empty = empty -1;
     } else if (a == RIGHT) {
-        int temp = s[empty];
         s[empty] = s[empty + 1];
-        s[empty + 1] = temp;
+        s[empty + 1] = 0;
+        empty = empty + 1;
     }
 }
 void SlidingTile::UndoAction(TileState &s, TileAction a) {
-    if (s[empty] != 0) {
-        updateEmpty(s);
-    }
     if (a == UP) {
         ApplyAction(s, DOWN);
     } else if (a == DOWN) {
@@ -76,6 +73,7 @@ void SlidingTile::updateEmpty(TileState &s) {
     for (int i = 0; i < 16; i++) {
         if (s[i] == 0) {
             empty = i;
+            return;
         }
     }
 }
