@@ -12,3 +12,9 @@
 //
 
 #include "STmanhattan.hpp"
+
+//Returns Manhattan
+int GetHeuristic(){
+    
+    
+}

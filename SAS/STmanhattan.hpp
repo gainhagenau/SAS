@@ -14,10 +14,13 @@
 #ifndef STmanhattan_hpp
 #define STmanhattan_hpp
 
+#include "SlidingTile.hpp"
+
 #include <stdio.h>
 
 void STmanhattan(){};
 
-int GetHeuristic()
+//Returns Manhattan
+int GetHeuristic();
 
 #endif /* STmanhattan_hpp */

@@ -19,6 +19,8 @@ using namespace std;
 
 enum moves {UP, DOWN, LEFT, RIGHT};
 
+
+
 class SlidingTile {
 public:
     int puzzle[4][4];
