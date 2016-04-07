@@ -21,7 +21,6 @@ void SlidingTile::GetActions(TileState &nodeID, vector<TileAction> &actions) {
     if (nodeID[empty] != 0) {
         updateEmpty(nodeID);
     }
-    
     if (empty <= 3) {
         actions.push_back(UP);
     }
@@ -40,7 +39,6 @@ void SlidingTile::ApplyAction(TileState &s, TileAction a) {
     if (s[empty] != 0) {
         updateEmpty(s);
     }
-    
     if (a == UP) {
         s[empty] = s[empty - 4];
         s[empty - 4] = 0;
