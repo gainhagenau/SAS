@@ -29,7 +29,6 @@ public:
     void GetActions(TileState &nodeID, vector<TileAction> &actions);
     void ApplyAction(TileState &s, TileAction a);
     void UndoAction(TileState &s, TileAction a);
-    void cost_limited_dfs(int limit, TileState &s);
 private:
     int empty;
     void updateEmpty(TileState &s);
