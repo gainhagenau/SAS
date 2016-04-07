@@ -19,9 +19,13 @@
 #include <stdio.h>
 #include <cmath>
 
-void STmanhattan(){};
+class STmanhattan {
+public:
+    STmanhattan(){};
+    
+    //Returns Manhattan
+    int GetHeuristic(TileState state);
+};
 
-//Returns Manhattan
-int GetHeuristic();
 
 #endif /* STmanhattan_hpp */

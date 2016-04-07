@@ -24,12 +24,12 @@ using namespace std;
  */
 
 //Returns Manhattan
-int GetHeuristic(TileState state){
-    int ManDist = 0
+int STmanhattan::GetHeuristic(TileState state){
+    int ManDist = 0;
     for (int i = 1; i < 16; i++) { //distance of empty slot not included
         int x;
         for (x = 0; x < 16; x++){ //get current position of i value
-            if (i = state[x]){
+            if (i == state[x]){
                 break;
             }
         }

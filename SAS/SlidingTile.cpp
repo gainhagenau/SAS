@@ -25,6 +25,7 @@ void SlidingTile::GetActions(TileState &nodeID, vector<TileAction> &actions) {
        8   9   10  11
        12  13  14  15
      */
+    actions.clear();
     if (empty <= 3) {
         actions.push_back(UP);
     }

@@ -32,7 +32,7 @@ int main(int argc, const char * argv[]) {
     
     STmanhattan man();
     
-    cout << man.GetHeuristic(s);
+    //cout << man.GetHeuristic(s);
     
     
     /* HOMEWORK 1
