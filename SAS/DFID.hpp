@@ -48,7 +48,7 @@ class DFID{
             vector<action> actions;
             e.GetActions(node, actions);
             nodesExpanded++; //another node has been expanded
-            for(int i = 0; i < actions.capacity(); i++){
+            for(int i = 0; i < actions.size(); i++){
                 e.ApplyAction(node, actions[i]); //get the next child node
                 bool found = DLS(e, goal, node, depth-1); //run DLS on the new node with one less depth
                 if (found) {

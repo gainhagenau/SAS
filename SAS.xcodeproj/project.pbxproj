@@ -27,6 +27,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		946890DE1CB6E59900ABE292 /* IDA.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IDA.hpp; sourceTree = "<group>"; };
 		A05774FF1CB610CB00EB8408 /* STmanhattan.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = STmanhattan.cpp; sourceTree = "<group>"; };
 		A05775001CB610CB00EB8408 /* STmanhattan.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = STmanhattan.hpp; sourceTree = "<group>"; };
 		A0D844F91CB1D38600CDA1B1 /* SAS */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SAS; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -72,6 +73,7 @@
 			isa = PBXGroup;
 			children = (
 				A0D844FC1CB1D38600CDA1B1 /* main.cpp */,
+				946890DE1CB6E59900ABE292 /* IDA.hpp */,
 				A0DC87C61CB1D89500727651 /* BFS.hpp */,
 				A0DC87C71CB1D89500727651 /* DFID.hpp */,
 				A0DC87C81CB1D89500727651 /* GridEnvironment.cpp */,
