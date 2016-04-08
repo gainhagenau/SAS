@@ -19,6 +19,10 @@ using namespace std;
 
 struct NState {
     int num;
+    
+    bool operator==(const NState &s) const{
+        return (s.num == num);
+    }
 };
 
 class NEnvironment {
@@ -36,9 +40,6 @@ public:
     
     //undo an action on a state
     void UndoAction(NState &s, int a);
-    
-    //Returns true if the states are the same
-    bool CompareStates(NState &a, NState &b);
     
 private:
     int branching;

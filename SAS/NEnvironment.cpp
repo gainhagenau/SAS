@@ -28,11 +28,3 @@ void NEnvironment::ApplyAction(NState &s, int a){
 void NEnvironment::UndoAction(NState &s, int a){
     s.num = (s.num - 1 - a) / branching; //since it is an int it will take the floor of the value
 }
-
-//Returns true if the states are the same
-bool NEnvironment::CompareStates(NState &a, NState &b){
-    if (a.num == b.num) {
-        return true;
-    }
-    return false;
-}

@@ -28,7 +28,7 @@ public:
     // GetPath returns if the goal was found
     bool GetPath(environment &e, state &start, state &goal){
         nodesExpanded = 0; //reset nodesExpanded for the new search
-        if (e.CompareStates(start, goal)) { //checking if start is the goal state
+        if (start == goal) { //checking if start is the goal state
             return true;
         }
         
@@ -48,7 +48,7 @@ public:
             for (int i = 0; i < actions.size(); i++){ //execute actions and check children
                 state newState = current; //grid state to be created
                 e.ApplyAction(newState, actions[i]); //execute action creating new state
-                if (e.CompareStates(newState, goal)) { //check for goal state
+                if (newState == goal) { //check for goal state
                     return true;
                 }
                 q.push(newState); //add the new state to the queue

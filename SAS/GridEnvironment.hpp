@@ -22,6 +22,10 @@ using namespace std;
 struct GridState{
     int x;
     int y;
+    
+    bool operator==(const GridState &s) const{
+        return (s.x == x && s.y == y);
+    }
 };
 
 enum GridAction {up, right};
@@ -42,9 +46,6 @@ public:
     
     //This function un-does an action on a state
     void UndoAction(GridState &s, GridAction a);
-    
-    //Returns true if the states are the same
-    bool CompareStates(GridState &a, GridState &b);
     
 private:
     int size; //size of grid
