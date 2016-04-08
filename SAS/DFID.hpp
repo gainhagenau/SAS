@@ -41,7 +41,7 @@ class DFID{
     }
     
     bool DLS(environment &e, state &goal, state &node, int depth){
-        if (depth == 0 && e.CompareStates(node, goal)) {
+        if (depth == 0 && node == goal) {
             return true;
         }
         else if (depth > 0){

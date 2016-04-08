@@ -20,7 +20,21 @@ using namespace std;
 
 enum TileAction {UP, DOWN, LEFT, RIGHT};
 
-typedef int TileState[16];
+
+struct TileState{
+    
+    int state[16];
+    
+    bool operator==(const TileState &s) const{
+        for (int i = 0; i < 16; i++){
+            if (s.state[i] != state[i]){
+                return false;
+            }
+        }
+        return true;
+    }
+};
+
 
 class SlidingTile {
 public:

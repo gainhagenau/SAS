@@ -18,7 +18,7 @@ void SlidingTile::GetActions(TileState &nodeID, vector<TileAction> &actions) {
        12  13  14  15
      */
     actions.clear();
-    if (nodeID[empty] != 0) {
+    if (nodeID.state[empty] != 0) {
         updateEmpty(nodeID);
     }
     if (empty <= 3) {
@@ -36,24 +36,24 @@ void SlidingTile::GetActions(TileState &nodeID, vector<TileAction> &actions) {
 }
 
 void SlidingTile::ApplyAction(TileState &s, TileAction a) {
-    if (s[empty] != 0) {
+    if (s.state[empty] != 0) {
         updateEmpty(s);
     }
     if (a == UP) {
-        s[empty] = s[empty - 4];
-        s[empty - 4] = 0;
+        s.state[empty] = s.state[empty - 4];
+        s.state[empty - 4] = 0;
         empty = empty - 4;
     } else if (a == DOWN) {
-        s[empty] = s[empty + 4];
-        s[empty + 4] = 0;
+        s.state[empty] = s.state[empty + 4];
+        s.state[empty + 4] = 0;
         empty = empty + 4;
     } else if (a == LEFT) {
-        s[empty] = s[empty - 1];
-        s[empty - 1] = 0;
+        s.state[empty] = s.state[empty - 1];
+        s.state[empty - 1] = 0;
         empty = empty -1;
     } else if (a == RIGHT) {
-        s[empty] = s[empty + 1];
-        s[empty + 1] = 0;
+        s.state[empty] = s.state[empty + 1];
+        s.state[empty + 1] = 0;
         empty = empty + 1;
     }
 }
@@ -71,7 +71,7 @@ void SlidingTile::UndoAction(TileState &s, TileAction a) {
 
 void SlidingTile::updateEmpty(TileState &s) {
     for (int i = 0; i < 16; i++) {
-        if (s[i] == 0) {
+        if (s.state[i] == 0) {
             empty = i;
             return;
         }

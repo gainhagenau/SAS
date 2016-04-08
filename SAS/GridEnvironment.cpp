@@ -44,10 +44,3 @@ void GridEnvironment::UndoAction(GridState &s, GridAction a){
         s.y--;
     }
 }
-
-bool GridEnvironment::CompareStates(GridState &a, GridState &b){
-    if (a.x == b.x && a.y == b.y){
-        return true;
-    }
-    return false;
-}
