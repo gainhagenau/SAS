@@ -75,7 +75,7 @@ public:
             gcost++;
             previousH = hcost;
             hcost = GetHeuristic(s);
-            bool found = cost_limit_dfs(limit, s, goal);
+            bool found = cost_limit_dfs(limit, s, goal); //run search on new state
             if (found){
                 return true;
             }
