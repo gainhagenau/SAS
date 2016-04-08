@@ -10,17 +10,20 @@
 #define IDA_hpp
 
 #include <stdio.h>
+#include <vector>
+#include <iostream>
+#include <queue>
+#include "STmanhattan.hpp"
 
 using namespace std;
 
 template <typename state, typename action, typename environment>
 class IDA {
 public:
-    
     /*
      bound <- f-cost(start)
      while(!solution)
-        nextboud = -1
+        nextbound = -1
      cost_limit_dfs(bound)
      */
     /*
@@ -38,7 +41,12 @@ public:
     
     // GetPath returns if the goal was found
     bool GetPath(environment &e, state &start, state &goal) {
-        
+        int bound = fCost(start);
+        int nextBound; //???
+        while (start != goal) {
+            nextBound = -1;
+            cost_limit_dfs(bound, start, goal);
+        }
     }
     
     // Returns the total nodes expanded by the last GetPath call.
@@ -46,11 +54,32 @@ public:
         return GetNodesExpanded;
     }
     
-    void cost_limited_dfs(int limit, TileState &s) {
-        
+    void cost_limited_dfs(int limit, TileState &s, state &goal) {
+        nodesExpanded++;
+        if (fCost(s) > limit) {
+            return;
+        }
+        if (s == goal) {
+            for (int i = 0; i < actions.size(); i++) {
+                e.ApplyAction(s, action[i]);
+                cost_limit_dfs(limit, s, goal);
+                e.UndoAction(s, action[i]);
+            }
+        }
     }
 private:
     int nodesExpanded;
+    int fCost(state &s) {
+        return hCost(s) + gCost(s); //g + h
+    }
+    
+    int hCost (state &s) { //heuristic cost
+        return GetHeuristic(s);
+    }
+    
+    int gCost(state &s) { //current distance traveled
+        return nodesExpanded;
+    }
 };
 
 #endif /* IDA_hpp */
