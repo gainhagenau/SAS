@@ -28,16 +28,28 @@ int main(int argc, const char * argv[]) {
     IDA<TileState, TileAction, SlidingTile, STmanhattan> idast;  //ida on sliding tile
     TileState start = {14, 1, 9, 6, 4, 8, 12, 5, 7, 2, 3, 0, 10, 11, 13, 15};
     TileState goal = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+    /*
+    14 1  9  6
+    4  8  12 5
+    7  2  3  0
+    10 11 13 15
     
-    cout << "IDA* on Sliding Tile Puzzle" << endl;
+    up = 0
+    down = 1
+    left = 2
+    right = 3
+     */
+    cout << "IDA* on Sliding Tile Puzzle\nStart State: ";
     for (int i = 0; i < 16; i++) {
         cout << start.state[i] << ", ";
     }
     cout << "\n";
     bool found = idast.GetPath(tile, start, goal, h);
+    cout << "\nFound: " << found << "\nEnd State:   ";
     for (int i = 0; i < 16; i++) {
-        cout << "Found: " << found << "\n" << start.state[i] << endl;
+        cout << start.state[i] << ", ";
     }
+    cout << "\n\nNodes Expanded: " << idast.GetNodesExpanded() << endl;
     
     /*
      0   1   2   3

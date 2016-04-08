@@ -38,10 +38,6 @@ public:
             nextBound = -1;
             solution = cost_limited_dfs(bound, start, goal, e, h); //run search with limited bound
             bound = nextBound; //increase the search depth
-            for (int i = 0; i < 16; i++) {
-                cout << start.state[i] << ", ";
-            }
-            cout << endl;
         }
         return true;
     }
@@ -52,22 +48,28 @@ public:
             return true;
         }
         if (fCost() > limit) { //f cost too high, check for nextBound
-            if (hcost != -1 && hcost < nextBound){
+            if (hcost == -1 || hcost < nextBound){
                 hcost = nextBound;
             }
             return false;
         }
-        
+        e.GetActions(s, actions);
         for (int i = 0; i < actions.size(); i++) { //run through actions
             nodesExpanded++;
             e.ApplyAction(s, actions[i]); //apply action and change asociated g and h costs
             gcost++;
             previousH = hcost;
             hcost = h.GetHeuristic(s);
+            
+            for (int i = 0; i < 16; i++) {
+                cout << s.state[i] << ", ";
+            }
+            
             bool found = cost_limited_dfs(limit, s, goal, e, h); //run search on new state
             if (found){
                 return true;
             }
+
             e.UndoAction(s, actions[i]); //undo actions
             gcost--;
             hcost = previousH;
@@ -77,7 +79,7 @@ public:
     
     // Returns the total nodes expanded by the last GetPath call.
     uint64_t GetNodesExpanded() {
-        return GetNodesExpanded;
+        return nodesExpanded;
     }
     
 private:
