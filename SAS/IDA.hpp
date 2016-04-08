@@ -41,12 +41,44 @@ public:
     
     // GetPath returns if the goal was found
     bool GetPath(environment &e, state &start, state &goal) {
-        int bound = fCost(start);
-        int nextBound; //???
-        while (start != goal) {
+        gcost = 0; //g cost at start is 0
+        hcost = GetHeuristic(start); //calculates the h cost from starting state
+        int bound = fCost(start); //max f cost allowed at current level of search
+        bool solution = false;
+        while (!solution) {
             nextBound = -1;
-            cost_limit_dfs(bound, start, goal);
+            solution = cost_limit_dfs(bound, start, goal); //run search with limited bound
+            bound = nextBound; //increase the search depth
         }
+    }
+    
+    
+    bool cost_limited_dfs(int limit, state &s, state &goal) {
+        if (hcost == 0 && s == goal){
+            return true;
+        }
+        if (fCost() > limit) {
+            if (hcost != -1 && hcost < nextBound){
+                hcost = nextBound;
+            }
+            return false;
+        }
+        
+        for (int i = 0; i < actions.size(); i++) {
+            nodesExpanded++;
+            e.ApplyAction(s, action[i]);
+            gcost++;
+            previousH = hcost;
+            hcost = GetHeuristic(s);
+            bool found = cost_limit_dfs(limit - 1, s, goal);
+            if (found){
+                return true;
+            }
+            e.UndoAction(s, action[i]);
+            gcost--;
+            hcost = previousH;
+        }
+        return false;
     }
     
     // Returns the total nodes expanded by the last GetPath call.
@@ -54,31 +86,14 @@ public:
         return GetNodesExpanded;
     }
     
-    void cost_limited_dfs(int limit, state &s, state &goal) {
-        nodesExpanded++;
-        if (fCost(s) > limit) {
-            return;
-        }
-        if (s == goal) {
-            for (int i = 0; i < actions.size(); i++) {
-                e.ApplyAction(s, action[i]);
-                cost_limit_dfs(limit, s, goal);
-                e.UndoAction(s, action[i]);
-            }
-        }
-    }
 private:
     int nodesExpanded;
-    int fCost(state &s) {
-        return hCost(s) + gCost(s); //g + h
-    }
-    
-    int hCost (state &s) { //heuristic cost
-        return GetHeuristic(s);
-    }
-    
-    int gCost(state &s) { //current distance traveled
-        return nodesExpanded;
+    int nextBound;
+    int gcost;
+    int hcost;
+    int previousH;
+    int fCost() {
+        return hcost + gcost; //g + h
     }
 };
 
