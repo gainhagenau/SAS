@@ -43,7 +43,7 @@ public:
     }
     
     //depth first search with limited f cost
-    bool cost_limited_dfs(int limit, state &s, state &goal, environment &e, heuristic &h) {
+    bool cost_limited_dfs(int limit, state &s, state &goal, environment &e, heuristic &h) {        
         if (hcost == 0 && s == goal){ //goal found
             return true;
         }
@@ -88,7 +88,6 @@ private:
     int gcost;
     int hcost;
     int previousH;
-    vector<action> actions;
     int fCost() {
         return hcost + gcost; //g + h
     }
