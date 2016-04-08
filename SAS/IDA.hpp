@@ -71,7 +71,7 @@ public:
         
         for (int i = 0; i < actions.size(); i++) { //run through actions
             nodesExpanded++;
-            e.ApplyAction(s, action[i]); //apply action and change asociated g and h costs
+            e.ApplyAction(s, actions[i]); //apply action and change asociated g and h costs
             gcost++;
             previousH = hcost;
             hcost = GetHeuristic(s);
@@ -79,7 +79,7 @@ public:
             if (found){
                 return true;
             }
-            e.UndoAction(s, action[i]); //undo actions
+            e.UndoAction(s, actions[i]); //undo actions
             gcost--;
             hcost = previousH;
         }
