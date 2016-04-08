@@ -24,7 +24,8 @@ using namespace std;
 int main(int argc, const char * argv[]) {
 
     SlidingTile tile;   //sliding tile object
-    IDA<TileState, TileAction, SlidingTile> idast;  //ida on sliding tile
+    STmanhattan h;
+    IDA<TileState, TileAction, SlidingTile, STmanhattan> idast;  //ida on sliding tile
     TileState start = {14, 1, 9, 6, 4, 8, 12, 5, 7, 2, 3, 0, 10, 11, 13, 15};
     TileState goal = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
     
@@ -33,7 +34,7 @@ int main(int argc, const char * argv[]) {
         cout << start.state[i] << ", ";
     }
     cout << "\n";
-    bool found = idast.GetPath(tile, start, goal);
+    bool found = idast.GetPath(tile, start, goal, h);
     for (int i = 0; i < 16; i++) {
         cout << "Found: " << found << "\n" << start.state[i] << endl;
     }

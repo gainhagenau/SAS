@@ -22,15 +22,14 @@
 
 using namespace std;
 
-template <typename state, typename action, typename environment>
+template <typename state, typename action, typename environment, typename heuristic>
 class IDA {
 public:
     IDA(){};
     ~IDA(){};
     
     // GetPath returns if the goal was found
-    bool GetPath(environment &e, state &start, state &goal) {
-        STmanhattan h;
+    bool GetPath(environment &e, state &start, state &goal, heuristic &h) {
         gcost = 0; //g cost at start is 0
         hcost = h.GetHeuristic(start); //calculates the h cost from starting state
         int bound = fCost(); //max f cost allowed at current level of search
@@ -48,7 +47,7 @@ public:
     }
     
     //depth first search with limited f cost
-    bool cost_limited_dfs(int limit, state &s, state &goal, environment &e, STmanhattan h) {
+    bool cost_limited_dfs(int limit, state &s, state &goal, environment &e, heuristic &h) {
         if (hcost == 0 && s == goal){ //goal found
             return true;
         }
@@ -65,7 +64,7 @@ public:
             gcost++;
             previousH = hcost;
             hcost = h.GetHeuristic(s);
-            bool found = cost_limited_dfs(limit, s, goal, e, h); //run search on new state
+            bool found = cost_limited_dfs(limit, s, goal, e); //run search on new state
             if (found){
                 return true;
             }
