@@ -1,4 +1,9 @@
-//
+/**
+ Single Agent Search
+ University of Denver
+ 4/2016
+ Authored by Gain Hagenau and Ryan Aikman
+ **/
 //  IDA.hpp
 //  SAS
 //
@@ -47,26 +52,26 @@ public:
         bool solution = false;
         while (!solution) {
             nextBound = -1;
-            solution = cost_limit_dfs(bound, start, goal); //run search with limited bound
+            solution = cost_limit_dfs(bound, start, goal, e); //run search with limited bound
             bound = nextBound; //increase the search depth
         }
     }
     
-    
-    bool cost_limited_dfs(int limit, state &s, state &goal) {
-        if (hcost == 0 && s == goal){
+    //depth first search with limited f cost
+    bool cost_limited_dfs(int limit, state &s, state &goal, environment &e) {
+        if (hcost == 0 && s == goal){ //goal found
             return true;
         }
-        if (fCost() > limit) {
+        if (fCost() > limit) { //f cost too high, check for nextBound
             if (hcost != -1 && hcost < nextBound){
                 hcost = nextBound;
             }
             return false;
         }
         
-        for (int i = 0; i < actions.size(); i++) {
+        for (int i = 0; i < actions.size(); i++) { //run through actions
             nodesExpanded++;
-            e.ApplyAction(s, action[i]);
+            e.ApplyAction(s, action[i]); //apply action and change asociated g and h costs
             gcost++;
             previousH = hcost;
             hcost = GetHeuristic(s);
@@ -74,7 +79,7 @@ public:
             if (found){
                 return true;
             }
-            e.UndoAction(s, action[i]);
+            e.UndoAction(s, action[i]); //undo actions
             gcost--;
             hcost = previousH;
         }
@@ -92,6 +97,7 @@ private:
     int gcost;
     int hcost;
     int previousH;
+    vector<action> actions;
     int fCost() {
         return hcost + gcost; //g + h
     }
