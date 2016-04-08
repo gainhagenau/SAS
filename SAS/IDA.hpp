@@ -77,7 +77,7 @@ public:
     
     // Returns the total nodes expanded by the last GetPath call.
     uint64_t GetNodesExpanded() {
-        return GetNodesExpanded;
+        return nodesExpanded;
     }
     
 private:
