@@ -70,7 +70,7 @@ public:
             gcost++;
             previousH = hcost;
             hcost = GetHeuristic(s);
-            bool found = cost_limit_dfs(limit - 1, s, goal);
+            bool found = cost_limit_dfs(limit, s, goal);
             if (found){
                 return true;
             }
