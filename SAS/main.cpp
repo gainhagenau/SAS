@@ -27,6 +27,8 @@ int main(int argc, const char * argv[]) {
     IDA<TileState, TileAction, SlidingTile> idast;  //ida on sliding tile
     int start[16] = {14, 1, 9, 6, 4, 8, 12, 5, 7, 2, 3, 0, 10, 11, 13, 15};
     
+    count << "IDA* on"
+    
     /*
      0   1   2   3
      4   5   6   7
