@@ -45,6 +45,10 @@ public:
     uint64_t GetNodesExpanded() {
         return GetNodesExpanded;
     }
+    
+    void cost_limited_dfs(int limit, TileState &s) {
+        
+    }
 private:
     int nodesExpanded;
 };
