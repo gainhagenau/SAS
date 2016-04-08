@@ -64,7 +64,7 @@ public:
             gcost++;
             previousH = hcost;
             hcost = h.GetHeuristic(s);
-            bool found = cost_limited_dfs(limit, s, goal, e); //run search on new state
+            bool found = cost_limited_dfs(limit, s, goal, e, h); //run search on new state
             if (found){
                 return true;
             }
