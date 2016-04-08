@@ -38,25 +38,25 @@ public:
             nextBound = -1;
             solution = cost_limited_dfs(bound, start, goal, e, h); //run search with limited bound
             bound = nextBound; //increase the search depth
-            for (int i = 0; i < 16; i++) {
-                cout << start.state[i] << ", ";
-            }
-            cout << endl;
         }
         return true;
     }
     
     //depth first search with limited f cost
-    bool cost_limited_dfs(int limit, state &s, state &goal, environment &e, heuristic &h) {
+    bool cost_limited_dfs(int limit, state &s, state &goal, environment &e, heuristic &h) {        
         if (hcost == 0 && s == goal){ //goal found
             return true;
         }
         if (fCost() > limit) { //f cost too high, check for nextBound
-            if (hcost != -1 && hcost < nextBound){
-                hcost = nextBound;
+            if (nextBound == -1 || fCost() < nextBound){
+                nextBound = fCost();
             }
             return false;
         }
+        
+        
+        vector<action> actions;
+        e.GetActions(s, actions);
         
         for (int i = 0; i < actions.size(); i++) { //run through actions
             nodesExpanded++;
@@ -86,7 +86,6 @@ private:
     int gcost;
     int hcost;
     int previousH;
-    vector<action> actions;
     int fCost() {
         return hcost + gcost; //g + h
     }
