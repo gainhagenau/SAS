@@ -52,29 +52,29 @@ public:
         }
     }
     
-    
+    //depth first search with limited f cost
     bool cost_limited_dfs(int limit, state &s, state &goal) {
-        if (hcost == 0 && s == goal){
+        if (hcost == 0 && s == goal){ //goal found
             return true;
         }
-        if (fCost() > limit) {
+        if (fCost() > limit) { //f cost too high, check for nextBound
             if (hcost != -1 && hcost < nextBound){
                 hcost = nextBound;
             }
             return false;
         }
         
-        for (int i = 0; i < actions.size(); i++) {
+        for (int i = 0; i < actions.size(); i++) { //run through actions
             nodesExpanded++;
-            e.ApplyAction(s, action[i]);
+            e.ApplyAction(s, action[i]); //apply action and change asociated g and h costs
             gcost++;
             previousH = hcost;
             hcost = GetHeuristic(s);
-            bool found = cost_limit_dfs(limit - 1, s, goal);
+            bool found = cost_limit_dfs(limit, s, goal); //run search on new state
             if (found){
                 return true;
             }
-            e.UndoAction(s, action[i]);
+            e.UndoAction(s, action[i]); //undo actions
             gcost--;
             hcost = previousH;
         }
