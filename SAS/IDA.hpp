@@ -54,7 +54,7 @@ public:
         return GetNodesExpanded;
     }
     
-    void cost_limited_dfs(int limit, TileState &s, state &goal) {
+    void cost_limited_dfs(int limit, state &s, state &goal) {
         nodesExpanded++;
         if (fCost(s) > limit) {
             return;
