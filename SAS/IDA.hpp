@@ -48,28 +48,26 @@ public:
             return true;
         }
         if (fCost() > limit) { //f cost too high, check for nextBound
-            if (hcost == -1 || hcost < nextBound){
-                hcost = nextBound;
+            if (nextBound == -1 || fCost() < nextBound){
+                nextBound = fCost();
             }
             return false;
         }
+        
+        
+        vector<action> actions;
         e.GetActions(s, actions);
+        
         for (int i = 0; i < actions.size(); i++) { //run through actions
             nodesExpanded++;
             e.ApplyAction(s, actions[i]); //apply action and change asociated g and h costs
             gcost++;
             previousH = hcost;
             hcost = h.GetHeuristic(s);
-            
-            for (int i = 0; i < 16; i++) {
-                cout << s.state[i] << ", ";
-            }
-            
             bool found = cost_limited_dfs(limit, s, goal, e, h); //run search on new state
             if (found){
                 return true;
             }
-
             e.UndoAction(s, actions[i]); //undo actions
             gcost--;
             hcost = previousH;

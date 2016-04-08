@@ -29,15 +29,15 @@ int main(int argc, const char * argv[]) {
     TileState start = {14, 1, 9, 6, 4, 8, 12, 5, 7, 2, 3, 0, 10, 11, 13, 15};
     TileState goal = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
     /*
-    14 1  9  6
-    4  8  12 5
-    7  2  3  0
-    10 11 13 15
-    
-    up = 0
-    down = 1
-    left = 2
-    right = 3
+     14 1  9  6
+     4  8  12 5
+     7  2  3  0
+     10 11 13 15
+     
+     up = 0
+     down = 1
+     left = 2
+     right = 3
      */
     cout << "IDA* on Sliding Tile Puzzle\nStart State: ";
     for (int i = 0; i < 16; i++) {
