@@ -25,40 +25,30 @@ using namespace std;
 template <typename state, typename action, typename environment>
 class IDA {
 public:
-    /*
-     bound <- f-cost(start)
-     while(!solution)
-        nextbound = -1
-     cost_limit_dfs(bound)
-     */
-    /*
-     cost_limited_dfs(limit, state)
-        if f-cost(state) > limit
-            return
-        if state = goal
-            for each action a in state
-                apply a to state
-                cost_limited_dfs
-                undo a from state
-     */
     IDA(){};
     ~IDA(){};
     
     // GetPath returns if the goal was found
     bool GetPath(environment &e, state &start, state &goal) {
+        STmanhattan h;
         gcost = 0; //g cost at start is 0
-        hcost = GetHeuristic(start); //calculates the h cost from starting state
-        int bound = fCost(start); //max f cost allowed at current level of search
+        hcost = h.GetHeuristic(start); //calculates the h cost from starting state
+        int bound = fCost(); //max f cost allowed at current level of search
         bool solution = false;
         while (!solution) {
             nextBound = -1;
-            solution = cost_limit_dfs(bound, start, goal, e); //run search with limited bound
+            solution = cost_limited_dfs(bound, start, goal, e, h); //run search with limited bound
             bound = nextBound; //increase the search depth
+            for (int i = 0; i < 16; i++) {
+                cout << start.state[i] << ", ";
+            }
+            cout << endl;
         }
+        return true;
     }
     
     //depth first search with limited f cost
-    bool cost_limited_dfs(int limit, state &s, state &goal, environment &e) {
+    bool cost_limited_dfs(int limit, state &s, state &goal, environment &e, STmanhattan h) {
         if (hcost == 0 && s == goal){ //goal found
             return true;
         }
@@ -74,8 +64,8 @@ public:
             e.ApplyAction(s, actions[i]); //apply action and change asociated g and h costs
             gcost++;
             previousH = hcost;
-            hcost = GetHeuristic(s);
-            bool found = cost_limit_dfs(limit, s, goal); //run search on new state
+            hcost = h.GetHeuristic(s);
+            bool found = cost_limited_dfs(limit, s, goal, e, h); //run search on new state
             if (found){
                 return true;
             }
