@@ -1,4 +1,9 @@
-//
+/**
+ Single Agent Search
+ University of Denver
+ 4/2016
+ Authored by Gain Hagenau and Ryan Aikman
+ **/
 //  IDA.hpp
 //  SAS
 //
@@ -47,13 +52,13 @@ public:
         bool solution = false;
         while (!solution) {
             nextBound = -1;
-            solution = cost_limit_dfs(bound, start, goal); //run search with limited bound
+            solution = cost_limit_dfs(bound, start, goal, e); //run search with limited bound
             bound = nextBound; //increase the search depth
         }
     }
     
     //depth first search with limited f cost
-    bool cost_limited_dfs(int limit, state &s, state &goal) {
+    bool cost_limited_dfs(int limit, state &s, state &goal, environment &e) {
         if (hcost == 0 && s == goal){ //goal found
             return true;
         }
@@ -92,6 +97,7 @@ private:
     int gcost;
     int hcost;
     int previousH;
+    vector<action> actions;
     int fCost() {
         return hcost + gcost; //g + h
     }
