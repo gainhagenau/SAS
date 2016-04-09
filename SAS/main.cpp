@@ -29,7 +29,8 @@ int main(int argc, const char * argv[]) {
     TileState goal = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
     
     int instances[100][16] =
-    {{14, 13, 15, 7, 11, 12, 9, 5, 6, 0, 2, 1, 4, 8, 10, 3},
+    
+    {{14, 1, 9, 6, 4, 8, 12, 5, 7, 2, 3, 0, 10, 11, 13, 15},
         {13, 5, 4, 10, 9, 12, 8, 14, 2, 3, 7, 1, 0, 15, 11, 6},
         {14, 7, 8, 2, 13, 11, 10, 4, 9, 12, 5, 0, 3, 6, 1, 15},
         {5, 12, 10, 7, 15, 11, 14, 0, 8, 2, 1, 13, 3, 4, 9, 6},
@@ -40,7 +41,7 @@ int main(int argc, const char * argv[]) {
         {3, 14, 9, 11, 5, 4, 8, 2, 13, 12, 6, 7, 10, 1, 15, 0},
         {13, 11, 8, 9, 0, 15, 7, 10, 4, 3, 6, 14, 5, 12, 2, 1},
         {5, 9, 13, 14, 6, 3, 7, 12, 10, 8, 4, 0, 15, 2, 11, 1},
-        {14, 1, 9, 6, 4, 8, 12, 5, 7, 2, 3, 0, 10, 11, 13, 15},
+        {14, 13, 15, 7, 11, 12, 9, 5, 6, 0, 2, 1, 4, 8, 10, 3},
         {3, 6, 5, 2, 10, 0, 15, 14, 1, 4, 13, 12, 9, 8, 11, 7},
         {7, 6, 8, 1, 11, 5, 14, 10, 3, 4, 9, 13, 15, 2, 0, 12},
         {13, 11, 4, 12, 1, 8, 9, 15, 6, 5, 14, 2, 7, 3, 10, 0},
@@ -130,26 +131,23 @@ int main(int argc, const char * argv[]) {
         {7, 15, 4, 0, 10, 9, 2, 5, 12, 11, 13, 6, 1, 3, 14, 8},
         {11, 4, 0, 8, 6, 10, 5, 13, 12, 7, 14, 3, 1, 2, 9, 15}};
     
-    cout << "IDA* on Sliding Tile Puzzle\nStart State: ";
-
-    
-    
+    TileState toSolve;
+    cout << "IDA* on Sliding Tile Puzzle\n";
     for (int i = 0; i < 100; i++) {
-        TileState thisTile;
-        int temp[16];
-        temp = instances[i];
-        thisTile.state = instances[i];
+        for (int j = 0; j < 16; j++) {
+            toSolve.state[j] = instances[i][j];
+        }
+        cout << "Problem " << i + 1 << " of 100\nStart State: " << endl;
+        for (int s = 0; s < 16; s++) {
+            cout << toSolve.state[s] << ", ";
+        }
+        cout << "\n";
         const clock_t begin_time = clock();
-        bool found = idast.GetPath(tile, thisTile, goal, h);
+        idast.GetPath(tile, toSolve, goal, h);
         std::cout << "\nTime Elapsed: " << float( clock () - begin_time ) /  CLOCKS_PER_SEC << " seconds";
-    }
-    
+        cout << "\n\nNodes Expanded: " << idast.GetNodesExpanded() << endl;
 
-    cout << "\nFound: " << found << "\nEnd State:   ";
-    for (int i = 0; i < 16; i++) {
-        cout << start.state[i] << ", ";
     }
-    cout << "\n\nNodes Expanded: " << idast.GetNodesExpanded() << endl;
     
     /*
      0   1   2   3
