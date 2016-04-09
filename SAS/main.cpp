@@ -132,7 +132,7 @@ int main(int argc, const char * argv[]) {
         {11, 4, 0, 8, 6, 10, 5, 13, 12, 7, 14, 3, 1, 2, 9, 15}};
     
     TileState toSolve;
-    cout << "IDA* on Sliding Tile Puzzle\n";
+    cout << "IDA* on Sliding Tile Puzzle\n\n";
     for (int i = 0; i < 100; i++) {
         for (int j = 0; j < 16; j++) {
             toSolve.state[j] = instances[i][j];
@@ -144,8 +144,8 @@ int main(int argc, const char * argv[]) {
         cout << "\n";
         const clock_t begin_time = clock();
         idast.GetPath(tile, toSolve, goal, h);
-        std::cout << "\nTime Elapsed: " << (float( clock () - begin_time ) /  CLOCKS_PER_SEC) / 60 << " minutes";
-        cout << "\n\nNodes Expanded: " << idast.GetNodesExpanded() << endl;
+        std::cout << "Time Elapsed: " << (float( clock () - begin_time ) /  CLOCKS_PER_SEC) / 60 << " minutes";
+        cout << "\nNodes Expanded: " << idast.GetNodesExpanded() << "\n" << endl;
 
     }
     
