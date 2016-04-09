@@ -144,7 +144,7 @@ int main(int argc, const char * argv[]) {
         cout << "\n";
         const clock_t begin_time = clock();
         idast.GetPath(tile, toSolve, goal, h);
-        std::cout << "\nTime Elapsed: " << float( clock () - begin_time ) /  CLOCKS_PER_SEC << " seconds";
+        std::cout << "\nTime Elapsed: " << (float( clock () - begin_time ) /  CLOCKS_PER_SEC) / 60 << " minutes";
         cout << "\n\nNodes Expanded: " << idast.GetNodesExpanded() << endl;
 
     }
