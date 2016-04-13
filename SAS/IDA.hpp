@@ -54,10 +54,8 @@ public:
             return false;
         }
         
-        
         vector<action> actions;
         e.GetActions(s, actions);
-        
         for (int i = 0; i < actions.size(); i++) { //run through actions
             nodesExpanded++;
             e.ApplyAction(s, actions[i]); //apply action and change asociated g and h costs
@@ -89,6 +87,7 @@ private:
     int fCost() {
         return hcost + gcost; //g + h
     }
+    action lastAction;
 };
 
 #endif /* IDA_hpp */
