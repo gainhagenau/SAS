@@ -31,7 +31,7 @@ TileState PDB::unrank(int rank) {
         toReturn.state[j++] = digit;
         rank = nextRank;
     }
-    unRadex(toReturn);
+    unRadix(toReturn);
     return toReturn;
 }
 
