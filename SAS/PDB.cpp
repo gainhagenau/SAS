@@ -31,6 +31,7 @@ TileState PDB::unrank(int rank) {
         toReturn.state[j++] = digit;
         rank = nextRank;
     }
+    unRadex(toReturn);
     return toReturn;
 }
 
@@ -40,4 +41,15 @@ int PDB::factorial(int n) {
         factorial *= n--;
     }
     return factorial;
+}
+
+void PDB::unRadex(TileState &in) {
+    for (int i = 0; i < 4; i++) {
+        for (int j = (i+1); j < 4; j++) {
+            if (in.state[j] >= in.state[i]) {
+                in.state[j]++;
+            }
+        }
+    }
+
 }

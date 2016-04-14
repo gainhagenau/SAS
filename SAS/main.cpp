@@ -22,13 +22,7 @@
 using namespace std;
 
 int main(int argc, const char * argv[]) {
-    PDB data;
-    TileState t = data.unrank(18);
-    for (int i = 0; i < 16; i++) {
-        cout << t.state[i];
-    }
-    cout << "\n";
-    
+        
     /*SlidingTile tile;   //sliding tile object
     STmanhattan h;
     IDA<TileState, TileAction, SlidingTile, STmanhattan> idast;  //ida on sliding tile
