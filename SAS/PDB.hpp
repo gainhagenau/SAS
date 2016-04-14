@@ -11,4 +11,21 @@
 
 #include <stdio.h>
 
+#include "SlidingTile.hpp"
+
+#include <stdio.h>
+#include <cmath>
+
+class PDB {
+public:
+    PDB(){};
+    ~PDB(){};
+    int GetHeuristic(TileState state);
+private:
+    int rank(TileState state);
+    TileState unrank(int n);
+    void buildPDB();
+};
+
+
 #endif /* PDB_hpp */

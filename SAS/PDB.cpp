@@ -7,3 +7,19 @@
 //
 
 #include "PDB.hpp"
+
+int PDB::GetHeuristic(TileState state) {
+    
+}
+
+int PDB::rank(TileState state) {
+    
+}
+
+TileState PDB::unrank(int n) {
+    
+}
+
+void PDB::buildPDB() {
+    
+}
