@@ -43,7 +43,7 @@ int PDB::factorial(int n) {
     return factorial;
 }
 
-void PDB::unRadex(TileState &in) {
+void PDB::unRadix(TileState &in) {
     for (int i = 0; i < 4; i++) {
         for (int j = (i+1); j < 4; j++) {
             if (in.state[j] >= in.state[i]) {

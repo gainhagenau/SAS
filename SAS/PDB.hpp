@@ -22,7 +22,7 @@ public:
     int rank(TileState state);
     TileState unrank(int rank);
     int factorial(int n);
-    void unRadex(TileState &in);
+    void unRadix(TileState &in);
 };
 
 
