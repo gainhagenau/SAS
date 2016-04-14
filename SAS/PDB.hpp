@@ -22,9 +22,9 @@ public:
     ~PDB(){};
     int GetHeuristic(TileState state);
 private:
+    void buildPDB();
     int rank(TileState state);
     TileState unrank(int n);
-    void buildPDB();
 };
 
 

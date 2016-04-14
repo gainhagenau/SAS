@@ -12,14 +12,14 @@ int PDB::GetHeuristic(TileState state) {
     
 }
 
+void PDB::buildPDB() {
+    
+}
+
 int PDB::rank(TileState state) {
     
 }
 
 TileState PDB::unrank(int n) {
-    
-}
-
-void PDB::buildPDB() {
     
 }
