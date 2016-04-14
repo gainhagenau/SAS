@@ -17,13 +17,19 @@
 #include "IDA.hpp"
 #include "SlidingTile.hpp"
 #include "STmanhattan.hpp"
-
+#include "PDB.hpp"
 
 using namespace std;
 
 int main(int argc, const char * argv[]) {
+    PDB data;
+    TileState t = data.unrank(18);
+    for (int i = 0; i < 16; i++) {
+        cout << t.state[i];
+    }
+    cout << "\n";
     
-    SlidingTile tile;   //sliding tile object
+    /*SlidingTile tile;   //sliding tile object
     STmanhattan h;
     IDA<TileState, TileAction, SlidingTile, STmanhattan> idast;  //ida on sliding tile
     TileState goal = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
@@ -147,7 +153,7 @@ int main(int argc, const char * argv[]) {
         std::cout << "Time Elapsed: " << (float( clock () - begin_time ) /  CLOCKS_PER_SEC) / 60 << " minutes";
         cout << "\nNodes Expanded: " << idast.GetNodesExpanded() << "\n" << endl;
 
-    }
+    }*/
     
     /*
      0   1   2   3

@@ -8,18 +8,36 @@
 
 #include "PDB.hpp"
 
-int PDB::GetHeuristic(TileState state) {
+int GetHeuristic(TileState state) {
+    return 0;
+}
+
+void buildPDB() {
     
 }
 
-void PDB::buildPDB() {
-    
+int rank(TileState state) {
+    return 0;
 }
 
-int PDB::rank(TileState state) {
-    
+TileState PDB::unrank(int rank) {
+    int nextRank;
+    int digit;
+    TileState toReturn;
+    int j = 0;
+    for (int i = 14; i >= 0; i--) {
+        nextRank = (rank % factorial(i));
+        digit = (rank / factorial(i));
+        toReturn.state[j++] = digit;
+        rank = nextRank;
+    }
+    return toReturn;
 }
 
-TileState PDB::unrank(int n) {
-    
+int PDB::factorial(int n) {
+    int factorial = 1;
+    while (n != 0) {
+        factorial *= n--;
+    }
+    return factorial;
 }
