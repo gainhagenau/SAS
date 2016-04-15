@@ -8,16 +8,21 @@
 
 #include "PDB.hpp"
 
-int GetHeuristic(TileState state) {
+int PDB::GetHeuristic(TileState state) {
     return 0;
 }
 
-void buildPDB() {
+void PDB::buildPDB() {
     
 }
 
-int rank(TileState state) {
-    return 0;
+int PDB::rank(TileState state) {
+    radix(state);
+    int toReturn = 0;
+    for (int i = 0; i < 16; i++) {
+        toReturn += (state.state[i] * factorial(i));
+    }
+    return toReturn;
 }
 
 TileState PDB::unrank(int rank) {
@@ -25,7 +30,7 @@ TileState PDB::unrank(int rank) {
     int digit;
     TileState toReturn;
     int j = 0;
-    for (int i = 14; i >= 0; i--) {
+    for (int i = 15; i >= 0; i--) {
         nextRank = (rank % factorial(i));
         digit = (rank / factorial(i));
         toReturn.state[j++] = digit;
@@ -44,12 +49,22 @@ int PDB::factorial(int n) {
 }
 
 void PDB::unRadix(TileState &in) {
-    for (int i = 0; i < 4; i++) {
-        for (int j = (i+1); j < 4; j++) {
+    for (int i = 0; i < 16; i++) {
+        for (int j = (i+1); j < 16; j++) {
             if (in.state[j] >= in.state[i]) {
                 in.state[j]++;
             }
         }
     }
 
+}
+
+void PDB::radix(TileState &in) {
+    for (int i = 0; i < 16; i++) {
+        for (int j = (i+1); j < 16; j++) {
+            if (in.state[j] <= in.state[i]) {
+                in.state[j]--;
+            }
+        }
+    }
 }
