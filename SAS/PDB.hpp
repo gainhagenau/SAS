@@ -21,7 +21,7 @@ public:
     void buildPDB();
     int rank(TileState state);
     TileState unrank(int rank);
-    int factorial(int n);
+    long factorial(long n);
     void unRadix(TileState &in);
     void radix(TileState &in);
 };
