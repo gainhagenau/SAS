@@ -26,9 +26,9 @@ int main(int argc, const char * argv[]) {
     TileState t;
     TileState w;
     for (int i = 0; i < 16; i++) {
-        t.state[i] = i;
+        t.state[i] = i; //load with 0, 1, 2,.... , 15
     }
-    w = p.unrank(p.rank(t));
+    w = p.unrank(p.rank(t)); //rank then unrank, 0, 1, 2,.... , 15 prints it works
     for (int i = 0; i < 16; i++) {
         cout << w.state[i]; 
     }

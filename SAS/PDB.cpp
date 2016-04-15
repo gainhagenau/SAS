@@ -62,7 +62,7 @@ void PDB::unRadix(TileState &in) {
 void PDB::radix(TileState &in) {
     for (int i = 0; i < 16; i++) {
         for (int j = (i+1); j < 16; j++) {
-            if (in.state[j] <= in.state[i]) {
+            if (in.state[j] >= in.state[i]) {
                 in.state[j]--;
             }
         }
