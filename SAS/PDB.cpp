@@ -17,9 +17,9 @@ void PDB::buildPDB() {
 }
 
 int PDB::rank(TileState state) {
-    radix(state);
+    radix(state);   //radix the state
     int toReturn = 0;
-    for (int i = 0; i < 16; i++) {
+    for (int i = 0; i < 16; i++) {  //starting at first tile and moving towards last
         toReturn += (state.state[i] * factorial(i));
     }
     return toReturn;
@@ -30,20 +30,20 @@ TileState PDB::unrank(int rank) {
     int digit;
     TileState toReturn;
     int j = 0;
-    for (long i = 15; i >= 0; i--) {
+    for (long i = 15; i >= 0; i--) {    //starting at the last tile, moving to the first
         nextRank = (rank % factorial(i));
         digit = (rank / factorial(i));
         toReturn.state[j++] = digit;
         rank = nextRank;
     }
-    unRadix(toReturn);
+    unRadix(toReturn);  //above will return the number in mixed radix, call unRadix to get regular
     return toReturn;
 }
 
 long PDB::factorial(long n) {
     long factorial = 1;
     if (n <= 16 ) {
-        switch (n) {
+        switch (n) {    //store the first 16 for quick reference
             case 0:
                 return 1;
             case 1:
@@ -79,31 +79,31 @@ long PDB::factorial(long n) {
             case 16:
                 return 20922789890000;
         }
-    } else {
+    } else {    //if not within the stored values, calculate
         factorial = 1;
-        while (n != 0) {
+        while (n != 0) {    //take n, multiply by what is there and decrement n until it = 0
             factorial *= n--;
         }
     }
     return factorial;
 }
 
-void PDB::unRadix(TileState &in) {
-    for (int i = 0; i < 16; i++) {
+void PDB::unRadix(TileState &in) {  //convert an array back to regular notation
+    for (int i = 0; i < 16; i++) {  //compare each digit to every digit that follows it
         for (int j = (i+1); j < 16; j++) {
-            if (in.state[j] >= in.state[i]) {
-                in.state[j]++;
+            if (in.state[j] >= in.state[i]) {   //if one of the following digits is greater than the current
+                in.state[j]++;  //increment
             }
         }
     }
     
 }
 
-void PDB::radix(TileState &in) {
-    for (int i = 0; i < 16; i++) {
+void PDB::radix(TileState &in) {    //get the mixed radix form of a number
+    for (int i = 0; i < 16; i++) {  //compare each digit to every digit that follows it
         for (int j = (i+1); j < 16; j++) {
-            if (in.state[j] >= in.state[i]) {
-                in.state[j]--;
+            if (in.state[j] >= in.state[i]) {   //if one of the following digits is greater than the current
+                in.state[j]--;  //decrement
             }
         }
     }
