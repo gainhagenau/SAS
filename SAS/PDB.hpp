@@ -12,18 +12,21 @@
 #include <stdio.h>
 #include <iostream>
 #include "SlidingTile.hpp"
+#include "vector"
 
 class PDB {
 public:
-    PDB(){};
+    PDB(vector<vector<int*>> patterns);
     int GetHeuristic(TileState state);
-//private:
-    void buildPDB();
+private:
+    void buildPDB(vector<int*> pattern, vector<int*> db);
     int rank(TileState state);
     TileState unrank(int rank);
     long factorial(long n);
     void unRadix(TileState &in);
     void radix(TileState &in);
+    
+    vector<int*> db; //database arrays
 };
 
 
