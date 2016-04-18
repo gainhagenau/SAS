@@ -157,7 +157,7 @@ int main(int argc, const char * argv[]) {
     
     
     
-    //HOMEWORK 1
+     /*HOMEWORK 1
      
      //Creating Grid based environment
      GridEnvironment grid(10);
@@ -219,7 +219,7 @@ int main(int argc, const char * argv[]) {
      cout << "\n";
      cout << "\n";
      
-     //HOMEWORK 1 END
+     HOMEWORK 1 END*/
     
     
     return 0;
