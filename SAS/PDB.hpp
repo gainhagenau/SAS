@@ -17,7 +17,7 @@ class PDB {
 public:
     PDB(){};
     int GetHeuristic(TileState state);
-//private:
+private:
     void buildPDB();
     int rank(TileState state);
     TileState unrank(int rank);
