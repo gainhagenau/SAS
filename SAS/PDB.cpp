@@ -8,13 +8,84 @@
 
 #include "PDB.hpp"
 
+//Takes a vector of vectors that will be built into pattern databases for the silding tile puzzel
+PDB::PDB(vector<vector<int*>> patterns){
+    
+    for (int i = 0; i < patterns.size(); i++){
+        buildPDB(patterns[i], db);
+    }
+}
+
+//constructs the pattern database array and then pushes it to the back of the db vector
+void PDB::buildPDB(vector<int*> pattern, vector<int*> db) {
+    
+    long size = factorial(16) / factorial(16 - pattern.size());
+    
+    int *array = new int[size]; //creates array and sets all values to -1
+    for (int i = 0; i < size; i++){
+        array[i] = -1;
+    }
+    
+    //build and place the starting state of the pattern DB in the array
+    TileState state = buildPatternState(pattern);
+    int index = rank(state);
+    array[index] = 0;
+    
+    /*
+     Does a BFS of the state space. The open states will be states with values equal to the current depth. 
+     The closed list contains all states with depths between 0 and the current depth. Unseen states will 
+     have a reserved depth of -1.
+    */
+    bool done = false;
+    int depth = 0;
+    vector<TileAction> actions;
+    TileState child;
+    SlidingTile st;
+    while (!done){
+        done = true;
+        for (int i = 0; i < size; i++){
+            if (array[i] == depth){ //expand node
+                state = unrank(i); //get state
+                st.GetActions(state, actions);
+                for (int j = 0; j < actions.size(); j++){ //apply actions
+                    st.ApplyAction(child, actions[j]);
+                    index = rank(child);
+                    if (array[index] == -1){
+                        done = false; //not done, another node to expand at next depth
+                        array[index] = depth + 1; //add node at the next depth
+                    }
+                }
+            }
+        }
+        depth++;
+    }
+    
+    //add the populated pattern DB to the vector of DBs
+    db.push_back(array);
+}
+
+//builds a starting state for a pattern database
+//blank tiles will be represented as -1
+TileState buildPatternState(vector<int*> pattern){
+    TileState ts;
+    for (int i = 0; i < 16; i++){
+        if (std::find(pattern.begin(), pattern.end(), i) != pattern.end()){
+            ts.state[i] = i;
+        }
+        else{
+            ts.state[i] = -1;
+        }
+    }
+    return ts;
+}
+
+
+
+//gets the heuristic for the
 int PDB::GetHeuristic(TileState state) {
     return 0;
 }
 
-void PDB::buildPDB() {
-    
-}
 
 int PDB::rank(TileState state) {
     radix(state);   //radix the state
