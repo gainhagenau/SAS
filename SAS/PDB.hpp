@@ -11,8 +11,10 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <algorithm>
 #include "SlidingTile.hpp"
 #include "vector"
+
 
 class PDB {
 public:
@@ -25,6 +27,7 @@ private:
     long factorial(long n);
     void unRadix(TileState &in);
     void radix(TileState &in);
+    TileState buildPatternState(vector<int*> pattern);
     
     vector<int*> db; //database arrays
 };
