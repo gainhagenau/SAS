@@ -9,15 +9,15 @@
 #include "PDB.hpp"
 
 //Takes a vector of vectors that will be built into pattern databases for the silding tile puzzel
-PDB::PDB(vector<vector<int*>> patterns){
+PDB::PDB(vector<vector<int>> patterns){
     
     for (int i = 0; i < patterns.size(); i++){
-        buildPDB(patterns[i], db);
+        buildPDB(patterns[i]);
     }
 }
 
 //constructs the pattern database array and then pushes it to the back of the db vector
-void PDB::buildPDB(vector<int*> pattern, vector<int*> db) {
+void PDB::buildPDB(vector<int> pattern) {
     
     long size = factorial(16) / factorial(16 - pattern.size());
     
@@ -66,7 +66,7 @@ void PDB::buildPDB(vector<int*> pattern, vector<int*> db) {
 
 //builds a starting state for a pattern database
 //blank tiles will be represented as -1
-TileState buildPatternState(vector<int*> pattern){
+TileState buildPatternState(vector<int> pattern){
     TileState ts;
     for (int i = 0; i < 16; i++){
         if (std::find(pattern.begin(), pattern.end(), i) != pattern.end()){
