@@ -26,8 +26,8 @@ private:
     int rank(TileState state, vector<int> pattern);
     TileState unrank(int rank, vector<int> pattern);
     long factorial(long n);
-    void unRadix(TileState &in);
-    void radix(vector<int> &in);
+    //void unRadix(TileState &in);
+    //void radix(vector<int> &in);
     TileState buildPatternState(vector<int> pattern);
     
     

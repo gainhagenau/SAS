@@ -140,8 +140,8 @@ TileState PDB::unrank(int rank, vector<int> pattern) {
     //un-permutate
     TileState toReturn;
     for (int i = 0; i < 16; i++) {
-        for (int j = 0; j < pattern.size(); j++) {
-            if (loc[j] == i) {
+        for (int j = 0; j < pattern.size(); j++) {  //Repopulate the tile state
+            if (loc[j] == i) {  //if the index i = the value in loc add it. Else add -1
                 toReturn.state[i] = loc[j];
             } else {
                 toReturn.state[i] = -1;
@@ -200,7 +200,7 @@ long PDB::factorial(long n) {
     return factorial;
 }
 
-void PDB::unRadix(TileState &in) {  //convert an array back to regular notation
+/*void PDB::unRadix(TileState &in) {  //convert an array back to regular notation
     for (int i = 0; i < 16; i++) {  //compare each digit to every digit that follows it
         for (int j = (i+1); j < 16; j++) {
             if (in.state[j] >= in.state[i]) {   //if one of the following digits is greater than the current
@@ -219,4 +219,4 @@ void PDB::radix(vector<int> &in) {    //get the mixed radix form of a number
             }
         }
     }
-}
+}*/
