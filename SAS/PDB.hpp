@@ -18,18 +18,19 @@
 
 class PDB {
 public:
-    PDB(vector<vector<int*>> patterns);
+    PDB(vector<vector<int>> patterns);
     int GetHeuristic(TileState state);
+    vector<int*> db; //database arrays
 private:
-    void buildPDB(vector<int*> pattern, vector<int*> db);
+    void buildPDB(vector<int> pattern);
     int rank(TileState state);
     TileState unrank(int rank);
     long factorial(long n);
     void unRadix(TileState &in);
     void radix(TileState &in);
-    TileState buildPatternState(vector<int*> pattern);
+    TileState buildPatternState(vector<int> pattern);
     
-    vector<int*> db; //database arrays
+    
 };
 
 
