@@ -32,10 +32,10 @@ void PDB::buildPDB(vector<int> pattern) {
     array[index] = 0;
     
     /*
-     Does a BFS of the state space. The open states will be states with values equal to the current depth. 
-     The closed list contains all states with depths between 0 and the current depth. Unseen states will 
+     Does a BFS of the state space. The open states will be states with values equal to the current depth.
+     The closed list contains all states with depths between 0 and the current depth. Unseen states will
      have a reserved depth of -1.
-    */
+     */
     bool done = false;
     int depth = 0;
     vector<TileAction> actions;
@@ -66,7 +66,7 @@ void PDB::buildPDB(vector<int> pattern) {
 
 //builds a starting state for a pattern database
 //blank tiles will be represented as -1
-TileState buildPatternState(vector<int> pattern){
+TileState PDB::buildPatternState(vector<int> pattern){
     TileState ts;
     for (int i = 0; i < 16; i++){
         if (std::find(pattern.begin(), pattern.end(), i) != pattern.end()){
@@ -87,27 +87,68 @@ int PDB::GetHeuristic(TileState state) {
 }
 
 
-int PDB::rank(TileState state) {
-    radix(state);   //radix the state
-    int toReturn = 0;
-    for (int i = 0; i < 16; i++) {  //starting at first tile and moving towards last
-        toReturn += (state.state[i] * factorial(i));
+int PDB::rank(TileState state, vector<int> pattern) {
+    //create permutation of the pattern
+    int loc[pattern.size()];
+    for (int i = 0; i < 16; i++) {
+        if (state.state[i] != -1) {
+            for (int j = 0; j < pattern.size(); j++) {
+                loc[j] = i;
+            }
+        }
     }
+    
+    //radix the permutation
+    for (int i = 0; i < pattern.size(); i++) {  //compare each digit to every digit that follows it
+        for (int j = (i+1); j < pattern.size(); j++) {
+            if (loc[j] >= loc[i]) {   //if one of the following digits is greater than the current
+                loc[j]--;  //decrement
+            }
+        }
+    }
+    
+    //rank the radix notation to return an int
+    int toReturn = 0;
+    for (int i = 0; i < pattern.size(); i++) {  //starting at first tile and moving towards last
+        toReturn += (loc[i] * factorial(i));
+    }
+    cout << toReturn << endl;
     return toReturn;
 }
 
-TileState PDB::unrank(int rank) {
+TileState PDB::unrank(int rank, vector<int> pattern) {
     int nextRank;
     int digit;
-    TileState toReturn;
+    int loc[pattern.size()];
     int j = 0;
-    for (long i = 15; i >= 0; i--) {    //starting at the last tile, moving to the first
+    for (long i = (pattern.size() - 1); i >= 0; i--) {    //starting at the last tile, moving to the first
         nextRank = (rank % factorial(i));
         digit = (rank / factorial(i));
-        toReturn.state[j++] = digit;
+        loc[j++] = digit;
         rank = nextRank;
     }
-    unRadix(toReturn);  //above will return the number in mixed radix, call unRadix to get regular
+    
+    //un-radix
+    for (int i = 0; i < pattern.size(); i++) {  //compare each digit to every digit that follows it
+        for (int j = (i+1); j < pattern.size(); j++) {
+            if (loc[j] >= loc[i]) {   //if one of the following digits is greater than the current
+                loc[j]++;  //increment
+            }
+        }
+    }
+    
+    //un-permutate
+    TileState toReturn;
+    for (int i = 0; i < 16; i++) {
+        for (int j = 0; j < pattern.size(); j++) {
+            if (loc[j] == i) {
+                toReturn.state[i] = loc[j];
+            } else {
+                toReturn.state[i] = -1;
+            }
+        }
+    }
+    
     return toReturn;
 }
 
@@ -170,11 +211,11 @@ void PDB::unRadix(TileState &in) {  //convert an array back to regular notation
     
 }
 
-void PDB::radix(TileState &in) {    //get the mixed radix form of a number
-    for (int i = 0; i < 16; i++) {  //compare each digit to every digit that follows it
-        for (int j = (i+1); j < 16; j++) {
-            if (in.state[j] >= in.state[i]) {   //if one of the following digits is greater than the current
-                in.state[j]--;  //decrement
+void PDB::radix(vector<int> &in) {    //get the mixed radix form of a number
+    for (int i = 0; i < in.size(); i++) {  //compare each digit to every digit that follows it
+        for (int j = (i+1); j < in.size(); j++) {
+            if (in[j] >= in[i]) {   //if one of the following digits is greater than the current
+                in[j]--;  //decrement
             }
         }
     }

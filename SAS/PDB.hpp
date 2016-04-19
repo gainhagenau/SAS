@@ -13,7 +13,7 @@
 #include <iostream>
 #include <algorithm>
 #include "SlidingTile.hpp"
-#include "vector"
+#include <vector>
 
 
 class PDB {
@@ -23,11 +23,11 @@ public:
     vector<int*> db; //database arrays
 private:
     void buildPDB(vector<int> pattern);
-    int rank(TileState state);
-    TileState unrank(int rank);
+    int rank(TileState state, vector<int> pattern);
+    TileState unrank(int rank, vector<int> pattern);
     long factorial(long n);
     void unRadix(TileState &in);
-    void radix(TileState &in);
+    void radix(vector<int> &in);
     TileState buildPatternState(vector<int> pattern);
     
     
