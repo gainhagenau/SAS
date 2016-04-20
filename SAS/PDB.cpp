@@ -93,7 +93,9 @@ int PDB::rank(TileState state, vector<int> pattern) {
     for (int i = 0; i < 16; i++) {
         if (state.state[i] != -1) {
             for (int j = 0; j < pattern.size(); j++) {
-                loc[j] = i;
+                if (pattern[j] == state.state[i]) {
+                    loc[j] = i;
+                }
             }
         }
     }
@@ -207,10 +209,10 @@ long PDB::factorial(long n) {
             }
         }
     }
-    
-}
-
-void PDB::radix(vector<int> &in) {    //get the mixed radix form of a number
+ 
+ }
+ 
+ void PDB::radix(vector<int> &in) {    //get the mixed radix form of a number
     for (int i = 0; i < in.size(); i++) {  //compare each digit to every digit that follows it
         for (int j = (i+1); j < in.size(); j++) {
             if (in[j] >= in[i]) {   //if one of the following digits is greater than the current
@@ -218,4 +220,4 @@ void PDB::radix(vector<int> &in) {    //get the mixed radix form of a number
             }
         }
     }
-}*/
+ }*/
