@@ -10,10 +10,11 @@
 
 //Takes a vector of vectors that will be built into pattern databases for the silding tile puzzel
 PDB::PDB(vector<vector<int>> patterns){
-    
+    /*
     for (int i = 0; i < patterns.size(); i++){
         buildPDB(patterns[i]);
     }
+     */
 }
 
 //constructs the pattern database array and then pushes it to the back of the db vector

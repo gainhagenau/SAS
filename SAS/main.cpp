@@ -27,9 +27,22 @@ int main(int argc, const char * argv[]) {
     pattern.push_back(0);
     pattern.push_back(1);
     pattern.push_back(2);
+    
     vector<vector<int>> p;
     p.push_back(pattern);
     PDB pdb = PDB(p);
+    
+    TileState ts;
+    for (int i = 0; i < 16; i++){
+        ts.state[i] = -1;
+    }
+    ts.state[13] = 0;
+    ts.state[14] = 1;
+    ts.state[15] = 2;
+    
+    //pattern 0,1,2
+    int answer = pdb.rank(ts, pattern);
+    cout << answer << "\n";
     
     /*SlidingTile tile;   //sliding tile object
     STmanhattan h;
