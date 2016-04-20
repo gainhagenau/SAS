@@ -28,7 +28,7 @@ void PDB::buildPDB(vector<int> pattern) {
     
     //build and place the starting state of the pattern DB in the array
     TileState state = buildPatternState(pattern);
-    int index = rank(state);
+    int index = rank(state, pattern);
     array[index] = 0;
     
     /*
@@ -45,11 +45,11 @@ void PDB::buildPDB(vector<int> pattern) {
         done = true;
         for (int i = 0; i < size; i++){
             if (array[i] == depth){ //expand node
-                state = unrank(i); //get state
+                state = unrank(i, pattern); //get state
                 st.GetActions(state, actions);
                 for (int j = 0; j < actions.size(); j++){ //apply actions
                     st.ApplyAction(child, actions[j]);
-                    index = rank(child);
+                    index = rank(child, pattern);
                     if (array[index] == -1){
                         done = false; //not done, another node to expand at next depth
                         array[index] = depth + 1; //add node at the next depth
@@ -112,7 +112,6 @@ int PDB::rank(TileState state, vector<int> pattern) {
     for (int i = 0; i < pattern.size(); i++) {  //starting at first tile and moving towards last
         toReturn += (loc[i] * factorial(i));
     }
-    cout << toReturn << endl;
     return toReturn;
 }
 

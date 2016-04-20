@@ -30,7 +30,6 @@ int main(int argc, const char * argv[]) {
     vector<vector<int>> p;
     p.push_back(pattern);
     PDB pdb = PDB(p);
-
     
     /*SlidingTile tile;   //sliding tile object
     STmanhattan h;
