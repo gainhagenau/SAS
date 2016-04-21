@@ -10,11 +10,9 @@
 
 //Takes a vector of vectors that will be built into pattern databases for the silding tile puzzel
 PDB::PDB(vector<vector<int>> patterns){
-    /*
     for (int i = 0; i < patterns.size(); i++){
         buildPDB(patterns[i]);
     }
-     */
 }
 
 //constructs the pattern database array and then pushes it to the back of the db vector
@@ -91,7 +89,7 @@ int PDB::GetHeuristic(TileState state) {
 
 long long PDB::rank(TileState s, vector<int> pattern) {
     vector<int> locations(pattern.size());  //hold the locations of tiles to be ranked
-
+    
     // load an array with the locations of the tiles in the pattern
     for (int i = 0; i < 16; i++) {
         if (s.state[i] != -1) {
