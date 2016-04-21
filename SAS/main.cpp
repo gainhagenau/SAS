@@ -22,8 +22,19 @@
 using namespace std;
 
 int main(int argc, const char * argv[]) {
-
-
+    vector<int> pattern;
+    pattern.push_back(14);
+    pattern.push_back(1);
+    pattern.push_back(2);
+    pattern.push_back(3);
+    pattern.push_back(5);
+    
+    vector<vector<int>> p;
+    p.push_back(pattern);
+    PDB pdb = PDB(p);
+    
+    
+    
     /*SlidingTile tile;   //sliding tile object
     STmanhattan h;
     IDA<TileState, TileAction, SlidingTile, STmanhattan> idast;  //ida on sliding tile
