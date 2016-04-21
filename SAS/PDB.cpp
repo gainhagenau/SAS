@@ -9,7 +9,11 @@
 #include "PDB.hpp"
 
 //Takes a vector of vectors that will be built into pattern databases for the silding tile puzzel
-PDB::PDB(vector<vector<int>> patterns){
+// m = include the manhattan distance in the calculation of heuristic or not
+PDB::PDB(vector<vector<int>> p, bool m){
+    patterns = p;
+    manhattan = m;
+
     for (int i = 0; i < patterns.size(); i++){
         buildPDB(patterns[i]);
     }
@@ -30,7 +34,7 @@ void PDB::buildPDB(vector<int> pattern) {
     }
     cout << endl;
     
-    long long size = factorial(16) / factorial(16 - pattern.size());
+    long size = factorial(16) / factorial(16 - pattern.size());
     
     int *array = new int[size]; //creates array and sets all values to -1
     for (long long i = 0; i < size; i++){
@@ -39,7 +43,7 @@ void PDB::buildPDB(vector<int> pattern) {
     
     //build and place the starting state of the pattern DB in the array
     TileState state = buildPatternState(pattern);
-    long long index = rank(state, pattern);
+    long index = rank(state, pattern);
     array[index] = 0;
     
     /*
@@ -56,7 +60,7 @@ void PDB::buildPDB(vector<int> pattern) {
     while (!done){
         done = true;
         int n = 0;
-        for (long long i = 0; i < size; i++){
+        for (long i = 0; i < size; i++){
             if (array[i] == depth){ //expand node
                 state = unrank(i, pattern); //get state
                 st.GetActions(state, actions);
@@ -102,12 +106,25 @@ TileState PDB::buildPatternState(vector<int> pattern){
 
 //gets the heuristic for the
 int PDB::GetHeuristic(TileState state) {
-    return 0;
+    int heuristic = 0;
+    for (int i = 0; i < db.size(); i++){
+        long r = rank(state, patterns[i]);
+        if ((db[i])[r] > heuristic){
+            heuristic = (db[i])[r];
+        }
+    }
+    if (manhattan){
+        int mh = man.GetHeuristic(state);
+        if (mh > heuristic){
+            heuristic = mh;
+        }
+    }
+    return heuristic;
 }
 
 
 
-long long PDB::rank(TileState s, vector<int> pattern) {
+long PDB::rank(TileState s, vector<int> pattern) {
     vector<int> locations(pattern.size());  //hold the locations of tiles to be ranked
     
     // load an array with the locations of the tiles in the pattern
