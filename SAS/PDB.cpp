@@ -123,15 +123,14 @@ long long PDB::rank(TileState s, vector<int> pattern) {
 }
 
 TileState PDB::unrank(long long rank, vector<int> pattern) {
-    int count = 16; //total
-    long long hashVal = rank;   //save ranked value
     vector<int> digit(pattern.size());
     
     // unrank locations of the pattern tiles
-    int numLeft = count - (int)pattern.size() + 1;
+    int numLeft = 17 - (int)pattern.size();
+    
     for (int i = (int)pattern.size() - 1; i >= 0; i--) {    //starting at last tile, move forward
-        digit[i] = hashVal % numLeft;
-        hashVal /= numLeft;
+        digit[i] = rank % numLeft;
+        rank /= numLeft;
         numLeft++;
         for (int j = i+1; j < pattern.size(); j++) {    //if farther digit >, increment
             if (digit[j] >= digit[i]) {
@@ -141,13 +140,13 @@ TileState PDB::unrank(long long rank, vector<int> pattern) {
     }
     
     TileState toReturn; // return puzzle
-    //load return puzzle with all -1
+    //load return puzzle with all -1 (stars)
     for (int i = 0; i < 16; i++) {
         toReturn.state[i] = -1;
     }
     //load the values in return that were in the pattern
     for (int i = 0; i < pattern.size(); i++) {
-        toReturn.state[digit[i]] = i;
+        toReturn.state[digit[i]] = pattern[i];
     }
     return toReturn;
 }
