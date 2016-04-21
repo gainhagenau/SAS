@@ -40,22 +40,28 @@ void PDB::buildPDB(vector<int> pattern) {
     vector<TileAction> actions;
     TileState child;
     SlidingTile st;
+    long total = 1;
     while (!done){
         done = true;
+        int n = 0;
         for (int i = 0; i < size; i++){
             if (array[i] == depth){ //expand node
                 state = unrank(i, pattern); //get state
                 st.GetActions(state, actions);
                 for (int j = 0; j < actions.size(); j++){ //apply actions
+                    child = state;
                     st.ApplyAction(child, actions[j]);
                     index = rank(child, pattern);
                     if (array[index] == -1){
                         done = false; //not done, another node to expand at next depth
                         array[index] = depth + 1; //add node at the next depth
+                        n++;
                     }
                 }
             }
         }
+        total += n;
+        cout << "Depth: " << depth << "   New: " << n << "     Completed: " << total << " of " << size << endl;
         depth++;
     }
     
