@@ -88,74 +88,72 @@ int PDB::GetHeuristic(TileState state) {
 }
 
 
-int PDB::rank(TileState state, vector<int> pattern) {
-    //create permutation of the pattern
-    int loc[pattern.size()];
+
+long long PDB::rank(TileState s, vector<int> pattern) {
+    vector<int> locations(pattern.size());  //hold the locations of tiles to be ranked
+
+    // load an array with the locations of the tiles in the pattern
     for (int i = 0; i < 16; i++) {
-        if (state.state[i] != -1) {
+        if (s.state[i] != -1) {
             for (int j = 0; j < pattern.size(); j++) {
-                if (pattern[j] == state.state[i]) {
-                    loc[j] = i;
+                if (pattern[j] == s.state[i]) {
+                    locations[j] = i;
                 }
             }
         }
     }
     
-    //radix the permutation
-    for (int i = 0; i < pattern.size(); i++) {  //compare each digit to every digit that follows it
-        for (int j = (i+1); j < pattern.size(); j++) {
-            if (loc[j] >= loc[i]) {   //if one of the following digits is greater than the current
-                loc[j]--;  //decrement
+    long long toReturn = 0; //ranked number that will get returned
+    int numLeft = 16;   //top of the fraction when calculating factorial
+    int possibilities = 16 - (int)pattern.size();   //bottom of the fraction when calculating factorial
+    
+    //compute lexicographical ranking of locations of pattern tiles
+    for (int i = 0; i < pattern.size(); i++) {
+        toReturn += locations[i] * (factorial(numLeft-1)/factorial(possibilities));
+        numLeft--;
+        // decrement the values that are less than the current val
+        for (int j = i; j < pattern.size(); j++) {
+            if (locations[j] > locations[i]) {
+                locations[j]--;
             }
         }
     }
     
-    //rank the radix notation to return an int
-    int toReturn = 0;
-    for (int i = 0; i < pattern.size(); i++) {  //starting at first tile and moving towards last
-        toReturn += (loc[i] * factorial(i));
-    }
     return toReturn;
 }
 
-TileState PDB::unrank(int rank, vector<int> pattern) {
-    int nextRank;
-    int digit;
-    int loc[pattern.size()];
-    int j = 0;
-    for (long i = (pattern.size() - 1); i >= 0; i--) {    //starting at the last tile, moving to the first
-        nextRank = (rank % factorial(i));
-        digit = (rank / factorial(i));
-        loc[j++] = digit;
-        rank = nextRank;
-    }
+TileState PDB::unrank(long long rank, vector<int> pattern) {
+    int count = 16; //total
+    long long hashVal = rank;   //save ranked value
+    vector<int> digit(pattern.size());
     
-    //un-radix
-    for (int i = 0; i < pattern.size(); i++) {  //compare each digit to every digit that follows it
-        for (int j = (i+1); j < pattern.size(); j++) {
-            if (loc[j] >= loc[i]) {   //if one of the following digits is greater than the current
-                loc[j]++;  //increment
+    // unrank locations of the pattern tiles
+    int numLeft = count - (int)pattern.size() + 1;
+    for (int i = (int)pattern.size() - 1; i >= 0; i--) {    //starting at last tile, move forward
+        digit[i] = hashVal % numLeft;
+        hashVal /= numLeft;
+        numLeft++;
+        for (int j = i+1; j < pattern.size(); j++) {    //if farther digit >, increment
+            if (digit[j] >= digit[i]) {
+                digit[j]++;
             }
         }
     }
     
-    //un-permutate
-    TileState toReturn;
+    TileState toReturn; // return puzzle
+    //load return puzzle with all -1
     for (int i = 0; i < 16; i++) {
-        for (int j = 0; j < pattern.size(); j++) {  //Repopulate the tile state
-            if (loc[j] == i) {  //if the index i = the value in loc add it. Else add -1
-                toReturn.state[i] = loc[j];
-            } else {
-                toReturn.state[i] = -1;
-            }
-        }
+        toReturn.state[i] = -1;
     }
-    
+    //load the values in return that were in the pattern
+    for (int i = 0; i < pattern.size(); i++) {
+        toReturn.state[digit[i]] = i;
+    }
     return toReturn;
 }
 
-long PDB::factorial(long n) {
-    long factorial = 1;
+long long PDB::factorial(long n) {
+    long long factorial = 1;
     if (n <= 16 ) {
         switch (n) {    //store the first 16 for quick reference
             case 0:
@@ -201,24 +199,3 @@ long PDB::factorial(long n) {
     }
     return factorial;
 }
-
-/*void PDB::unRadix(TileState &in) {  //convert an array back to regular notation
-    for (int i = 0; i < 16; i++) {  //compare each digit to every digit that follows it
-        for (int j = (i+1); j < 16; j++) {
-            if (in.state[j] >= in.state[i]) {   //if one of the following digits is greater than the current
-                in.state[j]++;  //increment
-            }
-        }
-    }
- 
- }
- 
- void PDB::radix(vector<int> &in) {    //get the mixed radix form of a number
-    for (int i = 0; i < in.size(); i++) {  //compare each digit to every digit that follows it
-        for (int j = (i+1); j < in.size(); j++) {
-            if (in[j] >= in[i]) {   //if one of the following digits is greater than the current
-                in[j]--;  //decrement
-            }
-        }
-    }
- }*/

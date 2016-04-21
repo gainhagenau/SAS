@@ -22,11 +22,11 @@
 using namespace std;
 
 int main(int argc, const char * argv[]) {
-    
     vector<int> pattern;
     pattern.push_back(0);
     pattern.push_back(1);
     pattern.push_back(2);
+    pattern.push_back(3);
     
     vector<vector<int>> p;
     p.push_back(pattern);
@@ -36,14 +36,55 @@ int main(int argc, const char * argv[]) {
     for (int i = 0; i < 16; i++){
         ts.state[i] = -1;
     }
-    ts.state[13] = 0;
-    ts.state[14] = 1;
-    ts.state[15] = 2;
-    
+    ts.state[15] = 0;
+    ts.state[4] = 1;
+    ts.state[8] = 2;
+    ts.state[12] = 3;
+
     //pattern 0,1,2
+    for (int i = 0; i < 16; i++) {
+        if (i == 3 || i == 7 || i == 11) {
+            if (ts.state[i] == -1) {
+                cout << "* " << endl;
+            } else {
+                cout << ts.state[i] << " " << endl;
+            }
+        }
+        else {
+            if (ts.state[i] == -1) {
+                cout << "* ";
+            } else {
+                cout << ts.state[i] << " ";
+            }
+            
+        }
+        
+    }
+
     int answer = pdb.rank(ts, pattern);
-    cout << answer << "\n";
     
+    cout << "\n\n" << answer << "\n\n";
+    
+    TileState temp = pdb.unrank(answer, pattern);
+    for (int i = 0; i < 16; i++) {
+        if (i == 3 || i == 7 || i == 11) {
+            if (temp.state[i] == -1) {
+                cout << "* " << endl;
+            } else {
+                cout << temp.state[i] << " " << endl;
+            }
+        }
+        else {
+            if (temp.state[i] == -1) {
+                cout << "* ";
+            } else {
+                cout << temp.state[i] << " ";
+            }
+
+        }
+        
+    }
+
     /*SlidingTile tile;   //sliding tile object
     STmanhattan h;
     IDA<TileState, TileAction, SlidingTile, STmanhattan> idast;  //ida on sliding tile
