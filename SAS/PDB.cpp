@@ -77,11 +77,11 @@ void PDB::buildPDB(vector<int> pattern) {
             }
         }
         total += n;
-        cout << "Depth: " << depth << "   New: " << n << "     Completed: " << total << " of " << size << endl;
+        //cout << "Depth: " << depth << "   New: " << n << "     Completed: " << total << " of " << size << endl;
         depth++;
     }
     
-    cout << "\n\n\n";
+    //cout << "\n\n\n";
     
     //add the populated pattern DB to the vector of DBs
     db.push_back(array);

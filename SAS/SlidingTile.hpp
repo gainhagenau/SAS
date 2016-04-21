@@ -43,6 +43,7 @@ public:
     void GetActions(TileState &nodeID, vector<TileAction> &actions);
     void ApplyAction(TileState &s, TileAction a);
     void UndoAction(TileState &s, TileAction a);
+    TileAction InvertAction(TileAction a);
 private:
     int empty = 0;
     void updateEmpty(TileState &s);

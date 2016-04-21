@@ -77,3 +77,13 @@ void SlidingTile::updateEmpty(TileState &s) {
         }
     }
 }
+
+TileAction SlidingTile::InvertAction(TileAction a) {
+    switch (a) // invert action
+    {
+        case UP: return DOWN; break;
+        case DOWN: return UP; break;
+        case LEFT: return RIGHT; break;
+        case RIGHT: return LEFT; break;
+    }
+}
