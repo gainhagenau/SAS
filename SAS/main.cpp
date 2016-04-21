@@ -36,7 +36,7 @@ int main(int argc, const char * argv[]) {
     for (int i = 0; i < 16; i++){
         ts.state[i] = -1;
     }
-    ts.state[15] = 0;
+    ts.state[14] = 0;
     ts.state[4] = 1;
     ts.state[8] = 2;
     ts.state[12] = 3;
