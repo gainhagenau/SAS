@@ -12,23 +12,28 @@
 #include <stdio.h>
 #include <iostream>
 #include <algorithm>
-#include "SlidingTile.hpp"
 #include <vector>
+#include "SlidingTile.hpp"
+#include "STmanhattan.hpp"
+
 
 
 class PDB {
 public:
-    PDB(vector<vector<int>> patterns);
+    PDB(vector<vector<int>> patterns, bool m);
     ~PDB();
     int GetHeuristic(TileState state);
 private:
     void buildPDB(vector<int> pattern);
-    long long rank(TileState state, vector<int> pattern);
+    long rank(TileState state, vector<int> pattern);
     TileState unrank(long long rank, vector<int> pattern);
     long long factorial(long n);
     TileState buildPatternState(vector<int> pattern);
     
+    vector<vector<int>> patterns;
     vector<int*> db; //database arrays
+    bool manhattan;
+    STmanhattan man;
 };
 
 

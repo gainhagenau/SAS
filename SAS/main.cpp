@@ -66,15 +66,19 @@ int main(int argc, const char * argv[]) {
     p.push_back(pattern1);
     p.push_back(pattern2);
     p.push_back(pattern3);
-    p.push_back(pattern4);
-    p.push_back(pattern5);
-    PDB pdb = PDB(p);
+    //p.push_back(pattern4);
+    //p.push_back(pattern5);
+    PDB pdb = PDB(p, false);
+    
+    TileState t = {14, 1, 9, 6, 4, 8, 12, 5, 7, 2, 3, 0, 10, 11, 13, 15};
+    
+    cout << pdb.GetHeuristic(t) << endl;
     
     
     
-    /*SlidingTile tile;   //sliding tile object
+    SlidingTile tile;   //sliding tile object
     STmanhattan h;
-    IDA<TileState, TileAction, SlidingTile, STmanhattan> idast;  //ida on sliding tile
+    IDA<TileState, TileAction, SlidingTile, PDB> idast;  //ida on sliding tile
     TileState goal = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
     
     int instances[100][16] =
@@ -192,11 +196,11 @@ int main(int argc, const char * argv[]) {
         }
         cout << "\n";
         const clock_t begin_time = clock();
-        idast.GetPath(tile, toSolve, goal, h);
+        idast.GetPath(tile, toSolve, goal, pdb);
         std::cout << "Time Elapsed: " << (float( clock () - begin_time ) /  CLOCKS_PER_SEC) / 60 << " minutes";
         cout << "\nNodes Expanded: " << idast.GetNodesExpanded() << "\n" << endl;
 
-    }*/
+    }
     
     /*
      0   1   2   3
