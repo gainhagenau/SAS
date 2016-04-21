@@ -21,17 +21,12 @@ public:
     PDB(vector<vector<int>> patterns);
     int GetHeuristic(TileState state);
     vector<int*> db; //database arrays
-    long long rank(TileState state, vector<int> pattern);
-//private:
+private:
     void buildPDB(vector<int> pattern);
-    
+    long long rank(TileState state, vector<int> pattern);
     TileState unrank(long long rank, vector<int> pattern);
     long long factorial(long n);
-    //void unRadix(TileState &in);
-    //void radix(vector<int> &in);
     TileState buildPatternState(vector<int> pattern);
-    
-    
 };
 
 
