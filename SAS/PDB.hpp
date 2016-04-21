@@ -19,6 +19,7 @@
 class PDB {
 public:
     PDB(vector<vector<int>> patterns);
+    ~PDB();
     int GetHeuristic(TileState state);
 private:
     void buildPDB(vector<int> pattern);
