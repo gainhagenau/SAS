@@ -24,11 +24,44 @@ using namespace std;
 int main(int argc, const char * argv[]) {
     
     
-    vector<int> pattern;
-    pattern.push_back(0);
-    pattern.push_back(2);
-    pattern.push_back(3);
+    vector<int> pattern1;
+    pattern1.push_back(0);
+    pattern1.push_back(1);
+    pattern1.push_back(4);
+    pattern1.push_back(5);
+
+    vector<int> pattern2;
+    pattern2.push_back(0);
+    pattern2.push_back(2);
+    pattern2.push_back(3);
+    pattern2.push_back(6);
+    pattern2.push_back(7);
     
+    vector<int> pattern3;
+    pattern3.push_back(0);
+    pattern3.push_back(8);
+    pattern3.push_back(9);
+    pattern3.push_back(12);
+    pattern3.push_back(13);
+    
+    vector<int> pattern4;
+    pattern4.push_back(0);
+    pattern4.push_back(10);
+    pattern4.push_back(11);
+    pattern4.push_back(14);
+    pattern4.push_back(15);
+    
+    vector<int> pattern5;
+    pattern5.push_back(0);
+    pattern5.push_back(1);
+    pattern5.push_back(2);
+    pattern5.push_back(3);
+    pattern5.push_back(4);
+    pattern5.push_back(5);
+    pattern5.push_back(6);
+    pattern5.push_back(7);
+
+
     vector<vector<int>> p;
     p.push_back(pattern1);
     p.push_back(pattern2);
