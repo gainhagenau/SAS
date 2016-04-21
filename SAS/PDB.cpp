@@ -15,13 +15,25 @@ PDB::PDB(vector<vector<int>> patterns){
     }
 }
 
+PDB::~PDB(){
+    for (int i = 0; i < db.size(); i++){
+        delete[] db[i];
+    }
+}
+
 //constructs the pattern database array and then pushes it to the back of the db vector
 void PDB::buildPDB(vector<int> pattern) {
     
-    long size = factorial(16) / factorial(16 - pattern.size());
+    cout << "Building Patern DB for pattern: ";
+    for (int i = 0; i < pattern.size(); i++){
+        cout << pattern[i] << "  ";
+    }
+    cout << endl;
     
-    int array[size]; //creates array and sets all values to -1
-    for (int i = 0; i < size; i++){
+    long long size = factorial(16) / factorial(16 - pattern.size());
+    
+    int *array = new int[size]; //creates array and sets all values to -1
+    for (long long i = 0; i < size; i++){
         array[i] = -1;
     }
     
@@ -44,7 +56,7 @@ void PDB::buildPDB(vector<int> pattern) {
     while (!done){
         done = true;
         int n = 0;
-        for (int i = 0; i < size; i++){
+        for (long long i = 0; i < size; i++){
             if (array[i] == depth){ //expand node
                 state = unrank(i, pattern); //get state
                 st.GetActions(state, actions);
@@ -64,6 +76,8 @@ void PDB::buildPDB(vector<int> pattern) {
         cout << "Depth: " << depth << "   New: " << n << "     Completed: " << total << " of " << size << endl;
         depth++;
     }
+    
+    cout << "\n\n\n";
     
     //add the populated pattern DB to the vector of DBs
     db.push_back(array);

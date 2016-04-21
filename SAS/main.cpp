@@ -30,7 +30,11 @@ int main(int argc, const char * argv[]) {
     pattern.push_back(3);
     
     vector<vector<int>> p;
-    p.push_back(pattern);
+    p.push_back(pattern1);
+    p.push_back(pattern2);
+    p.push_back(pattern3);
+    p.push_back(pattern4);
+    p.push_back(pattern5);
     PDB pdb = PDB(p);
     
     
