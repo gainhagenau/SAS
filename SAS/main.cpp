@@ -77,8 +77,8 @@ int main(int argc, const char * argv[]) {
     
     
     SlidingTile tile;   //sliding tile object
-    STmanhattan h;
-    IDA<TileState, TileAction, SlidingTile, PDB> idast;  //ida on sliding tile
+    STmanhattan man;
+    IDA<TileState, TileAction, SlidingTile, STmanhattan> idast;  //ida on sliding tile
     TileState goal = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
     
     int instances[100][16] =
@@ -195,7 +195,7 @@ int main(int argc, const char * argv[]) {
         }
         cout << "\n";
         const clock_t begin_time = clock();
-        idast.GetPath(tile, toSolve, goal, pdb);
+        idast.GetPath(tile, toSolve, goal, man);
         std::cout << "Time Elapsed: " << (float( clock () - begin_time ) /  CLOCKS_PER_SEC) / 60 << " minutes";
         cout << "\nNodes Expanded: " << idast.GetNodesExpanded() << "\n" << endl;
 

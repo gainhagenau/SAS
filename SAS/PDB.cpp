@@ -28,7 +28,7 @@ PDB::~PDB(){
 //constructs the pattern database array and then pushes it to the back of the db vector
 void PDB::buildPDB(vector<int> pattern) {
     
-    cout << "Building Patern DB for pattern: ";
+    cout << "Building Pattern DB for pattern: ";
     for (int i = 0; i < pattern.size(); i++){
         cout << pattern[i] << "  ";
     }
@@ -101,8 +101,6 @@ TileState PDB::buildPatternState(vector<int> pattern){
     }
     return ts;
 }
-
-
 
 //gets the heuristic for the
 int PDB::GetHeuristic(TileState state) {
