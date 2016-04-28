@@ -24,23 +24,44 @@ public:
         return nodesExpanded;
     }
 private:
-    vector<action> list;    // open/closed list
-    uint64_t nodesExpanded; //nodes expanded
+    uint64_t nodesExpanded; // nodes expanded
     
-    void addElement(action a, vector<action> &v) {  //push back the action
-        v.push_back(a);
+    struct node {
+        int gCost;
+        int hCost;
+        bool open;
+        state s;
+    };
+    vector<node> list;    // open/closed list
+    
+    void addElement(node n) {  //push back the action
+        int i = checkDuplicates(s, list);  //check for duplicates before adding
+        if (i >= 0) {    // if there is a duplicate at index i, replace
+            v[i] = n;
+        } else {    // no duplicates, just push back
+            v.push_back(n);
+        }
     }
-    bool checkDuplicates(vector<action> &v) {
-        for (int i = 0; i < v.size(); i++) {
-            for (int j = 0; j < v.size(); j++) {
-                if (j != i && v[i] == v[j]) {
-                    return true;
-                }
+    
+    int checkDuplicates(node n) {
+        for (int i = 0; i < n.state.size(); i++) {// go through array, if a match is found return that index
+            if (n.state == list[i].state) {
+                return i;
             }
         }
-        return false;
+        return -1;  // no duplicate
     }
-    void updateCost(action &a);
-    void removeBest(vector<action> &v);
+    void removeBest() {
+        int index = -1;
+        int f = 0;
+        for (int i = 0; i < list.size(); i==) {
+            if (list[i].open && f > list[i].gCost + list[i].hCost) {
+                f = list[i].gCost + list[i].hCost;
+                index = i;
+            }
+            
+        }
+        list.erase(i);
+    }
 }
 #endif /* InefficientAStar_hpp */
