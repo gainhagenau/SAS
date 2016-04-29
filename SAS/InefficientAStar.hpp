@@ -18,35 +18,7 @@ class InefficientAStar {
 public:
     InefficientAStar(){};
     // GetPath returns if the goal was found
-    
-    /*
-     while the open list is not empty
-     find the node with the least f on the open list, call it "q"
-     pop q off the open list
-     generate q's 8 successors and set their parents to q
-     for each successor
-    	if successor is the goal, stop the search
-     successor.g = q.g + distance between successor and q
-     successor.h = distance from goal to successor
-     successor.f = successor.g + successor.h
-     
-     if a node with the same position as successor is in the OPEN list \
-     which has a lower f than successor, skip this successor
-     if a node with the same position as successor is in the CLOSED list \
-     which has a lower f than successor, skip this successor
-     otherwise, add the node to the open list
-     end
-     push q on the closed list
-     end
-     */
-    bool GetPath(environment &e, state &start, state &goal, heuristic &h) {
-        vector<action> actions;
-        while (stillOpen()) {
-            node q = list[findBest()];
-            e.GetActions(q.state, actions); //populates actions with the current avalible actions
-            
-        }
-    }
+    bool GetPath(environment &e, state &start, state &goal, heuristic &h);
     // Returns the total nodes expanded by the last GetPath call.
     uint64_t GetNodesExpanded() {
         return nodesExpanded;
@@ -58,13 +30,16 @@ private:
         int gCost, hCost;
         bool open;
         state s;
+        action parentAction;
     };
     vector<node> list;    // open/closed list
     
     void addElement(node n) {  //push back the action
         int i = checkDuplicates(s, list);  //check for duplicates before adding
         if (i >= 0) {    // if there is a duplicate at index i, replace
-            list[i] = n;
+            if (list[i].gCost + list[i].hCost > n.gCost + n.hCost){ //if the new generation of the node has a lower f cost it is replaced
+                list[i] = n;
+            }
         } else {    // no duplicates, just push back
             list.push_back(n);
         }
@@ -78,38 +53,97 @@ private:
         }
         return -1;  // no duplicate
     }
-    void removeBest() {
+    
+    
+    int findBest() {   //find node with best f cost
         int index = -1;
-        int f = list[0].gCost + list[0].hCost;
+        int f = -1;
         for (int i = 1; i < list.size(); i++) {
-            if (list[i].open && f > list[i].gCost + list[i].hCost) {
+            if (list[i].open && f > list[i].gCost + list[i].hCost || f == -1) {
                 f = list[i].gCost + list[i].hCost;
                 index = i;
             }
-            
         }
-        list.erase(i);
+        if (index >= 0){
+            list[index].open = false;
+        }
+        return index;
     }
     
-    bool stillOpen() {  //determine if there are still elements on the list that are open
-        for (int i = 0; i < list.size(); i++) {
-            if (list[i].open == true) {
-                return true;
-            }
+    node MakeNode(state &s, int currentG, heuristic &h, action p){
+        node newNode;
+        newNode.state = s;
+        newNode.gCost = currentG;
+        newNode.hCost = h.GetHeuristic(s);
+        newNode.open = true;
+        newNode.parentAction = p;
+        return newNode;
+    }
+    
+    node getNode(int index){
+        return list[index];
+    }
+    
+    bool checkGoal(node &n, state &g){
+        if (n.state == g){
+            return true;
         }
         return false;
     }
     
-    int findBest() {   //find node with best f cost
-        int index = -1;
-        int f = list[0].gCost + list[0].hCost;
-        for (int i = 1; i < list.size(); i++) {
-            if (list[i].open && f > list[i].gCost + list[i].hCost) {
-                f = list[i].gCost + list[i].hCost;
-                index = i;
+    
+}
+
+
+/*
+ while the open list is not empty
+ find the node with the least f on the open list, call it "q"
+ pop q off the open list
+ generate q's 8 successors and set their parents to q
+ for each successor
+ if successor is the goal, stop the search
+ successor.g = q.g + distance between successor and q
+ successor.h = distance from goal to successor
+ successor.f = successor.g + successor.h
+ 
+ if a node with the same position as successor is in the OPEN list \
+ which has a lower f than successor, skip this successor
+ if a node with the same position as successor is in the CLOSED list \
+ which has a lower f than successor, skip this successor
+ otherwise, add the node to the open list
+ end
+ push q on the closed list
+ end
+ */
+bool GetPath(environment &e, state &start, state &goal, heuristic &h){
+    nodesExpanded = 0;
+    
+    node current = MakeNode(s, 0, h, null);
+    addElement(current);
+    
+    int nextToExpand = findBest();
+    vector<action> moves;
+    
+    while(nextToExpand >= 0){ //when no open nodes this will be -1 and exit
+        current = getNode(nextToExpand);
+        e.GetActions(current.state, moves); //update moves
+        for (int i = 0; i < moves.size; i++){
+            if (moves[i] == e.InvertAction(current.parentAction)){ //parent pruning
+                nodesExpanded++;
+                state temp = current.state;
+                node generated = MakeNode(e.ApplyAction(temp, moves[i]), current.gCost + 1, h, moves[i]); //new node
+                if (checkGoal(generated, goal)){
+                    return true;  //Goal Found
+                }
+                addElement(generated);
             }
         }
-        return index;
+        nextToExpand = findBest();
     }
+    return false; //no solution found
 }
+
+
+
+
 #endif /* InefficientAStar_hpp */
