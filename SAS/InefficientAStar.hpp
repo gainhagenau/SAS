@@ -35,7 +35,7 @@ private:
     vector<node> list;    // open/closed list
     
     void addElement(node n) {  //push back the action
-        int i = checkDuplicates(list);  //check for duplicates before adding
+        int i = checkDuplicates(n);  //check for duplicates before adding
         if (i >= 0) {    // if there is a duplicate at index i, replace
             if (list[i].gCost + list[i].hCost > n.gCost + n.hCost){ //if the new generation of the node has a lower f cost it is replaced
                 list[i] = n;
@@ -46,8 +46,8 @@ private:
     }
     
     int checkDuplicates(node n) {
-        for (int i = 0; i < n.state.size(); i++) {  // go through array, if a match is found return that index
-            if (n.state == list[i].state) {
+        for (int i = 0; i < list.size(); i++) {  // go through array, if a match is found return that index
+            if (n.s == list[i].s) {
                 return i;
             }
         }
@@ -72,7 +72,7 @@ private:
     
     node MakeNode(state &s, int currentG, heuristic &h, action p){
         node newNode;
-        newNode.state = s;
+        newNode.s = s;
         newNode.gCost = currentG;
         newNode.hCost = h.GetHeuristic(s);
         newNode.open = true;
@@ -85,7 +85,7 @@ private:
     }
     
     bool checkGoal(node &n, state &g){
-        if (n.state == g){
+        if (n.s == g){
             return true;
         }
         return false;
@@ -127,12 +127,13 @@ bool InefficientAStar<state, action, environment, heuristic>::GetPath(environmen
     
     while(nextToExpand >= 0){ //when no open nodes this will be -1 and exit
         current = getNode(nextToExpand);
-        e.GetActions(current.state, moves); //update moves
+        e.GetActions(current.s, moves); //update moves
         for (int i = 0; i < moves.size(); i++){
             if (moves[i] == e.InvertAction(current.parentAction)){ //parent pruning
                 nodesExpanded++;
-                state temp = current.state;
-                node generated = MakeNode(e.ApplyAction(temp, moves[i]), current.gCost + 1, h, moves[i]); //new node
+                state temp = current.s;
+                e.ApplyAction(temp, moves[i]); //apply action
+                node generated = MakeNode(temp, current.gCost + 1, h, moves[i]); //new node
                 if (checkGoal(generated, goal)){
                     return true;  //Goal Found
                 }

@@ -87,11 +87,9 @@ int main(int argc, const char * argv[]) {
     }
     cout << "\n";
     const clock_t begin_time = clock();
-    a.GetPath(tile, t, goal, man);
+    cout << a.GetPath(tile, t, goal, man) << "\n";
     std::cout << "Time Elapsed: " << (float( clock () - begin_time ) /  CLOCKS_PER_SEC) / 60 << " minutes";
     cout << "\nNodes Expanded: " << a.GetNodesExpanded() << "\n" << endl;
-    
-    }
 
 
     /*int instances[100][16] =
