@@ -18,13 +18,14 @@
 #include "SlidingTile.hpp"
 #include "STmanhattan.hpp"
 #include "PDB.hpp"
+#include "InefficientAStar.hpp"
 
 using namespace std;
 
 int main(int argc, const char * argv[]) {
     
     
-    vector<int> pattern1;
+    /*vector<int> pattern1;
     pattern1.push_back(0);
     pattern1.push_back(1);
     pattern1.push_back(4);
@@ -68,20 +69,32 @@ int main(int argc, const char * argv[]) {
     p.push_back(pattern3);
     p.push_back(pattern4);
     //p.push_back(pattern5);
-    PDB pdb = PDB(p, true);
+    PDB pdb = PDB(p, true);*/
     
     TileState t = {14, 1, 9, 6, 4, 8, 12, 5, 7, 2, 3, 0, 10, 11, 13, 15};
-    
-    cout << pdb.GetHeuristic(t) << endl;
-    
     
     
     SlidingTile tile;   //sliding tile object
     STmanhattan man;
-    IDA<TileState, TileAction, SlidingTile, STmanhattan> idast;  //ida on sliding tile
+    InefficientAStar<TileState, TileAction, SlidingTile, STmanhattan> a;
+    
+    //IDA<TileState, TileAction, SlidingTile, STmanhattan> idast;  //ida on sliding tile
     TileState goal = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
     
-    int instances[100][16] =
+    cout << "A* on Sliding Tile Puzzle\n\n";
+    for (int s = 0; s < 16; s++) {
+        cout << t.state[s] << ", ";
+    }
+    cout << "\n";
+    const clock_t begin_time = clock();
+    a.GetPath(tile, t, goal, man);
+    std::cout << "Time Elapsed: " << (float( clock () - begin_time ) /  CLOCKS_PER_SEC) / 60 << " minutes";
+    cout << "\nNodes Expanded: " << a.GetNodesExpanded() << "\n" << endl;
+    
+    }
+
+
+    /*int instances[100][16] =
     {{14, 13, 15, 7, 11, 12, 9, 5, 6, 0, 2, 1, 4, 8, 10, 3},
         {13, 5, 4, 10, 9, 12, 8, 14, 2, 3, 7, 1, 0, 15, 11, 6},
         {14, 7, 8, 2, 13, 11, 10, 4, 9, 12, 5, 0, 3, 6, 1, 15},
@@ -183,6 +196,7 @@ int main(int argc, const char * argv[]) {
         {7, 15, 4, 0, 10, 9, 2, 5, 12, 11, 13, 6, 1, 3, 14, 8},
         {11, 4, 0, 8, 6, 10, 5, 13, 12, 7, 14, 3, 1, 2, 9, 15}};
     
+    
     TileState toSolve;
     cout << "IDA* on Sliding Tile Puzzle\n\n";
     for (int i = 0; i < 100; i++) {
@@ -200,7 +214,7 @@ int main(int argc, const char * argv[]) {
         cout << "\nNodes Expanded: " << idast.GetNodesExpanded() << "\n" << endl;
 
     }
-    
+    */
     /*
      0   1   2   3
      4   5   6   7

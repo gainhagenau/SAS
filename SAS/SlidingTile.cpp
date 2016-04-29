@@ -85,5 +85,6 @@ TileAction SlidingTile::InvertAction(TileAction a) {
         case DOWN: return UP; break;
         case LEFT: return RIGHT; break;
         case RIGHT: return LEFT; break;
+        case NONE: return NONE; break;
     }
 }

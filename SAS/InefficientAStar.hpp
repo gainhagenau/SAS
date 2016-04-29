@@ -35,7 +35,7 @@ private:
     vector<node> list;    // open/closed list
     
     void addElement(node n) {  //push back the action
-        int i = checkDuplicates(s, list);  //check for duplicates before adding
+        int i = checkDuplicates(list);  //check for duplicates before adding
         if (i >= 0) {    // if there is a duplicate at index i, replace
             if (list[i].gCost + list[i].hCost > n.gCost + n.hCost){ //if the new generation of the node has a lower f cost it is replaced
                 list[i] = n;
@@ -59,7 +59,7 @@ private:
         int index = -1;
         int f = -1;
         for (int i = 1; i < list.size(); i++) {
-            if (list[i].open && f > list[i].gCost + list[i].hCost || f == -1) {
+            if ((list[i].open && f > list[i].gCost + list[i].hCost) || f == -1) {
                 f = list[i].gCost + list[i].hCost;
                 index = i;
             }
@@ -92,7 +92,7 @@ private:
     }
     
     
-}
+};
 
 
 /*
@@ -115,10 +115,11 @@ private:
  push q on the closed list
  end
  */
-bool GetPath(environment &e, state &start, state &goal, heuristic &h){
+template <typename state, typename action, typename environment, typename heuristic>
+bool InefficientAStar<state, action, environment, heuristic>::GetPath(environment &e, state &start, state &goal, heuristic &h){
     nodesExpanded = 0;
     
-    node current = MakeNode(s, 0, h, null);
+    node current = MakeNode(start, 0, h, NONE);
     addElement(current);
     
     int nextToExpand = findBest();
@@ -127,7 +128,7 @@ bool GetPath(environment &e, state &start, state &goal, heuristic &h){
     while(nextToExpand >= 0){ //when no open nodes this will be -1 and exit
         current = getNode(nextToExpand);
         e.GetActions(current.state, moves); //update moves
-        for (int i = 0; i < moves.size; i++){
+        for (int i = 0; i < moves.size(); i++){
             if (moves[i] == e.InvertAction(current.parentAction)){ //parent pruning
                 nodesExpanded++;
                 state temp = current.state;

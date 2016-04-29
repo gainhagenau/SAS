@@ -18,7 +18,7 @@
 
 using namespace std;
 
-enum TileAction {UP, DOWN, LEFT, RIGHT};
+enum TileAction {UP, DOWN, LEFT, RIGHT, NONE};
 
 
 struct TileState{
