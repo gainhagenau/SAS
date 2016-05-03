@@ -58,8 +58,8 @@ private:
     int findBest() {   //find node with best f cost
         int index = -1;
         int f = -1;
-        for (int i = 1; i < list.size(); i++) {
-            if ((list[i].open && f > list[i].gCost + list[i].hCost) || f == -1) {
+        for (int i = 0; i < list.size(); i++) {
+            if ((list[i].open && f > list[i].gCost + list[i].hCost) || (list[i].open && f == -1)) {
                 f = list[i].gCost + list[i].hCost;
                 index = i;
             }
@@ -129,7 +129,7 @@ bool InefficientAStar<state, action, environment, heuristic>::GetPath(environmen
         current = getNode(nextToExpand);
         e.GetActions(current.s, moves); //update moves
         for (int i = 0; i < moves.size(); i++){
-            if (moves[i] == e.InvertAction(current.parentAction)){ //parent pruning
+            if (moves[i] != e.InvertAction(current.parentAction)){ //parent pruning
                 nodesExpanded++;
                 state temp = current.s;
                 e.ApplyAction(temp, moves[i]); //apply action
