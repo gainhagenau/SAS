@@ -28,14 +28,14 @@ private:
     
     struct node {
         int gCost, hCost;
-        //bool open;
         state s;
         action parentAction;
     };
     vector<node> open;    // open/closed list
     vector<node> closed;
     
-    void addElement(node n) {  //push back the action
+    // ass an element to the open list
+    void addElement(node n) {
         int i = checkDuplicates(n);  //check for duplicates before adding
         if (i >= 0) {    // if there is a duplicate at index i, replace
             if ((open[i].gCost + open[i].hCost) > (n.gCost + n.hCost)){ //if the new generation of the node has a lower f cost it is replaced
@@ -46,6 +46,7 @@ private:
         }
     }
     
+    // check if there are any duplicates on the open list
     int checkDuplicates(node n) {
         for (int i = 0; i < open.size(); i++) {  // go through array, if a match is found return that index
             if (n.s == open[i].s) {
@@ -55,8 +56,8 @@ private:
         return -1;  // no duplicate
     }
     
-    
-    int findBest() {   //find node with best f cost
+    // find the index of node with the best f cost
+    int findBest() {
         int index = -1;
         int f = -1;
         for (int i = 0; i < open.size(); i++) {
@@ -69,6 +70,7 @@ private:
         return index;
     }
     
+    // Node constructor
     node MakeNode(state &s, int currentG, heuristic &h, action p){
         node newNode;
         newNode.s = s;
@@ -78,10 +80,12 @@ private:
         return newNode;
     }
     
+    // helper function that returns the node at a given index
     node getNode(int index){
         return open[index];
     }
     
+    // helper function to see if you have reached the goal state
     bool checkGoal(node &n, state &g){
         if (n.s == g){
             return true;
@@ -89,13 +93,17 @@ private:
         return false;
     }
     
-    void pop(int index) {   //move node from open to closed list, delete from open list
-        closed.push_back(open[index]);
+    // move node from the open to the closed list and then delete off the open list
+    void pop(int index) { 
+        //closed.push_back(open[index]);
         open.erase(open.begin() + index);
     }
     
 };
 
+/*******************************************************************
+ ************************** Algorithm ******************************
+ *******************************************************************/
 template <typename state, typename action, typename environment, typename heuristic>
 bool InefficientAStar<state, action, environment, heuristic>::GetPath(environment &e, state &start, state &goal, heuristic &h){
     nodesExpanded = 0;

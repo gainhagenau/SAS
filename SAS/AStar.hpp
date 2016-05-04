@@ -10,8 +10,10 @@
 #define AStar_hpp
 
 #include <stdio.h>
-#include <vector>
+#include <unordered_map>
+#include <map>
 #include <iostream>
+
 
 template <typename state, typename action, typename environment, typename heuristic>
 class AStar {
@@ -28,47 +30,37 @@ private:
     
     struct node {
         int gCost, hCost;
-        //bool open;
         state s;
         action parentAction;
     };
-    vector<node> open;    // open/closed list
-    vector<node> closed;
     
-    void addElement(node n) {  //push back the action
-        int i = checkDuplicates(n);  //check for duplicates before adding
-        if (i >= 0) {    // if there is a duplicate at index i, replace
-            if ((open[i].gCost + open[i].hCost) > (n.gCost + n.hCost)){ //if the new generation of the node has a lower f cost it is replaced
-                open[i] = n;
-            }
-        } else {    // no duplicates, just push back
-            open.push_back(n);
-        }
-    }
+    typedef unordered_map<node,int> nodeMap;
     
-    int checkDuplicates(node n) {
-        for (int i = 0; i < open.size(); i++) {  // go through array, if a match is found return that index
-            if (n.s == open[i].s) {
-                return i;
-            }
-        }
-        return -1;  // no duplicate
-    }
-    
-    
-    int findBest() {   //find node with best f cost
-        int index = -1;
-        int f = -1;
-        for (int i = 0; i < open.size(); i++) {
-            if (f > (open[i].gCost + open[i].hCost) || f == -1) {
-                f = open[i].gCost + open[i].hCost;
-                index = i;
-            }
-        }
+    nodeMap open;    // open map
+    typename nodeMap::hasher fn = open.hash_function();
 
-        return index;
+    
+    vector<node> closed;    //closed list
+    
+    /* Add element to open list
+     * check for duplicates first. If index just replace if better f cost in new node
+     * else just push onto open list
+     */
+    void addElement(node n) {
+
     }
     
+    // check to see if there is a duplicate on the open list. Return -1 if no duplicate
+    int checkDuplicates(node n) {
+
+    }
+    
+    // return the index of the node with the best f cost
+    int findBest() {
+       
+    }
+    
+    // node constructor
     node MakeNode(state &s, int currentG, heuristic &h, action p){
         node newNode;
         newNode.s = s;
@@ -78,10 +70,12 @@ private:
         return newNode;
     }
     
+    // helper function to return the node at a certain index
     node getNode(int index){
-        return open[index];
+
     }
     
+    // helper function to check to see if the goal has been reached
     bool checkGoal(node &n, state &g){
         if (n.s == g){
             return true;
@@ -89,13 +83,16 @@ private:
         return false;
     }
     
-    void pop(int index) {   //move node from open to closed list, delete from open list
-        closed.push_back(open[index]);
-        open.erase(open.begin() + index);
+    // move node from open to closed list, delete from open list
+    void pop(int index) {
+
     }
     
 };
 
+/*******************************************************************
+ ************************** Algorithm ******************************
+ *******************************************************************/
 template <typename state, typename action, typename environment, typename heuristic>
 bool AStar<state, action, environment, heuristic>::GetPath(environment &e, state &start, state &goal, heuristic &h){
     nodesExpanded = 0;
