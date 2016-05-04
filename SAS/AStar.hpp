@@ -1,22 +1,22 @@
 //
-//  InefficientAStar.hpp
+//  AStar.hpp
 //  SAS
 //
-//  Created by Ryan Aikman on 4/26/16.
+//  Created by Ryan Aikman on 5/3/16.
 //  Copyright © 2016 Gain Hagenau. All rights reserved.
 //
 
-#ifndef InefficientAStar_hpp
-#define InefficientAStar_hpp
+#ifndef AStar_hpp
+#define AStar_hpp
 
 #include <stdio.h>
 #include <vector>
 #include <iostream>
 
 template <typename state, typename action, typename environment, typename heuristic>
-class InefficientAStar {
+class AStar {
 public:
-    InefficientAStar(){};
+    AStar(){};
     // GetPath returns if the goal was found
     bool GetPath(environment &e, state &start, state &goal, heuristic &h);
     // Returns the total nodes expanded by the last GetPath call.
@@ -65,7 +65,7 @@ private:
                 index = i;
             }
         }
-        
+
         return index;
     }
     
@@ -97,12 +97,12 @@ private:
 };
 
 template <typename state, typename action, typename environment, typename heuristic>
-bool InefficientAStar<state, action, environment, heuristic>::GetPath(environment &e, state &start, state &goal, heuristic &h){
+bool AStar<state, action, environment, heuristic>::GetPath(environment &e, state &start, state &goal, heuristic &h){
     nodesExpanded = 0;
     
     node current = MakeNode(start, 0, h, NONE);
     addElement(current);
-    
+
     int nextToExpand = findBest();
     vector<action> moves;
     
@@ -127,5 +127,4 @@ bool InefficientAStar<state, action, environment, heuristic>::GetPath(environmen
     return false; //no solution found
 }
 
-
-#endif /* InefficientAStar_hpp */
+#endif /* AStar_hpp */

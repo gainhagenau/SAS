@@ -19,12 +19,12 @@
 #include "STmanhattan.hpp"
 #include "PDB.hpp"
 #include "InefficientAStar.hpp"
+#include "AStar.hpp"
 
 using namespace std;
 
 int main(int argc, const char * argv[]) {
-    
-    
+   
     /*vector<int> pattern1;
     pattern1.push_back(0);
     pattern1.push_back(1);
@@ -71,12 +71,16 @@ int main(int argc, const char * argv[]) {
     //p.push_back(pattern5);
     PDB pdb = PDB(p, true);*/
     
-    //TileState t = {14, 1, 9, 6, 4, 8, 12, 5, 7, 2, 3, 0, 10, 11, 13, 15};
-    TileState t = {1, 0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+    TileState t = {14, 1, 9, 6, 4, 8, 12, 5, 7, 2, 3, 0, 10, 11, 13, 15};
+    //TileState t = {1, 2, 3, 7, 4, 5, 6, 11, 8, 0, 9, 10, 12, 13, 14, 15};
+    //TileState t = {1, 2, 0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
     
     SlidingTile tile;   //sliding tile object
     STmanhattan man;
+    
+    //InefficientAStar<TileState, TileAction, SlidingTile, STmanhattan> a;
     InefficientAStar<TileState, TileAction, SlidingTile, STmanhattan> a;
+    
     
     //IDA<TileState, TileAction, SlidingTile, STmanhattan> idast;  //ida on sliding tile
     TileState goal = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};

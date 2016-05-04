@@ -31,6 +31,7 @@
 		941FF2F01CBF288C002ED1C3 /* PDB.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PDB.cpp; sourceTree = "<group>"; };
 		941FF2F11CBF288C002ED1C3 /* PDB.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PDB.hpp; sourceTree = "<group>"; };
 		943660A91CCFEF42004518C6 /* InefficientAStar.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = InefficientAStar.hpp; sourceTree = "<group>"; };
+		945A11DB1CD958B20068C4FD /* AStar.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AStar.hpp; sourceTree = "<group>"; };
 		946890DE1CB6E59900ABE292 /* IDA.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IDA.hpp; sourceTree = "<group>"; };
 		A05774FF1CB610CB00EB8408 /* STmanhattan.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = STmanhattan.cpp; sourceTree = "<group>"; };
 		A05775001CB610CB00EB8408 /* STmanhattan.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = STmanhattan.hpp; sourceTree = "<group>"; };
@@ -77,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				A0D844FC1CB1D38600CDA1B1 /* main.cpp */,
+				945A11DB1CD958B20068C4FD /* AStar.hpp */,
 				943660A91CCFEF42004518C6 /* InefficientAStar.hpp */,
 				946890DE1CB6E59900ABE292 /* IDA.hpp */,
 				A0DC87C61CB1D89500727651 /* BFS.hpp */,
