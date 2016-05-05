@@ -117,9 +117,9 @@ bool InefficientAStar<state, action, environment, heuristic>::GetPath(environmen
     while(!open.empty()) {  //when no open nodes, exit
         current = getNode(nextToExpand);
         e.GetActions(current.s, moves); //update moves
+        nodesExpanded++;
         for (int i = 0; i < moves.size(); i++){
             if (moves[i] != e.InvertAction(current.parentAction)){ //parent pruning
-                nodesExpanded++;
                 state temp = current.s;
                 e.ApplyAction(temp, moves[i]); //apply action
                 node generated = MakeNode(temp, current.gCost + 1, h, moves[i]); //new node

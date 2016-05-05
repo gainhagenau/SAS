@@ -20,12 +20,13 @@
 #include "PDB.hpp"
 #include "InefficientAStar.hpp"
 #include "AStar.hpp"
+#include <fstream>
 
 using namespace std;
 
 int main(int argc, const char * argv[]) {
-   
-    struct node {
+    
+    /*struct node {
         int gCost, hCost;
         TileState s;
         TileAction parentAction;
@@ -34,8 +35,8 @@ int main(int argc, const char * argv[]) {
     typedef std::unordered_map<node,int> nodeMap;
     
     nodeMap open;    // open map
-    nodeMap::hasher fn = open.hash_function();
-
+    //nodeMap::hasher fn = open.hash_function();
+*/
 
     
     /*vector<int> pattern1;
