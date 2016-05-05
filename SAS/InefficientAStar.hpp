@@ -106,6 +106,11 @@ private:
         open.erase(open.begin() + index);
     }
     
+    bool isEmpty(){
+        return open.empty();
+    }
+    
+    
 };
 
 /*******************************************************************
@@ -120,7 +125,7 @@ bool InefficientAStar<state, action, environment, heuristic>::GetPath(environmen
     
     vector<action> moves;
     
-    while(!open.empty()) {  //when no open nodes, exit
+    while(!isEmpty()) {  //when no open nodes, exit
         current = findBest();
         e.GetActions(current.s, moves); //update moves
         nodesExpanded++;

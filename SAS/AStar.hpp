@@ -101,11 +101,6 @@ private:
         return newNode;
     }
     
-    // helper function to return the node at a certain index
-    node getNode(int index){
-
-    }
-    
     // helper function to check to see if the goal has been reached
     bool checkGoal(node &n, state &g){
         if (n.s == g){
@@ -113,24 +108,44 @@ private:
         }
         return false;
     }
+    
+    bool isEmpty(){
+        return openTable.empty();
+    }
+    
+    
 };
 /*******************************************************************
  ************************** Algorithm ******************************
- *******************************************************************
+ *******************************************************************/
 template <typename state, typename action, typename environment, typename heuristic>
 bool AStar<state, action, environment, heuristic>::GetPath(environment &e, state &start, state &goal, heuristic &h){
     nodesExpanded = 0;
     
-    node current = MakeNode(start, 0, h, NONE);
+    node current = MakeNode(start, 0, h, static_cast<action>(1));
     addElement(current);
-
-    int nextToExpand = findBest();
+    
     vector<action> moves;
     
-    while(!open.empty()) {  //when no open nodes, exit
-        current = getNode(nextToExpand);
+    while(!isEmpty()) {  //when no open nodes, exit
+        current = findBest();
         e.GetActions(current.s, moves); //update moves
         nodesExpanded++;
+        int isFirst = 1;
+        //first because no parent
+        if (isFirst == 1) {
+            for (int i = 0; i < moves.size(); i++) {
+                state temp = current.s;
+                e.ApplyAction(temp, moves[i]); //apply action
+                node generated = MakeNode(temp, current.gCost + 1, h, moves[i]); //new node
+                if (checkGoal(generated, goal)){
+                    return true;  //Goal Found
+                }
+                addElement(generated);
+            }
+            isFirst = 0;
+        }
+        
         for (int i = 0; i < moves.size(); i++){
             if (moves[i] != e.InvertAction(current.parentAction)){ //parent pruning
                 state temp = current.s;
@@ -142,12 +157,10 @@ bool AStar<state, action, environment, heuristic>::GetPath(environment &e, state
                 addElement(generated);
             }
         }
-        pop(nextToExpand);
-        nextToExpand = findBest();
     }
     return false; //no solution found
 }
-*/
+
 
 
 #endif /* AStar_hpp */
