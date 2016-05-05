@@ -111,11 +111,11 @@ int main(int argc, const char * argv[]) {
 
     InefficientAStar<MapState, MapAction, GridMaps, GridMaps> a;
     MapState start, goal;
-    start.x = 51;
-    start.y = 133;
-    goal.x = 46;
-    goal.y = 27;
-    GridMaps grid(goal.x, goal.y);
+    start.x = 1;
+    start.y = 121;
+    goal.x = 20;
+    goal.y = 121;
+    GridMaps grid;
     cout << "Inneficient A* on Grid Map" << endl;
     const clock_t begin_time = clock();
     cout << a.GetPath(grid, start, goal, grid) << "\n";

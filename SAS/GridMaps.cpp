@@ -8,9 +8,8 @@
 
 #include "GridMaps.hpp"
 
-GridMaps::GridMaps(int gX, int gY) {
-    goalX = gX;
-    goalY = gY;
+GridMaps::GridMaps() {
+
     ifstream file;
     file.open("/Users/Ryan/Documents/Junior/Spring/Single Agent Search/GitHub/SAS/SAS/orz301d.map", ios::in);
     
@@ -25,11 +24,6 @@ GridMaps::GridMaps(int gX, int gY) {
     }
 }
 
-bool GridMaps::isValidPosition(int x, int y) {
-    int index = x + (y * 120);
-    return map[index];
-}
-
 int GridMaps::getIndex(int x, int y) {
     int index = x + (y * 120);
     return index;
@@ -38,8 +32,8 @@ int GridMaps::getIndex(int x, int y) {
 int GridMaps::GetHeuristic(MapState m) {
     // x = x distance to goal
     // y = y distance to goal
-    int x = abs(goalX - m.x);
-    int y = abs(goalY - m.y);
+    int x = abs(m.goalX - m.x);
+    int y = abs(m.goalY - m.y);
     return (max(x, y) + (sqrt(2)-1)*min(x, y));
 }
 
@@ -125,7 +119,7 @@ void GridMaps::UndoAction(MapState &s, MapAction a) {
     } else if (a == EAST) {
         ApplyAction(s, WEST);
     } else if (a == NORTHEAST) {
-        ApplyAction(s, SOUTHEAST);
+        ApplyAction(s, SOUTHWEST);
     } else if (a == NORTHWEST) {
         ApplyAction(s, SOUTHEAST);
     } else if (a == SOUTHEAST) {
