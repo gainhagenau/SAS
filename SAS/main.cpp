@@ -85,8 +85,8 @@ int main(int argc, const char * argv[]) {
     //p.push_back(pattern5);
     PDB pdb = PDB(p, true);*/
     
-    /*TileState t = {14, 1, 9, 6, 4, 8, 12, 5, 7, 2, 3, 0, 10, 11, 13, 15};
-    //TileState t = {1, 2, 3, 7, 4, 5, 6, 11, 8, 0, 9, 10, 12, 13, 14, 15};
+    //TileState t = {14, 1, 9, 6, 4, 8, 12, 5, 7, 2, 3, 0, 10, 11, 13, 15};
+    TileState t = {1, 2, 3, 7, 4, 5, 6, 11, 8, 0, 9, 10, 12, 13, 14, 15};
     //TileState t = {1, 2, 0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
     
     SlidingTile tile;   //sliding tile object
@@ -108,7 +108,7 @@ int main(int argc, const char * argv[]) {
     cout << a.GetPath(tile, t, goal, man) << "\n";
     std::cout << "Time Elapsed: " << (float( clock () - begin_time ) /  CLOCKS_PER_SEC) / 60 << " minutes";
     cout << "\nNodes Expanded: " << a.GetNodesExpanded() << "\n" << endl;
-     */
+    
 
 
     /*int instances[100][16] =
