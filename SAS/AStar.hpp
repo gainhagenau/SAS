@@ -34,30 +34,61 @@ private:
         action parentAction;
     };
     
-    typedef unordered_map<node,int> nodeMap;
-    
-    nodeMap open;    // open map
-    typename nodeMap::hasher fn = open.hash_function();
-
-    
-    vector<node> closed;    //closed list
+    unordered_map<state, node> openTable;
+    unordered_map<state, node> closedTable;
     
     /* Add element to open list
      * check for duplicates first. If index just replace if better f cost in new node
      * else just push onto open list
      */
     void addElement(node n) {
-
+        if (!checkDuplicates(n)){ //if no duplicate found
+            openTable.insert(std::make_pair(n.s, n));
+        }
     }
     
-    // check to see if there is a duplicate on the open list. Return -1 if no duplicate
-    int checkDuplicates(node n) {
-
+    // check to see if there is a duplicate on the open list.
+    //If there is then it evaluates the best, returns true if a duplicate was found
+    //also checks closed list to potentially re add a node to open
+    bool checkDuplicates(node n) {
+        //checking open list
+        auto check = openTable.find(n.s);
+        if(check != openTable.end()) {
+            //found duplicate
+            if ((check->second.gCost + check->second.hCost) > (n.gCost + n.hCost)){ //should be replaced
+                check->second = n;
+                return true;
+            }
+        }
+        //checking closed list for potential update
+        check = closedTable.find(n.s);
+        if(check != closedTable.end()) {
+            //found duplicate
+            if ((check->second.gCost + check->second.hCost) > (n.gCost + n.hCost)){ //should be updated and added to open
+                openTable.insert(std::make_pair(n.s, n));
+                closedTable.erase(check);
+                return true;
+            }
+        }
+        return false;
     }
     
     // return the index of the node with the best f cost
-    int findBest() {
-       
+    node findBest() {
+        node best;
+        bool first = true;
+        for ( auto i = openTable.begin(); i != openTable.end(); i++ ){
+            if (first){
+                best = i->second;
+                first = false;
+            } else if ((best->second.gCost + best->second.hCost) > (i.gCost + i.hCost)){ //new best
+                best = i->second;
+            }
+        }
+        //moves best to closed and returns
+        openTable.erase(best.s);
+        closedTable.insert(std::make_pair(best.s, best));
+        return best;
     }
     
     // node constructor
@@ -82,17 +113,10 @@ private:
         }
         return false;
     }
-    
-    // move node from open to closed list, delete from open list
-    void pop(int index) {
-
-    }
-    
 };
-
 /*******************************************************************
  ************************** Algorithm ******************************
- *******************************************************************/
+ *******************************************************************
 template <typename state, typename action, typename environment, typename heuristic>
 bool AStar<state, action, environment, heuristic>::GetPath(environment &e, state &start, state &goal, heuristic &h){
     nodesExpanded = 0;
@@ -123,5 +147,7 @@ bool AStar<state, action, environment, heuristic>::GetPath(environment &e, state
     }
     return false; //no solution found
 }
+*/
+
 
 #endif /* AStar_hpp */

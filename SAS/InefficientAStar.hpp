@@ -34,22 +34,31 @@ private:
     vector<node> open;    // open/closed list
     vector<node> closed;
     
-    // add an element to the open list
+    // adds an element to the open list
     void addElement(node n) {
-        int i = checkDuplicates(n);  //check for duplicates before adding
+        int i = checkDuplicates(n, open);  //check for duplicates before adding
         if (i >= 0) {    // if there is a duplicate at index i, replace
             if ((open[i].gCost + open[i].hCost) > (n.gCost + n.hCost)){ //if the new generation of the node has a lower f cost it is replaced
                 open[i] = n;
+                return;
             }
-        } else {    // no duplicates, just push back
-            open.push_back(n);
+        } else {    //check the closed list
+            i = checkDuplicates(n, closed);
+            if (i >= 0) {    // if there is a duplicate at index i, replace
+                if ((closed[i].gCost + closed[i].hCost) > (n.gCost + n.hCost)){ //moves node back to open if better duplicate generated
+                    open.push_back(n);
+                    closed.erase(closed.begin() + i);
+                    return;
+                }
+            }
         }
+        open.push_back(n);
     }
     
     // check if there are any duplicates on the open list
-    int checkDuplicates(node n) {
-        for (int i = 0; i < open.size(); i++) {  // go through array, if a match is found return that index
-            if (n.s == open[i].s) {
+    int checkDuplicates(node n, vector<node> &list) {
+        for (int i = 0; i < list.size(); i++) {  // go through array, if a match is found return that index
+            if (n.s == list[i].s) {
                 return i;
             }
         }
@@ -57,7 +66,7 @@ private:
     }
     
     // find the index of node with the best f cost
-    int findBest() {
+    node findBest() {
         int index = -1;
         int f = -1;
         for (int i = 0; i < open.size(); i++) {
@@ -66,8 +75,11 @@ private:
                 index = i;
             }
         }
-        
-        return index;
+        //moves the best to closed and then returns it
+        node toReturn = open[index];
+        closed.push_back(open[index]);
+        open.erase(open.begin() + index);
+        return toReturn;
     }
     
     // Node constructor
@@ -80,11 +92,6 @@ private:
         return newNode;
     }
     
-    // helper function that returns the node at a given index
-    node getNode(int index){
-        return open[index];
-    }
-    
     // helper function to see if you have reached the goal state
     bool checkGoal(node &n, state &g){
         if (n.s == g){
@@ -94,7 +101,7 @@ private:
     }
     
     // move node from the open to the closed list and then delete off the open list
-    void pop(int index) { 
+    void pop(int index) {
         //closed.push_back(open[index]);
         open.erase(open.begin() + index);
     }
@@ -111,11 +118,10 @@ bool InefficientAStar<state, action, environment, heuristic>::GetPath(environmen
     node current = MakeNode(start, 0, h, static_cast<action>(1));
     addElement(current);
     
-    int nextToExpand = findBest();
     vector<action> moves;
     int isFirst = 1;
     while(!open.empty()) {  //when no open nodes, exit
-        current = getNode(nextToExpand);
+        current = findBest();
         e.GetActions(current.s, moves); //update moves
         nodesExpanded++;
         if (isFirst == 1) {
@@ -143,8 +149,6 @@ bool InefficientAStar<state, action, environment, heuristic>::GetPath(environmen
                 addElement(generated);
             }
         }
-        pop(nextToExpand);
-        nextToExpand = findBest();
     }
     return false; //no solution found
 }
