@@ -22,7 +22,7 @@ using namespace std;
 
 //represents the current state in the search
 struct MapState {
-    int x, y, goalX, goalY;
+    int x, y;
     
     bool operator==(const MapState &s) const{
         return (s.x == x && s.y == y);

@@ -116,7 +116,7 @@ int main(int argc, const char * argv[]) {
     goal.x = 66;
     goal.y = 13;
     GridMaps grid(goal);
-    cout << "Inneficient A* on Grid Map" << endl;
+    cout << "A* on Grid Map" << endl;
     const clock_t begin_time = clock();
     cout << a.GetPath(grid, start, goal, grid) << "\n";
     std::cout << "Time Elapsed: " << (float( clock () - begin_time ) /  CLOCKS_PER_SEC) / 60 << " minutes";
