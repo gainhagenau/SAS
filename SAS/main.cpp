@@ -25,7 +25,7 @@ using namespace std;
 
 int main(int argc, const char * argv[]) {
     int instances[11][16] =
-    {{1, 2, 0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15},
+    {{1, 2, 3, 7, 0, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15},
         {14, 1, 9, 6, 4, 8, 12, 5, 7, 2, 3, 0, 10, 11, 13, 15},
         {3, 14, 9, 11, 5, 4, 8, 2, 13, 12, 6, 7, 10, 1, 15, 0},
         {3, 6, 5, 2, 10, 0, 15, 14, 1, 4, 13, 12, 9, 8, 11, 7},
@@ -97,7 +97,7 @@ int main(int argc, const char * argv[]) {
         for (int j = 0; j < 16; j++) {
             toSolve.state[j] = instances[i][j];
         }
-        cout << "Problem " << i + 1 << " of 11\nStart State: " << endl;
+        cout << "Problem " << i + 1 << " of 10\nStart State: " << endl;
         for (int s = 0; s < 16; s++) {
             cout << toSolve.state[s] << ", ";
         }

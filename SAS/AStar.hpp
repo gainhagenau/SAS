@@ -36,7 +36,8 @@ private:
     
     unordered_map<state, node> openTable;
     unordered_map<state, node> closedTable;
-    
+    bool isFirst = true;
+
     /* Add element to open list
      * check for duplicates first. If index just replace if better f cost in new node
      * else just push onto open list
@@ -131,7 +132,6 @@ bool AStar<state, action, environment, heuristic>::GetPath(environment &e, state
         current = findBest();
         e.GetActions(current.s, moves); //update moves
         nodesExpanded++;
-        int isFirst = 1;
         //first because no parent
         if (isFirst == 1) {
             for (int i = 0; i < moves.size(); i++) {
@@ -143,7 +143,7 @@ bool AStar<state, action, environment, heuristic>::GetPath(environment &e, state
                 }
                 addElement(generated);
             }
-            isFirst = 0;
+            isFirst = false;
         }
         
         for (int i = 0; i < moves.size(); i++){

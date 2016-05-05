@@ -33,7 +33,8 @@ private:
     };
     vector<node> open;    // open/closed list
     vector<node> closed;
-    
+    bool isFirst = true;
+
     // adds an element to the open list
     void addElement(node n) {
         int i = checkDuplicates(n, open);  //check for duplicates before adding
@@ -118,6 +119,10 @@ private:
  *******************************************************************/
 template <typename state, typename action, typename environment, typename heuristic>
 bool InefficientAStar<state, action, environment, heuristic>::GetPath(environment &e, state &start, state &goal, heuristic &h){
+    
+    open.clear();
+    closed.clear();
+    
     nodesExpanded = 0;
     
     node current = MakeNode(start, 0, h, static_cast<action>(1));
@@ -129,9 +134,8 @@ bool InefficientAStar<state, action, environment, heuristic>::GetPath(environmen
         current = findBest();
         e.GetActions(current.s, moves); //update moves
         nodesExpanded++;
-        int isFirst = 1;
         //first because no parent
-        if (isFirst == 1) {
+        while(isFirst) {
             for (int i = 0; i < moves.size(); i++) {
                 state temp = current.s;
                 e.ApplyAction(temp, moves[i]); //apply action
@@ -141,7 +145,7 @@ bool InefficientAStar<state, action, environment, heuristic>::GetPath(environmen
                 }
                 addElement(generated);
             }
-            isFirst = 0;
+            isFirst = false;
         }
         
         for (int i = 0; i < moves.size(); i++){
