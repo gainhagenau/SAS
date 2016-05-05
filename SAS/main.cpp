@@ -24,19 +24,103 @@
 using namespace std;
 
 int main(int argc, const char * argv[]) {
+    int instances[11][16] =
+    {{1, 2, 0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15},
+        {14, 1, 9, 6, 4, 8, 12, 5, 7, 2, 3, 0, 10, 11, 13, 15},
+        {3, 14, 9, 11, 5, 4, 8, 2, 13, 12, 6, 7, 10, 1, 15, 0},
+        {3, 6, 5, 2, 10, 0, 15, 14, 1, 4, 13, 12, 9, 8, 11, 7},
+        {7, 11, 8, 3, 14, 0, 6, 15, 1, 4, 13, 9, 5, 12, 2, 10},
+        {4, 7, 14, 13, 10, 3, 9, 12, 11, 5, 6, 15, 1, 2, 8, 0},
+        {14, 7, 1, 9, 12, 3, 6, 15, 8, 11, 2, 5, 10, 0, 4, 13},
+        {4, 5, 7, 2, 9, 14, 12, 13, 0, 3, 6, 11, 8, 1, 15, 10},
+        {8, 11, 4, 6, 7, 3, 10, 9, 2, 12, 15, 13, 0, 1, 5, 14},
+        {3, 14, 9, 11, 5, 4, 8, 2, 13, 12, 6, 7, 10, 1, 15, 0},
+        {9, 14, 5, 7, 8, 15, 1, 2, 10, 4, 13, 6, 12, 0, 11, 3}};
     
-    /*struct node {
-        int gCost, hCost;
-        TileState s;
-        TileAction parentAction;
-    };
     
-    typedef std::unordered_map<node,int> nodeMap;
+    vector<int> pattern1;
+    pattern1.push_back(0);
+    pattern1.push_back(1);
+    pattern1.push_back(4);
+    pattern1.push_back(5);
     
-    nodeMap open;    // open map
-    //nodeMap::hasher fn = open.hash_function();
-*/
+    vector<int> pattern2;
+    pattern2.push_back(0);
+    pattern2.push_back(2);
+    pattern2.push_back(3);
+    pattern2.push_back(6);
+    pattern2.push_back(7);
+    
+    vector<int> pattern3;
+    pattern3.push_back(0);
+    pattern3.push_back(8);
+    pattern3.push_back(9);
+    pattern3.push_back(12);
+    pattern3.push_back(13);
+    
+    vector<int> pattern4;
+    pattern4.push_back(0);
+    pattern4.push_back(10);
+    pattern4.push_back(11);
+    pattern4.push_back(14);
+    pattern4.push_back(15);
+    
+    vector<int> pattern5;
+    pattern5.push_back(0);
+    pattern5.push_back(1);
+    pattern5.push_back(2);
+    pattern5.push_back(3);
+    pattern5.push_back(4);
+    pattern5.push_back(5);
+    pattern5.push_back(6);
+    pattern5.push_back(7);
+    
+    
+    vector<vector<int>> p;
+    p.push_back(pattern1);
+    p.push_back(pattern2);
+    p.push_back(pattern3);
+    p.push_back(pattern4);
+    //p.push_back(pattern5);
+    PDB pdb = PDB(p, true);
 
+    // A*; SLIDING TILE (10); PDB
+    cout << "\nInefficient A* on Sliding Tile with PDB\n" << endl;
+    InefficientAStar<TileState, TileAction, SlidingTile, PDB> InefA;
+    
+    TileState goal = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+    
+    TileState toSolve;
+    SlidingTile tile;
+    
+    for (int i = 0; i < 11; i++) {
+        for (int j = 0; j < 16; j++) {
+            toSolve.state[j] = instances[i][j];
+        }
+        cout << "Problem " << i + 1 << " of 11\nStart State: " << endl;
+        for (int s = 0; s < 16; s++) {
+            cout << toSolve.state[s] << ", ";
+        }
+        cout << "\n";
+        const clock_t begin_time = clock();
+        InefA.GetPath(tile, toSolve, goal, pdb);
+        std::cout << "Time Elapsed: " << (float( clock () - begin_time ) /  CLOCKS_PER_SEC) / 60 << " minutes";
+        cout << "\nNodes Expanded: " << InefA.GetNodesExpanded() << "\n" << endl;
+    }
+    // A*; GRID MAP; GRID MAP
+    cout << "\n\nInefficient A* on Grid Map with 8-Way Movement & Octile Heuristic\n" << endl;
+    InefficientAStar<MapState, MapAction, GridMaps, GridMaps> a;
+    MapState s, g;
+    s.x = 44;
+    s.y = 21;
+    g.x = 44;
+    g.y = 55;
+    GridMaps grid(g);
+    cout << "A* on Grid Map" << endl;
+    const clock_t begin_time = clock();
+    cout << a.GetPath(grid, s, g, grid) << "\n";
+    std::cout << "Time Elapsed: " << (float( clock () - begin_time ) /  CLOCKS_PER_SEC) / 60 << " minutes";
+    cout << "\nNodes Expanded: " << a.GetNodesExpanded() << "\n" << endl;
     
     /*vector<int> pattern1;
     pattern1.push_back(0);
@@ -81,24 +165,24 @@ int main(int argc, const char * argv[]) {
     p.push_back(pattern2);
     p.push_back(pattern3);
     p.push_back(pattern4);
-    //p.push_back(pattern5);
+    p.push_back(pattern5);
     PDB pdb = PDB(p, true);*/
     
     //TileState t = {14, 1, 9, 6, 4, 8, 12, 5, 7, 2, 3, 0, 10, 11, 13, 15};
     //TileState t = {1, 2, 3, 7, 4, 5, 6, 11, 8, 0, 9, 10, 12, 13, 14, 15};
     //TileState t = {1, 2, 0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
     
-    //SlidingTile tile;   //sliding tile object
-    //STmanhattan man;
+    /*SlidingTile tile;   //sliding tile object
+    STmanhattan man;
     
-    //InefficientAStar<TileState, TileAction, SlidingTile, STmanhattan> a;
+    InefficientAStar<TileState, TileAction, SlidingTile, STmanhattan> a;
     //InefficientAStar<TileState, TileAction, SlidingTile, STmanhattan> a;
     
     
     //IDA<TileState, TileAction, SlidingTile, STmanhattan> idast;  //ida on sliding tile
-    //TileState goal = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+    TileState goal = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
     
-    /*cout << "A* on Sliding Tile Puzzle\n\n";
+    cout << "A* on Sliding Tile Puzzle\n\n";
     for (int s = 0; s < 16; s++) {
         cout << t.state[s] << ", ";
     }
@@ -109,7 +193,7 @@ int main(int argc, const char * argv[]) {
     cout << "\nNodes Expanded: " << a.GetNodesExpanded() << "\n" << endl;*/
     
 
-    InefficientAStar<MapState, MapAction, GridMaps, GridMaps> a;
+    /*AStar<MapState, MapAction, GridMaps, GridMaps> a;
     MapState start, goal;
     start.x = 55;
     start.y = 3;
@@ -120,7 +204,7 @@ int main(int argc, const char * argv[]) {
     const clock_t begin_time = clock();
     cout << a.GetPath(grid, start, goal, grid) << "\n";
     std::cout << "Time Elapsed: " << (float( clock () - begin_time ) /  CLOCKS_PER_SEC) / 60 << " minutes";
-    cout << "\nNodes Expanded: " << a.GetNodesExpanded() << "\n" << endl;
+    cout << "\nNodes Expanded: " << a.GetNodesExpanded() << "\n" << endl;*/
 
     /*int instances[100][16] =
     {{14, 13, 15, 7, 11, 12, 9, 5, 6, 0, 2, 1, 4, 8, 10, 3},

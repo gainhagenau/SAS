@@ -141,8 +141,5 @@ MapAction GridMaps::InvertAction(MapAction a) {
         case NORTHWEST: return SOUTHEAST; break;
         case SOUTHWEST: return NORTHEAST; break;
         case SOUTHEAST: return NORTHWEST; break;
-        case NA: return NA; break;
     }
 }
-
-

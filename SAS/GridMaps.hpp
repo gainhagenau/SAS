@@ -30,7 +30,7 @@ struct MapState {
 };
 
 //8 way movement
-enum MapAction {NORTH, SOUTH, EAST, WEST, NORTHWEST, NORTHEAST, SOUTHEAST, SOUTHWEST, NA};
+enum MapAction {NORTH, SOUTH, EAST, WEST, NORTHWEST, NORTHEAST, SOUTHEAST, SOUTHWEST};
 
 class GridMaps {
 public:
@@ -52,7 +52,7 @@ public:
     void UndoAction(MapState &s, MapAction a);
     
     MapAction InvertAction(MapAction a);
-
+    
 private:
     vector<bool> map;   //map to load from file
     MapState goal;
