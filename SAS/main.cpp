@@ -20,8 +20,7 @@
 #include "PDB.hpp"
 #include "InefficientAStar.hpp"
 #include "AStar.hpp"
-#include <fstream>
-
+#include "GridMaps.hpp"
 using namespace std;
 
 int main(int argc, const char * argv[]) {
@@ -110,6 +109,18 @@ int main(int argc, const char * argv[]) {
     cout << "\nNodes Expanded: " << a.GetNodesExpanded() << "\n" << endl;
     
 
+    InefficientAStar<MapState, MapAction, GridMaps, GridMaps> a;
+    MapState start, goal;
+    start.x = 51;
+    start.y = 133;
+    goal.x = 46;
+    goal.y = 27;
+    GridMaps grid(goal.x, goal.y);
+    cout << "Inneficient A* on Grid Map" << endl;
+    const clock_t begin_time = clock();
+    cout << a.GetPath(grid, start, goal, grid) << "\n";
+    std::cout << "Time Elapsed: " << (float( clock () - begin_time ) /  CLOCKS_PER_SEC) / 60 << " minutes";
+    cout << "\nNodes Expanded: " << a.GetNodesExpanded() << "\n" << endl;
 
     /*int instances[100][16] =
     {{14, 13, 15, 7, 11, 12, 9, 5, 6, 0, 2, 1, 4, 8, 10, 3},

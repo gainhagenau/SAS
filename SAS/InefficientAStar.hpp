@@ -105,7 +105,7 @@ private:
         //closed.push_back(open[index]);
         open.erase(open.begin() + index);
     }
-    
+
 };
 
 /*******************************************************************
@@ -115,15 +115,29 @@ template <typename state, typename action, typename environment, typename heuris
 bool InefficientAStar<state, action, environment, heuristic>::GetPath(environment &e, state &start, state &goal, heuristic &h){
     nodesExpanded = 0;
     
-    node current = MakeNode(start, 0, h, NONE);
+    node current = MakeNode(start, 0, h, static_cast<action>(1));
     addElement(current);
     
     vector<action> moves;
-    
+    int isFirst = 1;
     while(!open.empty()) {  //when no open nodes, exit
         current = findBest();
         e.GetActions(current.s, moves); //update moves
         nodesExpanded++;
+        if (isFirst == 1) {
+            for (int i = 0; i < moves.size(); i++) {
+                state temp = current.s;
+                e.ApplyAction(temp, moves[i]); //apply action
+                node generated = MakeNode(temp, current.gCost + 1, h, moves[i]); //new node
+                if (checkGoal(generated, goal)){
+                    return true;  //Goal Found
+                }
+                addElement(generated);
+            }
+            pop(nextToExpand);
+            nextToExpand = findBest();
+            isFirst = 0;
+        }
         for (int i = 0; i < moves.size(); i++){
             if (moves[i] != e.InvertAction(current.parentAction)){ //parent pruning
                 state temp = current.s;

@@ -23,14 +23,18 @@ using namespace std;
 //represents the current state in the search
 struct MapState {
     int x, y;
+    
+    bool operator==(const MapState &s) const{
+        return (s.x == x && s.y == y);
+    }
 };
 
 //8 way movement
-enum MapAction {UP, DOWN, LEFT, RIGHT, UPRIGHT, UPLEFT, DOWNRIGHT, DOWNLEFT};
+enum MapAction {NORTH, SOUTH, EAST, WEST, NORTHWEST, NORTHEAST, SOUTHEAST, SOUTHWEST, NA};
 
 class GridMaps {
 public:
-    GridMaps(int sX, int sY, int gX, int gY);
+    GridMaps(int gX, int gY);
     
     // check if the starting position and ending position are valid on the map
     bool isValidPosition(int x, int y);
@@ -49,9 +53,12 @@ public:
     
     //This function un-does an action on a state
     void UndoAction(MapState &s, MapAction a);
+    
+    MapAction InvertAction(MapAction a);
+
 private:
     vector<bool> map;   //map to load from file
-    int startX, startY, goalX, goalY;
+    int goalX, goalY;
 };
 
 
