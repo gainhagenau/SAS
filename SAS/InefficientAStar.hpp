@@ -105,7 +105,7 @@ private:
         //closed.push_back(open[index]);
         open.erase(open.begin() + index);
     }
-
+    
 };
 
 /*******************************************************************
@@ -119,11 +119,13 @@ bool InefficientAStar<state, action, environment, heuristic>::GetPath(environmen
     addElement(current);
     
     vector<action> moves;
-    int isFirst = 1;
+    
     while(!open.empty()) {  //when no open nodes, exit
         current = findBest();
         e.GetActions(current.s, moves); //update moves
         nodesExpanded++;
+        int isFirst = 1;
+        //first because no parent
         if (isFirst == 1) {
             for (int i = 0; i < moves.size(); i++) {
                 state temp = current.s;
@@ -134,10 +136,9 @@ bool InefficientAStar<state, action, environment, heuristic>::GetPath(environmen
                 }
                 addElement(generated);
             }
-            pop(nextToExpand);
-            nextToExpand = findBest();
             isFirst = 0;
         }
+        
         for (int i = 0; i < moves.size(); i++){
             if (moves[i] != e.InvertAction(current.parentAction)){ //parent pruning
                 state temp = current.s;

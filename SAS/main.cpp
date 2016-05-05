@@ -85,20 +85,20 @@ int main(int argc, const char * argv[]) {
     PDB pdb = PDB(p, true);*/
     
     //TileState t = {14, 1, 9, 6, 4, 8, 12, 5, 7, 2, 3, 0, 10, 11, 13, 15};
-    TileState t = {1, 2, 3, 7, 4, 5, 6, 11, 8, 0, 9, 10, 12, 13, 14, 15};
+    //TileState t = {1, 2, 3, 7, 4, 5, 6, 11, 8, 0, 9, 10, 12, 13, 14, 15};
     //TileState t = {1, 2, 0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
     
-    SlidingTile tile;   //sliding tile object
-    STmanhattan man;
+    //SlidingTile tile;   //sliding tile object
+    //STmanhattan man;
     
     //InefficientAStar<TileState, TileAction, SlidingTile, STmanhattan> a;
-    InefficientAStar<TileState, TileAction, SlidingTile, STmanhattan> a;
+    //InefficientAStar<TileState, TileAction, SlidingTile, STmanhattan> a;
     
     
     //IDA<TileState, TileAction, SlidingTile, STmanhattan> idast;  //ida on sliding tile
-    TileState goal = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+    //TileState goal = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
     
-    cout << "A* on Sliding Tile Puzzle\n\n";
+    /*cout << "A* on Sliding Tile Puzzle\n\n";
     for (int s = 0; s < 16; s++) {
         cout << t.state[s] << ", ";
     }
@@ -106,19 +106,19 @@ int main(int argc, const char * argv[]) {
     const clock_t begin_time = clock();
     cout << a.GetPath(tile, t, goal, man) << "\n";
     std::cout << "Time Elapsed: " << (float( clock () - begin_time ) /  CLOCKS_PER_SEC) / 60 << " minutes";
-    cout << "\nNodes Expanded: " << a.GetNodesExpanded() << "\n" << endl;
+    cout << "\nNodes Expanded: " << a.GetNodesExpanded() << "\n" << endl;*/
     
 
     InefficientAStar<MapState, MapAction, GridMaps, GridMaps> a;
-    MapState start, goal;
+    MapState start;
     start.x = 1;
     start.y = 121;
-    goal.x = 20;
-    goal.y = 121;
+    start.goalX = 62;
+    start.goalY = 96;
     GridMaps grid;
     cout << "Inneficient A* on Grid Map" << endl;
     const clock_t begin_time = clock();
-    cout << a.GetPath(grid, start, goal, grid) << "\n";
+    cout << a.GetPath(grid, start, start, grid) << "\n";
     std::cout << "Time Elapsed: " << (float( clock () - begin_time ) /  CLOCKS_PER_SEC) / 60 << " minutes";
     cout << "\nNodes Expanded: " << a.GetNodesExpanded() << "\n" << endl;
 
