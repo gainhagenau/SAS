@@ -8,8 +8,9 @@
 
 #include "GridMaps.hpp"
 
-GridMaps::GridMaps() {
-
+GridMaps::GridMaps(MapState g) {
+    goal.x = g.x;
+    goal.y = g.y;
     ifstream file;
     file.open("/Users/Ryan/Documents/Junior/Spring/Single Agent Search/GitHub/SAS/SAS/orz301d.map", ios::in);
     
@@ -32,8 +33,8 @@ int GridMaps::getIndex(int x, int y) {
 int GridMaps::GetHeuristic(MapState m) {
     // x = x distance to goal
     // y = y distance to goal
-    int x = abs(m.goalX - m.x);
-    int y = abs(m.goalY - m.y);
+    int x = abs(goal.x - m.x);
+    int y = abs(goal.y - m.y);
     return (max(x, y) + (sqrt(2)-1)*min(x, y));
 }
 
@@ -58,19 +59,19 @@ void GridMaps::GetActions(MapState &nodeID, vector<MapAction> &actions) {
         actions.push_back(EAST);
     }
     //UPRIGHT
-    if ((find(actions.begin(), actions.end(), EAST) != actions.end()) && (find(actions.begin(), actions.end(), NORTH) != actions.end())) {
+    if ((find(actions.begin(), actions.end(), EAST) != actions.end()) && (find(actions.begin(), actions.end(), NORTH) != actions.end()) && map[index - 119] == true) {
         actions.push_back(NORTHEAST);
     }
     //UPLEFT
-    if ((find(actions.begin(), actions.end(), WEST) != actions.end()) && (find(actions.begin(), actions.end(), NORTH) != actions.end())) {
+    if ((find(actions.begin(), actions.end(), WEST) != actions.end()) && (find(actions.begin(), actions.end(), NORTH) != actions.end()) && map[index - 121] == true) {
         actions.push_back(NORTHWEST);
     }
     //DOWNRIGHT
-    if ((find(actions.begin(), actions.end(), EAST) != actions.end()) && (find(actions.begin(), actions.end(), SOUTH) != actions.end())) {
+    if ((find(actions.begin(), actions.end(), EAST) != actions.end()) && (find(actions.begin(), actions.end(), SOUTH) != actions.end()) && map[index + 121] == true) {
         actions.push_back(SOUTHEAST);
     }
     //DOWNLEFT
-    if ((find(actions.begin(), actions.end(), SOUTH) != actions.end()) && (find(actions.begin(), actions.end(), WEST) != actions.end())) {
+    if ((find(actions.begin(), actions.end(), SOUTH) != actions.end()) && (find(actions.begin(), actions.end(), WEST) != actions.end()) && map[index + 119] == true) {
         actions.push_back(SOUTHWEST);
     }
 }
@@ -78,32 +79,32 @@ void GridMaps::GetActions(MapState &nodeID, vector<MapAction> &actions) {
 void GridMaps::ApplyAction(MapState &s, MapAction a) {
     if (a == NORTH) {
         s.y++;
-        cout << s.x << ", " << s.y << endl;
+        //cout << s.x << ", " << s.y << endl;
     } else if (a == SOUTH) {
         s.y--;
-        cout << s.x << ", " << s.y << endl;
+        //cout << s.x << ", " << s.y << endl;
     } else if (a == WEST) {
         s.x--;
-        cout << s.x << ", " << s.y << endl;
+        //cout << s.x << ", " << s.y << endl;
     } else if (a == EAST) {
         s.x++;
-        cout << s.x << ", " << s.y << endl;
+        //cout << s.x << ", " << s.y << endl;
     } else if (a == NORTHEAST) {
         s.y++;
         s.x++;
-        cout << s.x << ", " << s.y << endl;
+        //cout << s.x << ", " << s.y << endl;
     } else if (a == NORTHWEST) {
         s.y++;
         s.x--;
-        cout << s.x << ", " << s.y << endl;
+        //cout << s.x << ", " << s.y << endl;
     } else if (a == SOUTHEAST) {
         s.y--;
         s.x++;
-        cout << s.x << ", " << s.y << endl;
+        //cout << s.x << ", " << s.y << endl;
     } else if (a == SOUTHWEST) {
         s.y--;
         s.x--;
-        cout << s.x << ", " << s.y << endl;
+        //cout << s.x << ", " << s.y << endl;
     } else {
         cout << "ERROR: Invalid move" << endl;
     }

@@ -25,7 +25,7 @@ struct MapState {
     int x, y, goalX, goalY;
     
     bool operator==(const MapState &s) const{
-        return (s.x == x && s.y == y && s.goalY == goalY && s.goalX == goalX);
+        return (s.x == x && s.y == y);
     }
 };
 
@@ -34,10 +34,7 @@ enum MapAction {NORTH, SOUTH, EAST, WEST, NORTHWEST, NORTHEAST, SOUTHEAST, SOUTH
 
 class GridMaps {
 public:
-    GridMaps();
-    
-    // check if the starting position and ending position are valid on the map
-    bool isValidPosition(int x, int y);
+    GridMaps(MapState g);
     
     //translate x, y coordinates into index in map
     int getIndex(int x, int y);
@@ -58,6 +55,7 @@ public:
 
 private:
     vector<bool> map;   //map to load from file
+    MapState goal;
 };
 
 
