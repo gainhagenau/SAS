@@ -88,3 +88,11 @@ TileAction SlidingTile::InvertAction(TileAction a) {
         case NONE: return NONE; break;
     }
 }
+
+string SlidingTile::getString(TileState &s){
+    string str;
+    for (int i = 0; i < 16; i++){
+        str += s.state[i];
+    }
+    return str;
+}

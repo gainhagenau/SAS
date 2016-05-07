@@ -34,26 +34,26 @@ private:
         action parentAction;
     };
     
-    unordered_map<state, node> openTable;
-    unordered_map<state, node> closedTable;
+    unordered_map<string, node> openTable;
+    unordered_map<string, node> closedTable;
     bool isFirst = true;
 
     /* Add element to open list
      * check for duplicates first. If index just replace if better f cost in new node
      * else just push onto open list
      */
-    void addElement(node n) {
-        if (!checkDuplicates(n)){ //if no duplicate found
-            openTable.insert(std::make_pair(n.s, n));
+    void addElement(node n, environment &e) {
+        if (!checkDuplicates(n, e)){ //if no duplicate found
+            openTable.insert(std::make_pair(e.getString(n.s), n));
         }
     }
     
     // check to see if there is a duplicate on the open list.
     //If there is then it evaluates the best, returns true if a duplicate was found
     //also checks closed list to potentially re add a node to open
-    bool checkDuplicates(node n) {
+    bool checkDuplicates(node n, environment &e) {
         //checking open list
-        auto check = openTable.find(n.s);
+        auto check = openTable.find(e.getString(n.s));
         if(check != openTable.end()) {
             //found duplicate
             if ((check->second.gCost + check->second.hCost) > (n.gCost + n.hCost)){ //should be replaced
@@ -62,11 +62,11 @@ private:
             }
         }
         //checking closed list for potential update
-        check = closedTable.find(n.s);
+        check = closedTable.find(e.getString(n.s));
         if(check != closedTable.end()) {
             //found duplicate
             if ((check->second.gCost + check->second.hCost) > (n.gCost + n.hCost)){ //should be updated and added to open
-                openTable.insert(std::make_pair(n.s, n));
+                openTable.insert(std::make_pair(e.getString(n.s), n));
                 closedTable.erase(check);
                 return true;
             }
@@ -75,20 +75,20 @@ private:
     }
     
     // return the index of the node with the best f cost
-    node findBest() {
+    node findBest(environment &e) {
         node best;
         bool first = true;
         for ( auto i = openTable.begin(); i != openTable.end(); i++ ){
             if (first){
                 best = i->second;
                 first = false;
-            } else if ((best->second.gCost + best->second.hCost) > (i.gCost + i.hCost)){ //new best
+            } else if ((best.gCost + best.hCost) > (i->second.gCost + i->second.hCost)){ //new best
                 best = i->second;
             }
         }
         //moves best to closed and returns
-        openTable.erase(best.s);
-        closedTable.insert(std::make_pair(best.s, best));
+        openTable.erase(e.getString(best.s));
+        closedTable.insert(std::make_pair(e.getString(best.s), best));
         return best;
     }
     
@@ -114,26 +114,33 @@ private:
         return openTable.empty();
     }
     
-    
+    void clear(){
+        openTable.clear();
+        closedTable.clear();
+    }
 };
 /*******************************************************************
  ************************** Algorithm ******************************
  *******************************************************************/
 template <typename state, typename action, typename environment, typename heuristic>
 bool AStar<state, action, environment, heuristic>::GetPath(environment &e, state &start, state &goal, heuristic &h){
+    
+    clear(); // clears data strucutres
+    bool isFirst = true;
+    
     nodesExpanded = 0;
     
     node current = MakeNode(start, 0, h, static_cast<action>(1));
-    addElement(current);
+    addElement(current, e);
     
     vector<action> moves;
     
     while(!isEmpty()) {  //when no open nodes, exit
-        current = findBest();
+        current = findBest(e);
         e.GetActions(current.s, moves); //update moves
         nodesExpanded++;
-        //first because no parent
-        if (isFirst == 1) {
+        //No parent pruning
+        if(isFirst) {
             for (int i = 0; i < moves.size(); i++) {
                 state temp = current.s;
                 e.ApplyAction(temp, moves[i]); //apply action
@@ -141,20 +148,20 @@ bool AStar<state, action, environment, heuristic>::GetPath(environment &e, state
                 if (checkGoal(generated, goal)){
                     return true;  //Goal Found
                 }
-                addElement(generated);
+                addElement(generated, e);
             }
             isFirst = false;
-        }
-        
-        for (int i = 0; i < moves.size(); i++){
-            if (moves[i] != e.InvertAction(current.parentAction)){ //parent pruning
-                state temp = current.s;
-                e.ApplyAction(temp, moves[i]); //apply action
-                node generated = MakeNode(temp, current.gCost + 1, h, moves[i]); //new node
-                if (checkGoal(generated, goal)){
-                    return true;  //Goal Found
+        } else {
+            for (int i = 0; i < moves.size(); i++){
+                if (moves[i] != e.InvertAction(current.parentAction)){ //parent pruning
+                    state temp = current.s;
+                    e.ApplyAction(temp, moves[i]); //apply action
+                    node generated = MakeNode(temp, current.gCost + 1, h, moves[i]); //new node
+                    if (checkGoal(generated, goal)){
+                        return true;  //Goal Found
+                    }
+                    addElement(generated, e);
                 }
-                addElement(generated);
             }
         }
     }

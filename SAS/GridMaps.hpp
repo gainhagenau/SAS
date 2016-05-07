@@ -53,6 +53,8 @@ public:
     
     MapAction InvertAction(MapAction a);
     
+    string getString(MapState &m);
+    
 private:
     vector<bool> map;   //map to load from file
     MapState goal;

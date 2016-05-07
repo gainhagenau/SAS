@@ -15,6 +15,7 @@
 
 #include <stdio.h>
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -46,6 +47,8 @@ public:
     
     //This function un-does an action on a state
     void UndoAction(GridState &s, GridAction a);
+    
+    string getString(GridState &g);
     
 private:
     int size; //size of grid

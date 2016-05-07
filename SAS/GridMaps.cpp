@@ -12,7 +12,7 @@ GridMaps::GridMaps(MapState g) {
     goal.x = g.x;
     goal.y = g.y;
     ifstream file;
-    file.open("/Users/Ryan/Documents/Junior/Spring/Single Agent Search/GitHub/SAS/SAS/orz301d.map", ios::in);
+    file.open("/Users/Gain/Documents/School Work/College/Junior/Spring Quarter/Single Agent Search/SAS/SAS/orz301d.map", ios::in);
     
     char c;
     while (!file.eof()) {
@@ -143,3 +143,15 @@ MapAction GridMaps::InvertAction(MapAction a) {
         case SOUTHEAST: return NORTHWEST; break;
     }
 }
+
+string GridMaps::getString(MapState &m){
+    string str;
+    str += m.x;
+    str += m.y;
+    return str;
+}
+
+
+
+
+

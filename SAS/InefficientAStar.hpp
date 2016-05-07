@@ -33,8 +33,7 @@ private:
     };
     vector<node> open;    // open/closed list
     vector<node> closed;
-    bool isFirst = true;
-
+    
     // adds an element to the open list
     void addElement(node n) {
         int i = checkDuplicates(n, open);  //check for duplicates before adding
@@ -111,6 +110,11 @@ private:
         return open.empty();
     }
     
+    void clear(){
+        open.clear();
+        closed.clear();
+    }
+    
     
 };
 
@@ -120,8 +124,8 @@ private:
 template <typename state, typename action, typename environment, typename heuristic>
 bool InefficientAStar<state, action, environment, heuristic>::GetPath(environment &e, state &start, state &goal, heuristic &h){
     
-    open.clear();
-    closed.clear();
+    clear(); // clears data strucutres
+    bool isFirst = true;
     
     nodesExpanded = 0;
     
@@ -134,8 +138,8 @@ bool InefficientAStar<state, action, environment, heuristic>::GetPath(environmen
         current = findBest();
         e.GetActions(current.s, moves); //update moves
         nodesExpanded++;
-        //first because no parent
-        while(isFirst) {
+        //No parent pruning
+        if(isFirst) {
             for (int i = 0; i < moves.size(); i++) {
                 state temp = current.s;
                 e.ApplyAction(temp, moves[i]); //apply action
@@ -146,17 +150,17 @@ bool InefficientAStar<state, action, environment, heuristic>::GetPath(environmen
                 addElement(generated);
             }
             isFirst = false;
-        }
-        
-        for (int i = 0; i < moves.size(); i++){
-            if (moves[i] != e.InvertAction(current.parentAction)){ //parent pruning
-                state temp = current.s;
-                e.ApplyAction(temp, moves[i]); //apply action
-                node generated = MakeNode(temp, current.gCost + 1, h, moves[i]); //new node
-                if (checkGoal(generated, goal)){
-                    return true;  //Goal Found
+        } else {
+            for (int i = 0; i < moves.size(); i++){
+                if (moves[i] != e.InvertAction(current.parentAction)){ //parent pruning
+                    state temp = current.s;
+                    e.ApplyAction(temp, moves[i]); //apply action
+                    node generated = MakeNode(temp, current.gCost + 1, h, moves[i]); //new node
+                    if (checkGoal(generated, goal)){
+                        return true;  //Goal Found
+                    }
+                    addElement(generated);
                 }
-                addElement(generated);
             }
         }
     }

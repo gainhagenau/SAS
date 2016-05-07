@@ -44,3 +44,14 @@ void GridEnvironment::UndoAction(GridState &s, GridAction a){
         s.y--;
     }
 }
+
+string GridEnvironment::getString(GridState &g){
+    string str;
+    str += g.x;
+    str += g.y;
+    return str;
+}
+
+
+
+

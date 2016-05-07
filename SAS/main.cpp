@@ -84,9 +84,42 @@ int main(int argc, const char * argv[]) {
     //p.push_back(pattern5);
     PDB pdb = PDB(p, true);
 
+    // A* GRID MAP; GRID MAP
+    cout << "\n\nA* on Grid Map with 8-Way Movement & Octile Heuristic" << endl;
+    AStar<MapState, MapAction, GridMaps, GridMaps> aMap;
+    MapState s, g;
+    s.x = 60;
+    s.y = 1;
+    g.x = 61;
+    g.y = 48;
+    GridMaps grid(g);
+    const clock_t begin_time = clock();
+    cout << aMap.GetPath(grid, s, g, grid) << "\n";
+    std::cout << "Time Elapsed: " << (float( clock () - begin_time ) /  CLOCKS_PER_SEC) / 60 << " minutes";
+    cout << "\nNodes Expanded: " << aMap.GetNodesExpanded() << "\n" << endl;
+    
+    // A* GRID MAP; GRID MAP
+    cout << "\n\nInefficient A* on Grid Map with 8-Way Movement & Octile Heuristic" << endl;
+    InefficientAStar<MapState, MapAction, GridMaps, GridMaps> InefAMap;
+    MapState s1, g1;
+    s1.x = 60;
+    s1.y = 1;
+    g1.x = 77;
+    g1.y = 29;
+    GridMaps grid1(g1);
+    const clock_t begin_time1 = clock();
+    cout << InefAMap.GetPath(grid1, s1, g1, grid1) << "\n";
+    std::cout << "Time Elapsed: " << (float( clock () - begin_time1 ) /  CLOCKS_PER_SEC) / 60 << " minutes";
+    cout << "\nNodes Expanded: " << InefAMap.GetNodesExpanded() << "\n" << endl;
+    
     // A*; SLIDING TILE (10); PDB
     cout << "\nInefficient A* on Sliding Tile with PDB\n" << endl;
-    InefficientAStar<TileState, TileAction, SlidingTile, PDB> InefA;
+    AStar<TileState, TileAction, SlidingTile, PDB> InefATile;
+
+    
+    // A*; SLIDING TILE (10); PDB
+    cout << "\nA* on Sliding Tile with PDB\n" << endl;
+    AStar<TileState, TileAction, SlidingTile, PDB> aTile;
     
     TileState goal = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
     
@@ -97,30 +130,37 @@ int main(int argc, const char * argv[]) {
         for (int j = 0; j < 16; j++) {
             toSolve.state[j] = instances[i][j];
         }
-        cout << "Problem " << i + 1 << " of 10\nStart State: " << endl;
+        cout << "Problem " << i + 1 << " of 11\nStart State: " << endl;
         for (int s = 0; s < 16; s++) {
             cout << toSolve.state[s] << ", ";
         }
         cout << "\n";
         const clock_t begin_time = clock();
-        InefA.GetPath(tile, toSolve, goal, pdb);
+        aTile.GetPath(tile, toSolve, goal, pdb);
         std::cout << "Time Elapsed: " << (float( clock () - begin_time ) /  CLOCKS_PER_SEC) / 60 << " minutes";
-        cout << "\nNodes Expanded: " << InefA.GetNodesExpanded() << "\n" << endl;
+        cout << "\nNodes Expanded: " << aTile.GetNodesExpanded() << "\n" << endl;
     }
-    // A*; GRID MAP; GRID MAP
-    cout << "\n\nInefficient A* on Grid Map with 8-Way Movement & Octile Heuristic\n" << endl;
-    InefficientAStar<MapState, MapAction, GridMaps, GridMaps> a;
-    MapState s, g;
-    s.x = 44;
-    s.y = 21;
-    g.x = 44;
-    g.y = 55;
-    GridMaps grid(g);
-    cout << "A* on Grid Map" << endl;
-    const clock_t begin_time = clock();
-    cout << a.GetPath(grid, s, g, grid) << "\n";
-    std::cout << "Time Elapsed: " << (float( clock () - begin_time ) /  CLOCKS_PER_SEC) / 60 << " minutes";
-    cout << "\nNodes Expanded: " << a.GetNodesExpanded() << "\n" << endl;
+    
+    
+    TileState goal2 = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+    
+    TileState toSolve2;
+    SlidingTile tile2;
+    
+    for (int i = 0; i < 11; i++) {
+        for (int j = 0; j < 16; j++) {
+            toSolve2.state[j] = instances[i][j];
+        }
+        cout << "Problem " << i + 1 << " of 11\nStart State: " << endl;
+        for (int s = 0; s < 16; s++) {
+            cout << toSolve.state[s] << ", ";
+        }
+        cout << "\n";
+        const clock_t begin_time = clock();
+        InefATile.GetPath(tile2, toSolve2, goal2, pdb);
+        std::cout << "Time Elapsed: " << (float( clock () - begin_time ) /  CLOCKS_PER_SEC) / 60 << " minutes";
+        cout << "\nNodes Expanded: " << InefATile.GetNodesExpanded() << "\n" << endl;
+    }
     
     /*vector<int> pattern1;
     pattern1.push_back(0);

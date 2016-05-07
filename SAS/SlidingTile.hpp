@@ -45,6 +45,7 @@ public:
     void ApplyAction(TileState &s, TileAction a);
     void UndoAction(TileState &s, TileAction a);
     TileAction InvertAction(TileAction a);
+    string getString(TileState &s);
 private:
     int empty = 0;
     void updateEmpty(TileState &s);
