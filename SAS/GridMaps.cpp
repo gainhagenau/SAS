@@ -8,11 +8,17 @@
 
 #include "GridMaps.hpp"
 
+//lak303d: 194(h) x 194(w)
+//orz301s: 180(h) x 120(w)
+
 GridMaps::GridMaps(MapState g) {
     goal.x = g.x;
     goal.y = g.y;
     ifstream file;
-    file.open("/Users/Gain/Documents/School Work/College/Junior/Spring Quarter/Single Agent Search/SAS/SAS/orz301d.map", ios::in);
+    file.open("/Users/Ryan/Documents/Junior/Spring/Single Agent Search/GitHub/SAS/SAS/lak303d.map", ios::in);
+    
+    // lak303d map
+    mapY = mapX = 194;
     
     char c;
     while (!file.eof()) {
@@ -26,7 +32,7 @@ GridMaps::GridMaps(MapState g) {
 }
 
 int GridMaps::getIndex(int x, int y) {
-    int index = x + (y * 120);
+    int index = x + (y * mapY);
     return index;
 }
 
@@ -43,11 +49,11 @@ void GridMaps::GetActions(MapState &nodeID, vector<MapAction> &actions) {
     actions.clear();
 
     //UP
-    if (map[index - 120] == true) {
+    if (map[index - mapY] == true) {
         actions.push_back(NORTH);
     }
     //DOWN
-    if (map[index + 120] == true) {
+    if (map[index + mapY] == true) {
         actions.push_back(SOUTH);
     }
     //LEFT
@@ -59,19 +65,19 @@ void GridMaps::GetActions(MapState &nodeID, vector<MapAction> &actions) {
         actions.push_back(EAST);
     }
     //UPRIGHT
-    if ((find(actions.begin(), actions.end(), EAST) != actions.end()) && (find(actions.begin(), actions.end(), NORTH) != actions.end()) && map[index - 119] == true) {
+    if ((find(actions.begin(), actions.end(), EAST) != actions.end()) && (find(actions.begin(), actions.end(), NORTH) != actions.end()) && map[index - (mapY - 1)] == true) {
         actions.push_back(NORTHEAST);
     }
     //UPLEFT
-    if ((find(actions.begin(), actions.end(), WEST) != actions.end()) && (find(actions.begin(), actions.end(), NORTH) != actions.end()) && map[index - 121] == true) {
+    if ((find(actions.begin(), actions.end(), WEST) != actions.end()) && (find(actions.begin(), actions.end(), NORTH) != actions.end()) && map[index - (mapY + 1)] == true) {
         actions.push_back(NORTHWEST);
     }
     //DOWNRIGHT
-    if ((find(actions.begin(), actions.end(), EAST) != actions.end()) && (find(actions.begin(), actions.end(), SOUTH) != actions.end()) && map[index + 121] == true) {
+    if ((find(actions.begin(), actions.end(), EAST) != actions.end()) && (find(actions.begin(), actions.end(), SOUTH) != actions.end()) && map[index + (mapY + 1)] == true) {
         actions.push_back(SOUTHEAST);
     }
     //DOWNLEFT
-    if ((find(actions.begin(), actions.end(), SOUTH) != actions.end()) && (find(actions.begin(), actions.end(), WEST) != actions.end()) && map[index + 119] == true) {
+    if ((find(actions.begin(), actions.end(), SOUTH) != actions.end()) && (find(actions.begin(), actions.end(), WEST) != actions.end()) && map[index + (mapY - 1)] == true) {
         actions.push_back(SOUTHWEST);
     }
 }

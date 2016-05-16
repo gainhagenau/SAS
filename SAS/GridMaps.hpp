@@ -58,6 +58,7 @@ public:
 private:
     vector<bool> map;   //map to load from file
     MapState goal;
+    int mapX, mapY;
 };
 
 
