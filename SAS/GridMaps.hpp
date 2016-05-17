@@ -55,6 +55,8 @@ public:
     
     string getString(MapState &m);
     
+    bool isValid(int x, int y);
+    
 private:
     vector<bool> map;   //map to load from file
     MapState goal;

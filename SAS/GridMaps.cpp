@@ -43,9 +43,19 @@ int GridMaps::getIndex(int x, int y) {
 int GridMaps::GetHeuristic(MapState m) {
     // x = x distance to goal
     // y = y distance to goal
+    
+    /* OCTILE
     int x = abs(goal.x - m.x);
     int y = abs(goal.y - m.y);
     return (max(x, y) + (sqrt(2)-1)*min(x, y));
+     */
+    
+    // DIFFERENTIAL RANDOM
+    int randomX, randomY;
+    randomX = rand() % mapW;
+    randomY = rand() % mapH;
+    
+    //DIFFERENTIAL FARTHEST
 }
 
 void GridMaps::GetActions(MapState &nodeID, vector<MapAction> &actions) {
@@ -161,7 +171,12 @@ string GridMaps::getString(MapState &m){
     return str;
 }
 
-
+bool GridMaps::isValid(int x, int y) {
+    if (map[getIndex(x, y)]) {
+        return true;
+    }
+    return false;
+}
 
 
 
