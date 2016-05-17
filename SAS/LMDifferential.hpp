@@ -16,11 +16,20 @@
 
 class LMDifferential {
 public:
-    LMDifferential(int f) {
-        flag = f;
-    }
+    LMDifferential(GridMaps &m, bool f);
     
+    //returns the heuristic
     int GetHeuristic(MapState state);
+    
+    //populate the pivot array based on the pivot passed in
+    void BuildPivot(vector<int> &pivotArray, MapState p);
+    
+    //finds the furthest state from the state passed in
+    MapState FindFurthest(MapState p);
+        
 private:
-    int flag;
+    GridMaps map;
+    bool furthest;
+    vector<int> pivotArray1;
+    vector<int> pivotArry2;
 };

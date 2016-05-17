@@ -8,17 +8,22 @@
 
 #include "LMDifferential.hpp"
 
-int GetHeuristic(MapState state) {
+LMDifferential::LMDifferential(GridMaps &m, bool f)
+{
     
-    // DIFFERENTIAL RANDOM
-    if (
-    int randomX, randomY;
-    randomX = rand() % mapW;
-    randomY = rand() % mapH;
-    
-    while(!isValid(randomX, randomY)) {
-        randomX = rand() % mapW;
-        randomY = rand() % mapH;
-    }
 }
-//DIFFERENTIAL FARTHEST
+
+//returns the heuristic
+int LMDifferential::GetHeuristic(MapState state){
+    
+}
+
+//populate the pivot array based on the pivot passed in
+void LMDifferential::BuildPivot(vector<int> &pivotArray, MapState p){
+    
+}
+
+//finds the furthest state from the state passed in
+MapState LMDifferential::FindFurthest(MapState p){
+    
+}
