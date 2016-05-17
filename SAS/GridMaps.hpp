@@ -64,6 +64,8 @@ public:
     
     int getSize();
     
+    MapState getGoal();
+    
 private:
     vector<bool> map;   //map to load from file
     MapState goal;

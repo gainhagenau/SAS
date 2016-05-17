@@ -8,19 +8,43 @@
 
 #include "LMDifferential.hpp"
 #include <Queue>
+#include <math.h>
 
 LMDifferential::LMDifferential(GridMaps &m, bool f) {
     map() = m;
     furthest = f;
+    cout << "Building Pivot Array 1... ";
+    MapState p = map().getRandomState();
+    BuildPivot(pivotArray1, p);
+    cout << "Complete\n";
+    if (furthest){
+        cout << "Building Pivot Array 2... ";
+        BuildPivot(pivotArry2, FindFurthest(p));
+        cout << "Complete\n";
+    }
 }
 
 //returns the heuristic
 int LMDifferential::GetHeuristic(MapState state){
+    int heuristic;
+    MapState goal = map().getGoal();
+    
+    //calculate first euclidian distance
+    float x = pow(pivotArray1[map().getIndex(state.x, state.y)], 2.0);
+    float y = pow(pivotArray1[map().getIndex(goal.x, goal.y)], 2.0);
+    heuristic = (int)sqrt(x + y);
+    
+    //calculate second if created
     if (furthest) {
-        
-    } else {
-        
+        int temp;
+        float x = pow(pivotArray1[map().getIndex(state.x, state.y)], 2.0);
+        float y = pow(pivotArray1[map().getIndex(goal.x, goal.y)], 2.0);
+        temp = (int)sqrt(x + y);
+        if (temp > heuristic){ //takes the largets heuristic
+            heuristic = temp;
+        }
     }
+    return heuristic;
 }
 
 //populate the pivot array based on the pivot passed in

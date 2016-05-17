@@ -207,3 +207,7 @@ MapState GridMaps::getRandomState() {
 int GridMaps::getSize(){
     return map.size();
 }
+
+MapState GridMaps::getGoal(){
+    return goal;
+}
