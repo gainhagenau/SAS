@@ -7,10 +7,12 @@
 //
 
 #include "LMDifferential.hpp"
+#include <Queue>
 
 LMDifferential::LMDifferential(GridMaps &m, bool f)
 {
-    
+    map() = m;
+    furthest = f;
 }
 
 //returns the heuristic
@@ -25,5 +27,18 @@ void LMDifferential::BuildPivot(vector<int> &pivotArray, MapState p){
 
 //finds the furthest state from the state passed in
 MapState LMDifferential::FindFurthest(MapState p){
-    
+    vector<MapState> closed;
+    queue<MapState> open;
+    vector<MapAction> actions;
+    open.push(p);
+    while (!open.empty()){
+        MapState current = 
+        
+        
+        
+    }
+    MapState final;
+    final.x = 1;
+    final.y = 2;
+    return final;
 }
