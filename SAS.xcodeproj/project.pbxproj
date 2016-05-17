@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		941FF2F21CBF288C002ED1C3 /* PDB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 941FF2F01CBF288C002ED1C3 /* PDB.cpp */; };
 		943511E61CDAC7DE009E1BE5 /* GridMaps.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 943511E41CDAC7DE009E1BE5 /* GridMaps.cpp */; };
+		94C4927C1CEAD69500D5286C /* LMDifferential.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94C4927A1CEAD69500D5286C /* LMDifferential.cpp */; };
 		A05775011CB610CB00EB8408 /* STmanhattan.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A05774FF1CB610CB00EB8408 /* STmanhattan.cpp */; };
 		A0D844FD1CB1D38600CDA1B1 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0D844FC1CB1D38600CDA1B1 /* main.cpp */; };
 		A0DC87CE1CB1D89500727651 /* GridEnvironment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0DC87C81CB1D89500727651 /* GridEnvironment.cpp */; };
@@ -38,6 +39,8 @@
 		945A11DB1CD958B20068C4FD /* AStar.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AStar.hpp; sourceTree = "<group>"; };
 		946890DE1CB6E59900ABE292 /* IDA.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IDA.hpp; sourceTree = "<group>"; };
 		9478E2541CEA6F5C00258921 /* lak303d.map */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = lak303d.map; sourceTree = "<group>"; };
+		94C4927A1CEAD69500D5286C /* LMDifferential.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LMDifferential.cpp; sourceTree = "<group>"; };
+		94C4927B1CEAD69500D5286C /* LMDifferential.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LMDifferential.hpp; sourceTree = "<group>"; };
 		A05774FF1CB610CB00EB8408 /* STmanhattan.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = STmanhattan.cpp; sourceTree = "<group>"; };
 		A05775001CB610CB00EB8408 /* STmanhattan.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = STmanhattan.hpp; sourceTree = "<group>"; };
 		A0D844F91CB1D38600CDA1B1 /* SAS */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SAS; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,6 +90,8 @@
 				943660A91CCFEF42004518C6 /* InefficientAStar.hpp */,
 				943511E41CDAC7DE009E1BE5 /* GridMaps.cpp */,
 				943511E51CDAC7DE009E1BE5 /* GridMaps.hpp */,
+				94C4927A1CEAD69500D5286C /* LMDifferential.cpp */,
+				94C4927B1CEAD69500D5286C /* LMDifferential.hpp */,
 				946890DE1CB6E59900ABE292 /* IDA.hpp */,
 				A0DC87C61CB1D89500727651 /* BFS.hpp */,
 				A0DC87C71CB1D89500727651 /* DFID.hpp */,
@@ -163,6 +168,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				941FF2F21CBF288C002ED1C3 /* PDB.cpp in Sources */,
+				94C4927C1CEAD69500D5286C /* LMDifferential.cpp in Sources */,
 				A0DC87D01CB1D89500727651 /* SlidingTile.cpp in Sources */,
 				943511E61CDAC7DE009E1BE5 /* GridMaps.cpp in Sources */,
 				A0DC87CF1CB1D89500727651 /* NEnvironment.cpp in Sources */,
