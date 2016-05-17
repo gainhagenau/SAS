@@ -185,3 +185,7 @@ MapState GridMaps::getRandomState() {
     toReturn.y = randomY;
     return toReturn;
 }
+
+int GridMaps::getSize(){
+    return map.size();
+}

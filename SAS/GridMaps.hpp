@@ -59,6 +59,8 @@ public:
     
     MapState getRandomState();
     
+    int getSize();
+    
 private:
     vector<bool> map;   //map to load from file
     MapState goal;
