@@ -45,15 +45,30 @@ MapState LMDifferential::FindFurthest(MapState p){
     vector<MapState> closed;
     queue<MapState> open;
     vector<MapAction> actions;
+    MapState final;
     open.push(p);
     while (!open.empty()){
-        MapState current = 
-        
-        
-        
+        bool createdNew = false;
+        MapState current = open.front(); open.pop(); //get next state
+        map().GetActions(current, actions);
+        for (int i = 0; i < actions.size(); i++){
+            map().ApplyAction(current, actions[i]);
+            bool duplicate = false; //check for duplicates
+            for (int j = 0; j < closed.size(); j++){
+                if (closed[j] == current){
+                    duplicate = true;
+                    break;
+                }
+            }
+            if (!duplicate){ //add new node to the open list
+                open.push(current);
+                createdNew = true;
+            }
+            map().UndoAction(current, actions[i]); //undo action
+        }
+        if (!createdNew && open.empty()){
+            final = current;
+        }
     }
-    MapState final;
-    final.x = 1;
-    final.y = 2;
     return final;
 }

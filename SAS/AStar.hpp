@@ -25,8 +25,14 @@ public:
     uint64_t GetNodesExpanded() {
         return nodesExpanded;
     }
+    
+    int getCostOfPreviousSolution(){
+        return costOfSolution;
+    }
+    
 private:
     uint64_t nodesExpanded; // nodes expanded
+    int costOfSolution;
     
     struct node {
         int gCost, hCost;
@@ -146,6 +152,7 @@ bool AStar<state, action, environment, heuristic>::GetPath(environment &e, state
                 e.ApplyAction(temp, moves[i]); //apply action
                 node generated = MakeNode(temp, current.gCost + 1, h, moves[i]); //new node
                 if (checkGoal(generated, goal)){
+                    costOfSolution = generated.gCost;
                     return true;  //Goal Found
                 }
                 addElement(generated, e);
@@ -158,6 +165,7 @@ bool AStar<state, action, environment, heuristic>::GetPath(environment &e, state
                     e.ApplyAction(temp, moves[i]); //apply action
                     node generated = MakeNode(temp, current.gCost + 1, h, moves[i]); //new node
                     if (checkGoal(generated, goal)){
+                        costOfSolution = generated.gCost;
                         return true;  //Goal Found
                     }
                     addElement(generated, e);
