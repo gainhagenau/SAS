@@ -28,7 +28,7 @@ public:
     MapState FindFurthest(MapState p);
         
 private:
-    GridMaps map;
+    GridMaps map();
     bool furthest;
     vector<int> pivotArray1;
     vector<int> pivotArry2;
