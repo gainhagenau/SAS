@@ -57,6 +57,8 @@ public:
     
     bool isValid(int x, int y);
     
+    MapState getRandomState();
+    
 private:
     vector<bool> map;   //map to load from file
     MapState goal;

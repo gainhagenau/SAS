@@ -47,13 +47,13 @@ int GridMaps::GetHeuristic(MapState m) {
     int x = abs(goal.x - m.x);
     int y = abs(goal.y - m.y);
     return (max(x, y) + (sqrt(2)-1)*min(x, y));
-
+    
 }
 
 void GridMaps::GetActions(MapState &nodeID, vector<MapAction> &actions) {
     int index = getIndex(nodeID.x, nodeID.y);
     actions.clear();
-
+    
     //UP
     if (map[index - mapW] == true) {
         actions.push_back(NORTH);
@@ -170,5 +170,18 @@ bool GridMaps::isValid(int x, int y) {
     return false;
 }
 
-
-
+MapState GridMaps::getRandomState() {
+    int randomX, randomY;
+    MapState toReturn;
+    
+    randomX = rand() % mapW;
+    randomY = rand() % mapH;
+    
+    while(!isValid(randomX, randomY)) {
+        randomX = rand() % mapW;
+        randomY = rand() % mapH;
+    }
+    toReturn.x = randomX;
+    toReturn.y = randomY;
+    return toReturn;
+}
