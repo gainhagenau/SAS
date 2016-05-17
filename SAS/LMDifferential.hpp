@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include "GridMaps.hpp"
+#include "AStar.hpp"
 
 #endif /* LMDifferential_hpp */
 

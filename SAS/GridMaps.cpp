@@ -40,6 +40,24 @@ int GridMaps::getIndex(int x, int y) {
     return index;
 }
 
+MapState GridMaps::getMapState(int index) {
+    int x;
+    int y;
+    MapState toReturn;
+    
+    for (int i = 0; i < index; i++) {
+        if (i == mapW) {
+            y++;
+            x = 0;
+        } else {
+            x++;
+        }
+    }
+    toReturn.x = x;
+    toReturn.y = y;
+    return toReturn;
+}
+
 int GridMaps::GetHeuristic(MapState m) {
     // x = x distance to goal
     // y = y distance to goal

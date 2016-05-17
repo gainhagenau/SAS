@@ -39,6 +39,9 @@ public:
     //translate x, y coordinates into index in map
     int getIndex(int x, int y);
 
+    //translate index into MapState
+    MapState getMapState(int index);
+    
     //Returns octile distance heuristic
     int GetHeuristic(MapState m);
     

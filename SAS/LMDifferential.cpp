@@ -25,7 +25,19 @@ int LMDifferential::GetHeuristic(MapState state){
 
 //populate the pivot array based on the pivot passed in
 void LMDifferential::BuildPivot(vector<int> &pivotArray, MapState p){
-
+    //set to size of index
+    pivotArray.resize(map().getSize());
+    
+    AStar<MapState, MapAction, GridMaps, GridMaps> AStar;
+    //for every valid index run A* and find distance from that state to pivot state
+    for (int i = 0; i < pivotArray.size(); ++i) {
+        MapState m = map().getMapState(i);
+        if (map().isValid(m.x, m.y)) {
+            GridMaps grid(map().getMapState(i));
+            AStar.GetPath(grid, p, m, grid);
+            
+        }
+    }
 }
 
 //finds the furthest state from the state passed in
