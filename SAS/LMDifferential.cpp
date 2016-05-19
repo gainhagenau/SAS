@@ -13,9 +13,11 @@
 LMDifferential::LMDifferential(GridMaps *m, bool f, int numPivots) {
     map = m;
     furthest = f;
-    
+    distanceLists.resize(numPivots);
+    pivotList.resize(numPivots);
     if (furthest){ //Furthest
-        cout << "Calculating " << numPivots << " Furthest Pivots...    ";
+        cout << "Calculating " << numPivots << " Furthest Pivots...";
+        cout << "gain sucks";
         pivotList = map->getRandomState(1);
         BuildPivot(distanceLists[0], pivotList[0]);
         for (int i = 1; i < numPivots; i++) {
@@ -52,6 +54,11 @@ int LMDifferential::GetHeuristic(MapState state){
                 heuristic = h;
             }
         }
+    }
+    //take max of octile and LMDifferential
+    int h = map->GetHeuristic(state);
+    if (h > heuristic) {
+        heuristic = h;
     }
     return heuristic;
 }

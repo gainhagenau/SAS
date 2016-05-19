@@ -22,6 +22,7 @@
 #include "AStar.hpp"
 #include "GridMaps.hpp"
 #include "LMDifferential.hpp"
+
 using namespace std;
 
 int main(int argc, const char * argv[]) {
@@ -83,24 +84,28 @@ int main(int argc, const char * argv[]) {
     p.push_back(pattern3);
     p.push_back(pattern4);
     //p.push_back(pattern5);
-    PDB pdb = PDB(p, true);
-
-    // A* GRID MAP; GRID MAP
-    cout << "\n\nA* on Grid Map with 8-Way Movement & Octile Heuristic" << endl;
-    AStar<MapState, MapAction, GridMaps, GridMaps> aMap;
+    //PDB pdb = PDB(p, true);
+    
     MapState s, g;
-    s.x = 60;
-    s.y = 1;
-    g.x = 61;
-    g.y = 48;
+    s.x = 98;
+    s.y = 11;
+    g.x = 128;
+    g.y = 54;
     GridMaps grid(g);
+    //LMDifferential lmd1 = LMDifferential(&grid, false, 10);
+    cout << "Got here 1" << endl;
+
+    LMDifferential lmd2 = LMDifferential(&grid, true, 10);
+    // A* GRID MAP; GRID MAP
+    cout << "\n\nA* on Grid Map with 8-Way Movement & Octile Heuristic/LMDifferential" << endl;
+    AStar<MapState, MapAction, GridMaps, LMDifferential> aMap;
     const clock_t begin_time = clock();
-    cout << aMap.GetPath(grid, s, g, grid) << "\n";
+    cout << aMap.GetPath(grid, s, g, lmd2) << "\n";
     std::cout << "Time Elapsed: " << (float( clock () - begin_time ) /  CLOCKS_PER_SEC) / 60 << " minutes";
     cout << "\nNodes Expanded: " << aMap.GetNodesExpanded() << "\n" << endl;
-    
+
     // A* GRID MAP; GRID MAP
-    cout << "\n\nInefficient A* on Grid Map with 8-Way Movement & Octile Heuristic" << endl;
+    /*cout << "\n\nInefficient A* on Grid Map with 8-Way Movement & Octile Heuristic/LMDifferential" << endl;
     InefficientAStar<MapState, MapAction, GridMaps, GridMaps> InefAMap;
     MapState s1, g1;
     s1.x = 60;
@@ -111,8 +116,9 @@ int main(int argc, const char * argv[]) {
     const clock_t begin_time1 = clock();
     cout << InefAMap.GetPath(grid1, s1, g1, grid1) << "\n";
     std::cout << "Time Elapsed: " << (float( clock () - begin_time1 ) /  CLOCKS_PER_SEC) / 60 << " minutes";
-    cout << "\nNodes Expanded: " << InefAMap.GetNodesExpanded() << "\n" << endl;
+    cout << "\nNodes Expanded: " << InefAMap.GetNodesExpanded() << "\n" << endl;*/
     
+    /*
     // A*; SLIDING TILE (10); PDB
     cout << "\nInefficient A* on Sliding Tile with PDB\n" << endl;
     AStar<TileState, TileAction, SlidingTile, PDB> InefATile;
@@ -162,7 +168,7 @@ int main(int argc, const char * argv[]) {
         std::cout << "Time Elapsed: " << (float( clock () - begin_time ) /  CLOCKS_PER_SEC) / 60 << " minutes";
         cout << "\nNodes Expanded: " << InefATile.GetNodesExpanded() << "\n" << endl;
     }
-    
+    */
     /*vector<int> pattern1;
     pattern1.push_back(0);
     pattern1.push_back(1);
