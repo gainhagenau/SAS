@@ -66,7 +66,6 @@ int LMDifferential::GetHeuristic(MapState state){
 //populate the pivot array based on the pivot passed in
 void LMDifferential::BuildPivot(vector<int> &pivotArray, MapState p){
     //set to size of index
-    pivotArray.clear();
     pivotArray.resize(map->getSize());
     
     AStar<MapState, MapAction, GridMaps, GridMaps> AStar;
@@ -74,8 +73,7 @@ void LMDifferential::BuildPivot(vector<int> &pivotArray, MapState p){
     for (int i = 0; i < pivotArray.size(); i++) {
         MapState m = map->getMapState(i);
         if (map->isValid(m.x, m.y)) {
-            GridMaps grid(map->getMapState(i));
-            if (AStar.GetPath(grid, p, m, grid)) {
+            if (AStar.GetPath(*map, p, m, *map)) { //map passed twice for stright line heuristic
                 pivotArray.push_back(AStar.getCostOfPreviousSolution());
             }
         }

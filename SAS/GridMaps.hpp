@@ -34,7 +34,7 @@ enum MapAction {NORTH, SOUTH, EAST, WEST, NORTHWEST, NORTHEAST, SOUTHEAST, SOUTH
 
 class GridMaps {
 public:
-    GridMaps(MapState g);
+    GridMaps(MapState g, string mapfile);
     
     //translate x, y coordinates into index in map
     int getIndex(int x, int y);

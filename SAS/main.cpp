@@ -26,6 +26,31 @@
 using namespace std;
 
 int main(int argc, const char * argv[]) {
+    cout << "started\n";
+    MapState g;
+    MapState s;
+    s.x = 98;
+    s.y = 11;
+    g.x = 128;
+    g.y = 54;
+    GridMaps grid(g, "/Users/Gain/Documents/School Work/College/Junior/Spring Quarter/Single Agent Search/SAS/SAS/lak303d.map");
+    cout << "Grid Initialized\n" << endl;
+    
+    //LMDifferential lmd1 = LMDifferential(&grid, false, 10);
+    
+    LMDifferential lmd2 = LMDifferential(&grid, true, 10);
+    // A* GRID MAP; GRID MAP
+    cout << "\n\nA* on Grid Map with 8-Way Movement & Octile Heuristic/LMDifferential" << endl;
+    AStar<MapState, MapAction, GridMaps, LMDifferential> aMap;
+    const clock_t begin_time = clock();
+    cout << aMap.GetPath(grid, s, g, lmd2) << "\n";
+    std::cout << "Time Elapsed: " << (float( clock () - begin_time ) /  CLOCKS_PER_SEC) / 60 << " minutes";
+    cout << "\nNodes Expanded: " << aMap.GetNodesExpanded() << "\n" << endl;
+    
+    
+    return 0;
+}
+    /*
     int instances[11][16] =
     {{1, 2, 3, 7, 0, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15},
         {14, 1, 9, 6, 4, 8, 12, 5, 7, 2, 3, 0, 10, 11, 13, 15},
@@ -85,27 +110,11 @@ int main(int argc, const char * argv[]) {
     p.push_back(pattern4);
     //p.push_back(pattern5);
     //PDB pdb = PDB(p, true);
-    
-    MapState s, g;
-    s.x = 98;
-    s.y = 11;
-    g.x = 128;
-    g.y = 54;
-    GridMaps grid(g);
-    //LMDifferential lmd1 = LMDifferential(&grid, false, 10);
-    cout << "Got here 1" << endl;
-
-    LMDifferential lmd2 = LMDifferential(&grid, true, 10);
-    // A* GRID MAP; GRID MAP
-    cout << "\n\nA* on Grid Map with 8-Way Movement & Octile Heuristic/LMDifferential" << endl;
-    AStar<MapState, MapAction, GridMaps, LMDifferential> aMap;
-    const clock_t begin_time = clock();
-    cout << aMap.GetPath(grid, s, g, lmd2) << "\n";
-    std::cout << "Time Elapsed: " << (float( clock () - begin_time ) /  CLOCKS_PER_SEC) / 60 << " minutes";
-    cout << "\nNodes Expanded: " << aMap.GetNodesExpanded() << "\n" << endl;
+     
+     
 
     // A* GRID MAP; GRID MAP
-    /*cout << "\n\nInefficient A* on Grid Map with 8-Way Movement & Octile Heuristic/LMDifferential" << endl;
+    cout << "\n\nInefficient A* on Grid Map with 8-Way Movement & Octile Heuristic/LMDifferential" << endl;
     InefficientAStar<MapState, MapAction, GridMaps, GridMaps> InefAMap;
     MapState s1, g1;
     s1.x = 60;
@@ -446,7 +455,3 @@ int main(int argc, const char * argv[]) {
      cout << "\n";
      
      HOMEWORK 1 END*/
-    
-    
-    return 0;
-}

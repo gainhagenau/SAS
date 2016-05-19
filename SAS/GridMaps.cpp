@@ -11,11 +11,11 @@
 //lak303d: 194(h) x 194(w)
 //orz301s: 180(h) x 120(w)
 
-GridMaps::GridMaps(MapState g) {
+GridMaps::GridMaps(MapState g, string mapfile) {
     goal.x = g.x;
     goal.y = g.y;
     ifstream file;
-    file.open("/Users/Ryan/Documents/Junior/Spring/Single Agent Search/GitHub/SAS/SAS/orz301d.map", ios::in);
+    file.open(mapfile, ios::in);
     
     // lak303d map
     //mapW = mapH = 194;
