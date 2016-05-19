@@ -31,10 +31,11 @@ int main(int argc, const char * argv[]) {
     MapState s;
     s.x = 98;
     s.y = 11;
-    g.x = 90;
-    g.y = 11;
+    g.x = 95;
+    g.y = 12;
     GridMaps grid(g, "/Users/Gain/Documents/School Work/College/Junior/Spring Quarter/Single Agent Search/SAS/SAS/lak303d.map", 194, 194);
     GridMaps *map = &grid;
+    float begin_time = 0;
     
     if (map->isValid(g.x, g.y)) {
         cout << "valid goal" << endl;
@@ -43,8 +44,10 @@ int main(int argc, const char * argv[]) {
             if (map->isValid(m.x, m.y)) {
                 AStar<MapState, MapAction, GridMaps, GridMaps> AStar;
                 cout << "Valid point (" << m.x << "," << m.y << ")";
+                const clock_t begin_time = clock();
                 if (AStar.GetPath(*map, m, g, *map)){
                     cout << " - distance: " << AStar.getCostOfPreviousSolution() << endl;
+                    cout << "Time Elapsed: " << (int)(float( clock () - begin_time ) /  CLOCKS_PER_SEC) / 60 << " minutes" << endl;
                 }
             }
         }
