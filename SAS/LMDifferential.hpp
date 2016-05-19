@@ -15,9 +15,15 @@
 
 #endif /* LMDifferential_hpp */
 
+struct MSG{ //MapState with g cost
+    MapState m;
+    int g;
+};
+
+
 class LMDifferential {
 public:
-    LMDifferential(GridMaps &m, bool f);
+    LMDifferential(GridMaps *m, bool f, int numPivots);
     
     //returns the heuristic
     int GetHeuristic(MapState state);
@@ -26,11 +32,11 @@ public:
     void BuildPivot(vector<int> &pivotArray, MapState p);
     
     //finds the furthest state from the state passed in
-    MapState FindFurthest(MapState p);
+    MapState FindFurthest(int index);
         
 private:
-    GridMaps map();
+    GridMaps *map;
     bool furthest;
-    vector<int> pivotArray1;
-    vector<int> pivotArry2;
+    vector<vector<int>> distanceLists;
+    vector<MapState> pivotList;
 };

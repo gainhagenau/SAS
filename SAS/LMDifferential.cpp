@@ -10,38 +10,47 @@
 #include <Queue>
 #include <math.h>
 
-LMDifferential::LMDifferential(GridMaps &m, bool f) {
-    map() = m;
+LMDifferential::LMDifferential(GridMaps *m, bool f, int numPivots) {
+    map = m;
     furthest = f;
-    cout << "Building Pivot Array 1... ";
-    MapState p = map().getRandomState();
-    BuildPivot(pivotArray1, p);
-    cout << "Complete\n";
-    if (furthest){
-        cout << "Building Pivot Array 2... ";
-        BuildPivot(pivotArry2, FindFurthest(p));
-        cout << "Complete\n";
+    
+    if (furthest){ //Furthest
+        cout << "Calculating " << numPivots << " Furthest Pivots...    ";
+        pivotList = map->getRandomState(1);
+        BuildPivot(distanceLists[0], pivotList[0]);
+        for (int i = 1; i < numPivots; i++) {
+            MapState nextPivot = FindFurthest(i - 1); //finds what the next pivot should be for indes i
+            pivotList[i] = nextPivot;
+            BuildPivot(distanceLists[i], pivotList[i]); //builds the distances
+        }
+    } else { //All Random
+        cout << "Calculating " << numPivots << " Random Pivots...    ";
+        pivotList = map->getRandomState(numPivots);
+        for (int i = 0; i < numPivots; i++) {
+            BuildPivot(distanceLists[i], pivotList[i]); //builds the distances
+        }
     }
+    cout << "Complete\n";
 }
 
 //returns the heuristic
 int LMDifferential::GetHeuristic(MapState state){
-    int heuristic;
-    MapState goal = map().getGoal();
-    
-    //calculate first euclidian distance
-    float x = pow(pivotArray1[map().getIndex(state.x, state.y)], 2.0);
-    float y = pow(pivotArray1[map().getIndex(goal.x, goal.y)], 2.0);
-    heuristic = (int)sqrt(x + y);
-    
-    //calculate second if created
-    if (furthest) {
-        int temp;
-        float x = pow(pivotArray1[map().getIndex(state.x, state.y)], 2.0);
-        float y = pow(pivotArray1[map().getIndex(goal.x, goal.y)], 2.0);
-        temp = (int)sqrt(x + y);
-        if (temp > heuristic){ //takes the largets heuristic
-            heuristic = temp;
+    int heuristic = -1;
+    if (!distanceLists.empty()){
+        MapState goal = map->getGoal(); //gets the goal from the map
+        vector<int> distances = distanceLists[0]; //sets the first one
+        float x = pow(distances[map->getIndex(state.x, state.y)], 2.0);
+        float y = pow(distances[map->getIndex(goal.x, goal.y)], 2.0);
+        heuristic = (int)sqrt(x + y);
+        
+        for (int i = 0; i < distanceLists.size(); i++){ //gets the max of all the rest of the remaining pivot heuristics
+            distances = distanceLists[i];
+            x = pow(distances[map->getIndex(state.x, state.y)], 2.0);
+            y = pow(distances[map->getIndex(goal.x, goal.y)], 2.0);
+            int h = (int)sqrt(x + y);
+            if (h > heuristic){
+                heuristic = h;
+            }
         }
     }
     return heuristic;
@@ -51,14 +60,14 @@ int LMDifferential::GetHeuristic(MapState state){
 void LMDifferential::BuildPivot(vector<int> &pivotArray, MapState p){
     //set to size of index
     pivotArray.clear();
-    pivotArray.resize(map().getSize());
+    pivotArray.resize(map->getSize());
     
     AStar<MapState, MapAction, GridMaps, GridMaps> AStar;
     //for every valid index run A* and find distance from that state to pivot state
     for (int i = 0; i < pivotArray.size(); i++) {
-        MapState m = map().getMapState(i);
-        if (map().isValid(m.x, m.y)) {
-            GridMaps grid(map().getMapState(i));
+        MapState m = map->getMapState(i);
+        if (map->isValid(m.x, m.y)) {
+            GridMaps grid(map->getMapState(i));
             if (AStar.GetPath(grid, p, m, grid)) {
                 pivotArray.push_back(AStar.getCostOfPreviousSolution());
             }
@@ -66,19 +75,35 @@ void LMDifferential::BuildPivot(vector<int> &pivotArray, MapState p){
     }
 }
 
-//finds the furthest state from the state passed in
-MapState LMDifferential::FindFurthest(MapState p){
+//finds the furthest state from all of the states lower and including the index passes in the pivotList
+MapState LMDifferential::FindFurthest(int index){
     vector<MapState> closed;
-    queue<MapState> open;
+    vector<MSG> open;
     vector<MapAction> actions;
-    MapState final;
-    open.push(p);
+    MapState lastCreated;
+    for (int i = index; i >= 0; i++){ //Add all created indexes to the open list
+        MSG p;
+        p.g = 0;
+        p.m = pivotList[i];
+        open.push_back(p);
+    }
+    
     while (!open.empty()){
-        bool createdNew = false;
-        MapState current = open.front(); open.pop(); //get next state
-        map().GetActions(current, actions);
+        int next = 0;
+        for (int i = 1; i < closed.size(); i++ ){ //find the next best on open
+            if (open[i].g < open[next].g){
+                next = i;
+            }
+        }
+        MapState current = open[next].m; //sets the next map state
+        int currentG = open[next].g;
+        closed.push_back(current);
+        open.erase(open.begin() + next); //moving from open to closed now
+        lastCreated = current;
+        
+        map->GetActions(current, actions); //get actions
         for (int i = 0; i < actions.size(); i++){
-            map().ApplyAction(current, actions[i]);
+            map->ApplyAction(current, actions[i]);
             bool duplicate = false; //check for duplicates
             for (int j = 0; j < closed.size(); j++){
                 if (closed[j] == current){
@@ -87,14 +112,11 @@ MapState LMDifferential::FindFurthest(MapState p){
                 }
             }
             if (!duplicate){ //add new node to the open list
-                open.push(current);
-                createdNew = true;
+                MSG msg; msg.m = current; msg.g = currentG + 1; //Creates new MSG
+                open.push_back(msg);
             }
-            map().UndoAction(current, actions[i]); //undo action
-        }
-        if (!createdNew && open.empty()){
-            final = current;
+            map->UndoAction(current, actions[i]); //undo action
         }
     }
-    return final;
+    return lastCreated;
 }

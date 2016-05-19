@@ -60,7 +60,7 @@ public:
     
     bool isValid(int x, int y);
     
-    MapState getRandomState();
+    vector<MapState> getRandomState(int num);
     
     int getSize();
     

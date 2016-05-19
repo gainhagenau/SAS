@@ -41,8 +41,8 @@ int GridMaps::getIndex(int x, int y) {
 }
 
 MapState GridMaps::getMapState(int index) {
-    int x;
-    int y;
+    int x = 0;
+    int y = 0;
     MapState toReturn;
     
     for (int i = 0; i < index; i++) {
@@ -188,24 +188,31 @@ bool GridMaps::isValid(int x, int y) {
     return false;
 }
 
-MapState GridMaps::getRandomState() {
+vector<MapState> GridMaps::getRandomState(int num) {
     int randomX, randomY;
-    MapState toReturn;
-    
+    vector<MapState> toReturn;
+    MapState temp;
     randomX = rand() % mapW;
     randomY = rand() % mapH;
-    
-    while(!isValid(randomX, randomY)) {
-        randomX = rand() % mapW;
-        randomY = rand() % mapH;
+    for (int i = 0; i < num; i++) {
+        while(!isValid(randomX, randomY)) {
+            randomX = rand() % mapW;
+            randomY = rand() % mapH;
+        }
+        temp.x = randomX;
+        temp.y = randomY;
+        if (!(find(toReturn.begin(), toReturn.end(), temp) != toReturn.end())) {
+            toReturn.push_back(temp);
+        } else {
+            i--;
+        }
+        
     }
-    toReturn.x = randomX;
-    toReturn.y = randomY;
     return toReturn;
 }
 
 int GridMaps::getSize(){
-    return map.size();
+    return (int)map.size();
 }
 
 MapState GridMaps::getGoal(){
