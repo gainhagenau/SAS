@@ -33,7 +33,7 @@ int main(int argc, const char * argv[]) {
     s.y = 11;
     g.x = 128;
     g.y = 54;
-    GridMaps grid(g, "/Users/Gain/Documents/School Work/College/Junior/Spring Quarter/Single Agent Search/SAS/SAS/lak303d.map");
+    GridMaps grid(g, "/Users/Ryan/Documents/Junior/Spring/Single Agent Search/GitHub/SAS/SAS/lak303d.map", 194, 194);
     cout << "Grid Initialized\n" << endl;
     
     //LMDifferential lmd1 = LMDifferential(&grid, false, 10);

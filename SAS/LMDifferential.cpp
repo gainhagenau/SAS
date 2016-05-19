@@ -73,11 +73,12 @@ void LMDifferential::BuildPivot(vector<int> &pivotArray, MapState p){
     //for every valid index run A* and find distance from that state to pivot state
     for (int i = 0; i < pivotArray.size(); i++) {
         MapState m = map->getMapState(i);
-        if (map->isValid(m.x, m.y)) {
+        if (map->isValid(m.x, m.y) && map->isValid(p.x, p.y)) {
             if (AStar.GetPath(*map, p, m, *map)) { //map passed twice for stright line heuristic
-                pivotArray[AStar.getCostOfPreviousSolution()];
+                pivotArray[i] = AStar.getCostOfPreviousSolution();
                 cout << "One Calculated!" << endl;
             }
+        } else {
         }
     }
 }

@@ -11,18 +11,14 @@
 //lak303d: 194(h) x 194(w)
 //orz301s: 180(h) x 120(w)
 
-GridMaps::GridMaps(MapState g, string mapfile) {
+GridMaps::GridMaps(MapState g, string mapfile, int w, int h) {
     goal.x = g.x;
     goal.y = g.y;
     ifstream file;
     file.open(mapfile, ios::in);
     
-    // lak303d map
-    //mapW = mapH = 194;
-    
-    // orz301s map
-    mapW = 120;
-    mapH = 180;
+    mapW = w;
+    mapH = h; //194
     
     char c;
     while (!file.eof()) {
