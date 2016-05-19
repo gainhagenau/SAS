@@ -17,7 +17,7 @@
 
 class LMDifferential {
 public:
-    LMDifferential(GridMaps &m, bool f);
+    LMDifferential(GridMaps *m, bool f);
     
     //returns the heuristic
     int GetHeuristic(MapState state);
@@ -29,7 +29,7 @@ public:
     MapState FindFurthest(MapState p);
         
 private:
-    GridMaps map();
+    GridMaps *map;
     bool furthest;
     vector<int> pivotArray1;
     vector<int> pivotArry2;

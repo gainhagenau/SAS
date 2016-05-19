@@ -21,6 +21,8 @@
 #include "InefficientAStar.hpp"
 #include "AStar.hpp"
 #include "GridMaps.hpp"
+#include "LMDifferential.hpp"
+
 using namespace std;
 
 int main(int argc, const char * argv[]) {

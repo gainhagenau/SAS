@@ -41,8 +41,8 @@ int GridMaps::getIndex(int x, int y) {
 }
 
 MapState GridMaps::getMapState(int index) {
-    int x;
-    int y;
+    int x = 0;
+    int y = 0;
     MapState toReturn;
     
     for (int i = 0; i < index; i++) {
@@ -205,7 +205,7 @@ MapState GridMaps::getRandomState() {
 }
 
 int GridMaps::getSize(){
-    return map.size();
+    return (int)map.size();
 }
 
 MapState GridMaps::getGoal(){
