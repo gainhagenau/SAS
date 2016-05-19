@@ -29,6 +29,10 @@ GridMaps::GridMaps(MapState g, string mapfile, int w, int h) {
             map.push_back(false);
         }
     }
+    if (map.size() != mapW * mapH){
+        cout << "ERROR: something when wrong reading in the map." << endl;
+        cout << "Map size: " << map.size() << " should be: " << mapW * mapH << endl;
+    }
 }
 
 int GridMaps::getIndex(int x, int y) {
@@ -37,20 +41,9 @@ int GridMaps::getIndex(int x, int y) {
 }
 
 MapState GridMaps::getMapState(int index) {
-    int x = 0;
-    int y = 0;
     MapState toReturn;
-    
-    for (int i = 0; i < index; i++) {
-        if (i == mapW) {
-            y++;
-            x = 0;
-        } else {
-            x++;
-        }
-    }
-    toReturn.x = x;
-    toReturn.y = y;
+    toReturn.x = index % mapW;
+    toReturn.y = index / mapW;
     return toReturn;
 }
 
@@ -69,45 +62,45 @@ void GridMaps::GetActions(MapState &nodeID, vector<MapAction> &actions) {
     actions.clear();
     
     //UP
-    if (map[index - mapW] == true) {
+    if (getMapState(index).y > 0 && map[index - mapW] == true) {
         actions.push_back(NORTH);
     }
     //DOWN
-    if (map[index + mapW] == true) {
+    if (getMapState(index).y < mapH - 1 && map[index + mapW] == true) {
         actions.push_back(SOUTH);
     }
     //LEFT
-    if (map[index - 1] == true) {
+    if (getMapState(index).x > 0 && map[index - 1] == true) {
         actions.push_back(WEST);
     }
     //RIGHT
-    if (map[index + 1] == true) {
+    if (getMapState(index).x < mapW - 1 && map[index + 1] == true) {
         actions.push_back(EAST);
     }
     //UPRIGHT
-    if ((find(actions.begin(), actions.end(), EAST) != actions.end()) && (find(actions.begin(), actions.end(), NORTH) != actions.end()) && map[index - (mapW - 1)] == true) {
+    if (getMapState(index).y > 0 && getMapState(index).x < mapW - 1 && (find(actions.begin(), actions.end(), EAST) != actions.end()) && (find(actions.begin(), actions.end(), NORTH) != actions.end()) && map[index - (mapW - 1)] == true) {
         actions.push_back(NORTHEAST);
     }
     //UPLEFT
-    if ((find(actions.begin(), actions.end(), WEST) != actions.end()) && (find(actions.begin(), actions.end(), NORTH) != actions.end()) && map[index - (mapW + 1)] == true) {
+    if (getMapState(index).y > 0 && getMapState(index).x > 0 &&(find(actions.begin(), actions.end(), WEST) != actions.end()) && (find(actions.begin(), actions.end(), NORTH) != actions.end()) && map[index - (mapW + 1)] == true) {
         actions.push_back(NORTHWEST);
     }
     //DOWNRIGHT
-    if ((find(actions.begin(), actions.end(), EAST) != actions.end()) && (find(actions.begin(), actions.end(), SOUTH) != actions.end()) && map[index + (mapW + 1)] == true) {
+    if (getMapState(index).y < mapH - 1 && getMapState(index).x < mapW - 1 && (find(actions.begin(), actions.end(), EAST) != actions.end()) && (find(actions.begin(), actions.end(), SOUTH) != actions.end()) && map[index + (mapW + 1)] == true) {
         actions.push_back(SOUTHEAST);
     }
     //DOWNLEFT
-    if ((find(actions.begin(), actions.end(), SOUTH) != actions.end()) && (find(actions.begin(), actions.end(), WEST) != actions.end()) && map[index + (mapW - 1)] == true) {
+    if (getMapState(index).y < mapH - 1 && getMapState(index).x > 0 && (find(actions.begin(), actions.end(), SOUTH) != actions.end()) && (find(actions.begin(), actions.end(), WEST) != actions.end()) && map[index + (mapW - 1)] == true) {
         actions.push_back(SOUTHWEST);
     }
 }
 
 void GridMaps::ApplyAction(MapState &s, MapAction a) {
     if (a == NORTH) {
-        s.y++;
+        s.y--;
         //cout << s.x << ", " << s.y << endl;
     } else if (a == SOUTH) {
-        s.y--;
+        s.y++;
         //cout << s.x << ", " << s.y << endl;
     } else if (a == WEST) {
         s.x--;
@@ -116,19 +109,19 @@ void GridMaps::ApplyAction(MapState &s, MapAction a) {
         s.x++;
         //cout << s.x << ", " << s.y << endl;
     } else if (a == NORTHEAST) {
-        s.y++;
+        s.y--;
         s.x++;
         //cout << s.x << ", " << s.y << endl;
     } else if (a == NORTHWEST) {
-        s.y++;
+        s.y--;
         s.x--;
         //cout << s.x << ", " << s.y << endl;
     } else if (a == SOUTHEAST) {
-        s.y--;
+        s.y++;
         s.x++;
         //cout << s.x << ", " << s.y << endl;
     } else if (a == SOUTHWEST) {
-        s.y--;
+        s.y++;
         s.x--;
         //cout << s.x << ", " << s.y << endl;
     } else {

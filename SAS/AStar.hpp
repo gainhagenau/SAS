@@ -131,6 +131,12 @@ private:
 template <typename state, typename action, typename environment, typename heuristic>
 bool AStar<state, action, environment, heuristic>::GetPath(environment &e, state &start, state &goal, heuristic &h){
     
+    if (start == goal){
+        costOfSolution = 0;
+        return true;
+    }
+    
+    
     clear(); // clears data strucutres
     bool isFirst = true;
     

@@ -66,6 +66,7 @@ int LMDifferential::GetHeuristic(MapState state){
 
 //populate the pivot array based on the pivot passed in
 void LMDifferential::BuildPivot(vector<int> &pivotArray, MapState p){
+    cout << "Starting build on pivot: " << p.x << "," << p.y << endl;
     //set to size of index
     pivotArray.resize(map->getSize());
     
@@ -74,9 +75,10 @@ void LMDifferential::BuildPivot(vector<int> &pivotArray, MapState p){
     for (int i = 0; i < pivotArray.size(); i++) {
         MapState m = map->getMapState(i);
         if (map->isValid(m.x, m.y) && map->isValid(p.x, p.y)) {
-            if (AStar.GetPath(*map, p, m, *map)) { //map passed twice for stright line heuristic
-                pivotArray[i] = AStar.getCostOfPreviousSolution();
+            cout << "Finding Cost from: " << m.x << "," << m.y <<endl;
+            if (AStar.GetPath(*map, m, p, *map)) { //map passed twice for stright line heuristic
                 cout << "One Calculated!" << endl;
+                pivotArray[i] = AStar.getCostOfPreviousSolution();
             }
         } else {
         }
