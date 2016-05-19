@@ -11,22 +11,23 @@
 #include <math.h>
 
 LMDifferential::LMDifferential(GridMaps *m, bool f, int numPivots) {
+    cout << "Constructing an LMD...\n";
     map = m;
     furthest = f;
     distanceLists.resize(numPivots);
     pivotList.resize(numPivots);
     if (furthest){ //Furthest
-        cout << "Calculating " << numPivots << " Furthest Pivots...";
-        cout << "gain sucks";
-        pivotList = map->getRandomState(1);
+        cout << "Calculating " << numPivots << " Furthest Pivots..." << endl;
+        pivotList[0] = map->getRandomState(1)[0];
         BuildPivot(distanceLists[0], pivotList[0]);
+        cout << "1" << endl;
         for (int i = 1; i < numPivots; i++) {
             MapState nextPivot = FindFurthest(i - 1); //finds what the next pivot should be for indes i
             pivotList[i] = nextPivot;
             BuildPivot(distanceLists[i], pivotList[i]); //builds the distances
         }
     } else { //All Random
-        cout << "Calculating " << numPivots << " Random Pivots...    ";
+        cout << "Calculating " << numPivots << " Random Pivots...    " << endl;
         pivotList = map->getRandomState(numPivots);
         for (int i = 0; i < numPivots; i++) {
             BuildPivot(distanceLists[i], pivotList[i]); //builds the distances
@@ -74,7 +75,8 @@ void LMDifferential::BuildPivot(vector<int> &pivotArray, MapState p){
         MapState m = map->getMapState(i);
         if (map->isValid(m.x, m.y)) {
             if (AStar.GetPath(*map, p, m, *map)) { //map passed twice for stright line heuristic
-                pivotArray.push_back(AStar.getCostOfPreviousSolution());
+                pivotArray[AStar.getCostOfPreviousSolution()];
+                cout << "One Calculated!" << endl;
             }
         }
     }
@@ -86,7 +88,7 @@ MapState LMDifferential::FindFurthest(int index){
     vector<MSG> open;
     vector<MapAction> actions;
     MapState lastCreated;
-    for (int i = index; i >= 0; i++){ //Add all created indexes to the open list
+    for (int i = index; i >= 0; i--){ //Add all created indexes to the open list
         MSG p;
         p.g = 0;
         p.m = pivotList[i];
