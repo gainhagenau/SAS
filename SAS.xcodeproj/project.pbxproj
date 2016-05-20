@@ -42,7 +42,6 @@
 		94C4927A1CEAD69500D5286C /* LMDifferential.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LMDifferential.cpp; sourceTree = "<group>"; };
 		94C4927B1CEAD69500D5286C /* LMDifferential.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LMDifferential.hpp; sourceTree = "<group>"; };
 		A001F61A1CEEC20D00983799 /* GridMapAStar.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GridMapAStar.hpp; sourceTree = "<group>"; };
-		A001F61F1CEEC70000983799 /* gain.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; name = gain.map; path = ../../../../../../../../Desktop/gain.map; sourceTree = "<group>"; };
 		A05774FF1CB610CB00EB8408 /* STmanhattan.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = STmanhattan.cpp; sourceTree = "<group>"; };
 		A05775001CB610CB00EB8408 /* STmanhattan.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = STmanhattan.hpp; sourceTree = "<group>"; };
 		A0D844F91CB1D38600CDA1B1 /* SAS */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SAS; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -110,7 +109,6 @@
 				941FF2F11CBF288C002ED1C3 /* PDB.hpp */,
 				943511E71CDAC85E009E1BE5 /* orz301d.map */,
 				9478E2541CEA6F5C00258921 /* lak303d.map */,
-				A001F61F1CEEC70000983799 /* gain.map */,
 			);
 			path = SAS;
 			sourceTree = "<group>";

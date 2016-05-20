@@ -182,7 +182,7 @@ vector<MapState> GridMaps::getRandomState(int num) {
     int randomY = 0;
     vector<MapState> toReturn;
     MapState temp;
-    srand (7);
+    srand (time(NULL));
     for (int i = 0; i < num; i++) {
         randomX = rand() % mapW;
         randomY = rand() % mapH;

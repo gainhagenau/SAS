@@ -70,15 +70,13 @@ int main(int argc, const char * argv[]) {
     g.y = 4;
     GridMaps grid(g, "/Users/Gain/Desktop/den009d.map", 50, 34);
     
-    LMDifferential lmd1 = LMDifferential(&grid, false, 0);
+    LMDifferential lmd1 = LMDifferential(&grid, false, 10);
     
     AStar<MapState, MapAction, GridMaps, LMDifferential> aMap;
     cout << "Running A* with LMD - " << "Start: (" << s.x << "," << s.y << ") Goal: (" << g.x << "," << g.y << ")" << endl;
     if (aMap.GetPath(grid, s, g, lmd1)){
         cout << "SUCCESS!" << endl << endl;
     }
-    cout << aMap.GetPath(grid, s, g, lmd1) << "\n";
-    
     
     //DEN MAP 10 FURTHEST
     cout << "Using Map: den009d.map" << endl;
@@ -93,7 +91,37 @@ int main(int argc, const char * argv[]) {
     if (aMap.GetPath(grid, s, g, lmd2)){
         cout << "SUCCESS!" << endl << endl;
     }
-    cout << aMap.GetPath(grid, s, g, lmd2) << "\n";
+    
+    //ORZ MAP 10 Random
+    cout << "Using Map: orz000d.map" << endl;
+    s.x = 25;
+    s.y = 16;
+    g.x = 43;
+    g.y = 133;
+    
+    GridMaps grid2(g, "/Users/Gain/Desktop/orz000d.map", 79, 137);
+    
+    LMDifferential lmd3 = LMDifferential(&grid, false, 10);
+    
+    cout << "Running A* with LMD - " << "Start: (" << s.x << "," << s.y << ") Goal: (" << g.x << "," << g.y << ")" << endl;
+    if (aMap.GetPath(grid2, s, g, lmd3)){
+        cout << "SUCCESS!" << endl << endl;
+    }
+    
+    //ORZ MAP 10 FURTHEST
+    cout << "Using Map: orz000d.map" << endl;
+    s.x = 6;
+    s.y = 4;
+    g.x = 44;
+    g.y = 4;
+    
+    LMDifferential lmd4 = LMDifferential(&grid, true, 10);
+    
+    cout << "Running A* with LMD - " << "Start: (" << s.x << "," << s.y << ") Goal: (" << g.x << "," << g.y << ")" << endl;
+    if (aMap.GetPath(grid2, s, g, lmd4)){
+        cout << "SUCCESS!" << endl << endl;
+    }
+
     
     
     return 0;

@@ -90,8 +90,8 @@ MapState LMDifferential::FindFurthest(int index){
     vector<MSG> open;
     vector<MapAction> actions;
     MapState lastCreated;
+    MSG p;
     for (int i = index; i >= 0; i--){ //Add all created indexes to the open list
-        MSG p;
         p.g = 0;
         p.m = pivotList[i];
         open.push_back(p);
@@ -99,14 +99,13 @@ MapState LMDifferential::FindFurthest(int index){
     
     while (!open.empty()){
         int next = 0;
-        for (int i = 1; i < closed.size(); i++ ){ //find the next best on open
+        for (int i = 1; i < open.size(); i++ ){ //find the next best on open
             if (open[i].g < open[next].g){
                 next = i;
             }
         }
         MapState current = open[next].m; //sets the next map state
         int currentG = open[next].g;
-        closed.push_back(current);
         open.erase(open.begin() + next); //moving from open to closed now
         lastCreated = current;
         
@@ -123,6 +122,7 @@ MapState LMDifferential::FindFurthest(int index){
             if (!duplicate){ //add new node to the open list
                 MSG msg; msg.m = current; msg.g = currentG + 1; //Creates new MSG
                 open.push_back(msg);
+                closed.push_back(current);
             }
             map->UndoAction(current, actions[i]); //undo action
         }
