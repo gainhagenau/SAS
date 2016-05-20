@@ -178,16 +178,18 @@ bool GridMaps::isValid(int x, int y) {
 }
 
 vector<MapState> GridMaps::getRandomState(int num) {
-    int randomX, randomY;
+    int randomX = 0;
+    int randomY = 0;
     vector<MapState> toReturn;
     MapState temp;
-    randomX = rand() % mapW;
-    randomY = rand() % mapH;
+    srand (7);
     for (int i = 0; i < num; i++) {
+        randomX = rand() % mapW;
+        randomY = rand() % mapH;
         while(!isValid(randomX, randomY)) {
             randomX = rand() % mapW;
             randomY = rand() % mapH;
-        }
+        } //at this point the values should be both random and valid
         temp.x = randomX;
         temp.y = randomY;
         if (!(find(toReturn.begin(), toReturn.end(), temp) != toReturn.end())) {

@@ -1,26 +1,30 @@
 //
-//  AStar.hpp
+//  GridMapAStar.hpp
 //  SAS
 //
-//  Created by Ryan Aikman on 5/3/16.
+//  Created by Gain Hagenau on 5/19/16.
 //  Copyright © 2016 Gain Hagenau. All rights reserved.
 //
 
-#ifndef AStar_hpp
-#define AStar_hpp
+#ifndef GridMapAStar_hpp
+#define GridMapAStar_hpp
 
 #include <stdio.h>
 #include <unordered_map>
 #include <map>
 #include <iostream>
+#include "GridMaps.hpp"
+#include "LMDifferential.hpp"
 
 
-template <typename state, typename action, typename environment, typename heuristic>
-class AStar {
+class GridMapAStar {
 public:
-    AStar(){};
+    GridMapAStar(GridMaps m, LMDifferential lmd, bool furthest){
+        map = m;
+        lmd = lmd;
+    };
     // GetPath returns if the goal was found
-    bool GetPath(environment &e, state &start, state &goal, heuristic &h);
+    bool GetPath();
     // Returns the total nodes expanded by the last GetPath call.
     uint64_t GetNodesExpanded() {
         return nodesExpanded;
@@ -31,6 +35,9 @@ public:
     }
     
 private:
+    GridMaps map;
+    LMDifferential lmd;
+    
     uint64_t nodesExpanded; // nodes expanded
     int costOfSolution;
     
@@ -43,16 +50,15 @@ private:
     unordered_map<string, node> openTable;
     unordered_map<string, node> closedTable;
     bool isFirst = true;
-
+    
     /* Add element to open list
      * check for duplicates first. If index just replace if better f cost in new node
      * else just push onto open list
      */
     void addElement(node n, environment &e) {
-        openTable.insert(std::make_pair(e.getString(n.s), n));
-        //if (!checkDuplicates(n, e)){ //if no duplicate found
-        //    openTable.insert(std::make_pair(e.getString(n.s), n));
-        //}
+        if (!checkDuplicates(n, e)){ //if no duplicate found
+            openTable.insert(std::make_pair(e.getString(n.s), n));
+        }
     }
     
     // check to see if there is a duplicate on the open list.
@@ -176,6 +182,7 @@ bool AStar<state, action, environment, heuristic>::GetPath(environment &e, state
                     node generated = MakeNode(temp, current.gCost + 1, h, moves[i]); //new node
                     if (checkGoal(generated, goal)){
                         costOfSolution = generated.gCost;
+                        cout << openTable.size() << "  -  " << closedTable.size() << endl;
                         return true;  //Goal Found
                     }
                     addElement(generated, e);
@@ -188,4 +195,4 @@ bool AStar<state, action, environment, heuristic>::GetPath(environment &e, state
 
 
 
-#endif /* AStar_hpp */
+#endif /* GridMapAStar_hpp */

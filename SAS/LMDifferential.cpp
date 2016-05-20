@@ -17,23 +17,22 @@ LMDifferential::LMDifferential(GridMaps *m, bool f, int numPivots) {
     distanceLists.resize(numPivots);
     pivotList.resize(numPivots);
     if (furthest){ //Furthest
-        cout << "Calculating " << numPivots << " Furthest Pivots..." << endl;
+        cout << "Calculating " << numPivots << " Furthest Pivots:" << endl;
         pivotList[0] = map->getRandomState(1)[0];
         BuildPivot(distanceLists[0], pivotList[0]);
-        cout << "1" << endl;
         for (int i = 1; i < numPivots; i++) {
             MapState nextPivot = FindFurthest(i - 1); //finds what the next pivot should be for indes i
             pivotList[i] = nextPivot;
             BuildPivot(distanceLists[i], pivotList[i]); //builds the distances
         }
     } else { //All Random
-        cout << "Calculating " << numPivots << " Random Pivots...    " << endl;
+        cout << "Calculating " << numPivots << " Random Pivots:    " << endl;
         pivotList = map->getRandomState(numPivots);
         for (int i = 0; i < numPivots; i++) {
             BuildPivot(distanceLists[i], pivotList[i]); //builds the distances
         }
     }
-    cout << "Complete\n";
+    cout << "All " << numPivots << " pivots calculated for Land Mark Differential Heuristic" << endl;
 }
 
 //returns the heuristic
@@ -66,7 +65,7 @@ int LMDifferential::GetHeuristic(MapState state){
 
 //populate the pivot array based on the pivot passed in
 void LMDifferential::BuildPivot(vector<int> &pivotArray, MapState p){
-    cout << "Starting build on pivot: " << p.x << "," << p.y << endl;
+    cout << "Building pivot (" << p.x << "," << p.y << ").... " << flush;
     //set to size of index
     pivotArray.resize(map->getSize());
     
@@ -75,14 +74,14 @@ void LMDifferential::BuildPivot(vector<int> &pivotArray, MapState p){
     for (int i = 0; i < pivotArray.size(); i++) {
         MapState m = map->getMapState(i);
         if (map->isValid(m.x, m.y) && map->isValid(p.x, p.y)) {
-            cout << "Finding Cost from: " << m.x << "," << m.y <<endl;
+            //cout << "Finding Cost from: " << m.x << "," << m.y;
             if (AStar.GetPath(*map, m, p, *map)) { //map passed twice for stright line heuristic
-                cout << "One Calculated!" << endl;
                 pivotArray[i] = AStar.getCostOfPreviousSolution();
+                //cout << " -- cost: " << AStar.getCostOfPreviousSolution() << endl;
             }
-        } else {
         }
     }
+    cout << "COMPLETE" << endl;
 }
 
 //finds the furthest state from all of the states lower and including the index passes in the pivotList

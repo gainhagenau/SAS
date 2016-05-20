@@ -26,70 +26,80 @@
 using namespace std;
 
 int main(int argc, const char * argv[]) {
+    /*
+     MapState g;
+     MapState s;
+     s.x = 98;
+     s.y = 11;
+     g.x = 16;
+     g.y = 10;
+     GridMaps grid(g, "/Users/Gain/Desktop/den009d.map", 50, 34);
+     GridMaps *map = &grid;
+     
+     if (map->isValid(g.x, g.y)) {
+     cout << "valid goal" << endl;
+     for (int i = 0; i < map->getSize(); i++) {
+     MapState m = map->getMapState(i);
+     if (map->isValid(m.x, m.y)) {
+     AStar<MapState, MapAction, GridMaps, GridMaps> AStar;
+     cout << i << " of " << map->getSize() << " - Valid point (" << m.x << "," << m.y << ")";
+     if (AStar.GetPath(*map, m, g, *map)){
+     cout << " - distance: " << AStar.getCostOfPreviousSolution() << endl;
+     }
+     }
+     }
+     } else {
+     cout << "NOT valid goal" << endl;
+     }
+     cout << "done" << endl;
+     
+     }
+     */
     
+    
+    
+    cout << "A* on Grid Map with 8-Way Movement & Octile Heuristic/LMDifferential" << endl << endl << flush;
+    
+    //DEN MAP 10 RANDOM
+    cout << "Using Map: den009d.map" << endl;
     MapState g;
     MapState s;
-    s.x = 98;
-    s.y = 11;
-    g.x = 95;
-    g.y = 12;
-    GridMaps grid(g, "/Users/Gain/Documents/School Work/College/Junior/Spring Quarter/Single Agent Search/SAS/SAS/lak303d.map", 194, 194);
-    GridMaps *map = &grid;
-    float begin_time = 0;
+    s.x = 6;
+    s.y = 4;
+    g.x = 44;
+    g.y = 4;
+    GridMaps grid(g, "/Users/Gain/Desktop/den009d.map", 50, 34);
     
-    if (map->isValid(g.x, g.y)) {
-        cout << "valid goal" << endl;
-        for (int i = 0; i < map->getSize(); i++) {
-            MapState m = map->getMapState(i);
-            if (map->isValid(m.x, m.y)) {
-                AStar<MapState, MapAction, GridMaps, GridMaps> AStar;
-                cout << "Valid point (" << m.x << "," << m.y << ")";
-                const clock_t begin_time = clock();
-                if (AStar.GetPath(*map, m, g, *map)){
-                    cout << " - distance: " << AStar.getCostOfPreviousSolution() << endl;
-                    cout << "Time Elapsed: " << (int)(float( clock () - begin_time ) /  CLOCKS_PER_SEC) / 60 << " minutes" << endl;
-                }
-            }
-        }
-    } else {
-        cout << "NOT valid goal" << endl;
+    LMDifferential lmd1 = LMDifferential(&grid, false, 0);
+    
+    AStar<MapState, MapAction, GridMaps, LMDifferential> aMap;
+    cout << "Running A* with LMD - " << "Start: (" << s.x << "," << s.y << ") Goal: (" << g.x << "," << g.y << ")" << endl;
+    if (aMap.GetPath(grid, s, g, lmd1)){
+        cout << "SUCCESS!" << endl << endl;
     }
-    cout << "done" << endl;
+    cout << aMap.GetPath(grid, s, g, lmd1) << "\n";
     
+    
+    //DEN MAP 10 FURTHEST
+    cout << "Using Map: den009d.map" << endl;
+    s.x = 6;
+    s.y = 4;
+    g.x = 44;
+    g.y = 4;
+    
+    LMDifferential lmd2 = LMDifferential(&grid, true, 10);
+    
+    cout << "Running A* with LMD - " << "Start: (" << s.x << "," << s.y << ") Goal: (" << g.x << "," << g.y << ")" << endl;
+    if (aMap.GetPath(grid, s, g, lmd2)){
+        cout << "SUCCESS!" << endl << endl;
+    }
+    cout << aMap.GetPath(grid, s, g, lmd2) << "\n";
+    
+    
+    return 0;
 }
 
-
-
-
-
- /*
- 
- cout << "started\n";
- MapState g;
- MapState s;
- s.x = 98;
- s.y = 11;
- g.x = 128;
- g.y = 54;
- GridMaps grid(g, "/Users/Gain/Documents/School Work/College/Junior/Spring Quarter/Single Agent Search/SAS/SAS/lak303d.map", 194, 194);
- cout << "Grid Initialized\n" << endl;
- 
- //LMDifferential lmd1 = LMDifferential(&grid, false, 10);
- 
- LMDifferential lmd2 = LMDifferential(&grid, true, 10);
- // A* GRID MAP; GRID MAP
- cout << "\n\nA* on Grid Map with 8-Way Movement & Octile Heuristic/LMDifferential" << endl;
- AStar<MapState, MapAction, GridMaps, LMDifferential> aMap;
- const clock_t begin_time = clock();
- cout << aMap.GetPath(grid, s, g, lmd2) << "\n";
- std::cout << "Time Elapsed: " << (float( clock () - begin_time ) /  CLOCKS_PER_SEC) / 60 << " minutes";
- cout << "\nNodes Expanded: " << aMap.GetNodesExpanded() << "\n" << endl;
- 
- 
- return 0;
- }
-
- /*
+/*
  int instances[11][16] =
  {{1, 2, 3, 7, 0, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15},
  {14, 1, 9, 6, 4, 8, 12, 5, 7, 2, 3, 0, 10, 11, 13, 15},

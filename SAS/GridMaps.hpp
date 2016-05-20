@@ -17,6 +17,7 @@
 #include <math.h>
 #include <string.h>
 #include <fstream>
+#include <time.h>
 
 using namespace std;
 
